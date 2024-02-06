@@ -1,7 +1,14 @@
-<script>
+<script lang="ts">
 	import { cn } from "$lib/utils";
-	let className = undefined;
-	export let level = "h5";
+	import type { HTMLAttributes } from "svelte/elements";
+	import type { HeadingLevel } from ".";
+
+	type $$Props = HTMLAttributes<HTMLHeadingElement> & {
+		level?: HeadingLevel;
+	};
+
+	let className: $$Props["class"] = undefined;
+	export let level: $$Props["level"] = "h5";
 	export { className as class };
 </script>
 

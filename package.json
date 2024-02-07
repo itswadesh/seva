@@ -15,7 +15,7 @@
 		"test:unit": "vitest",
 		"studio": "drizzle-kit studio --config drizzle.config.ts",
 		"generate": "drizzle-kit generate:pg --config drizzle.config.ts",
-		"migrate": "drizzle-kit push:pg --config drizzle.config.ts"
+		"migrate": "drizzle-kit push:pg --config ./src/drizzle.config.ts"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -50,9 +50,15 @@
 		"dotenv": "^16.4.1",
 		"drizzle-orm": "^0.29.3",
 		"embla-carousel-svelte": "8.0.0-rc22",
+		"formsnap": "^0.4.3",
+		"html5-qrcode": "^2.3.8",
 		"lucide-svelte": "^0.323.0",
 		"postgres": "^3.4.3",
+		"svelte-material-ui": "7.0.0-beta.16",
+		"svelte-qr-scanner": "^1.1.0",
+		"sveltekit-superforms": "^1.13.4",
 		"tailwind-merge": "^2.2.1",
-		"tailwind-variants": "^0.1.20"
+		"tailwind-variants": "^0.1.20",
+		"zod": "^3.22.4"
 	}
 }

@@ -1,20 +1,16 @@
-<script>
+<script lang="ts">
     import { enhance } from '$app/forms';
-    import { collectionstore } from '$lib/store/collectionStore';
+    import { updateStore } from '$lib/store/collectionStore';
     import { Html5Qrcode } from 'html5-qrcode';
     import { onMount } from 'svelte';
     import { navigate } from 'svelte-routing';
 
     let scanning = false;
 
-    let html5Qrcode;
-    let getStoreValue;
+    let html5Qrcode: Html5Qrcode;
 
     onMount(() => {
         initScanner();
-        collectionstore.subscribe((value) => {
-            getStoreValue = value;
-        });
     });
 
     function initScanner() {
@@ -40,24 +36,23 @@
         scanning = false;
     }
 
-    async function onScanSuccess(decodedText, decodedResult) {
-        getStoreValue.TokenNo = decodedText;
-        collectionstore.update(() => getStoreValue);
+    async function onScanSuccess(decodedText: any, decodedResult: any) {
+        let getStoreValue = decodedText;
+        const updatedState = {
+            TokenNo: decodedText
+        }
+        updateStore(updatedState)
         console.log(decodedResult);
         stop();
 
-        const form = document.getElementById('scan');
+        const form = document.getElementById('scan') as HTMLFormElement;
+        if (form) form.submit();
 
-        // Trigger the form submission
-        if (form) form.onsubmit();
-
-
-       
-            navigate('/');
+        navigate('/');
         
     }
 
-    function onScanFailure(error) {
+    function onScanFailure(error: any) {
         console.warn(`Code scan error = ${error}`);
     }
 </script>

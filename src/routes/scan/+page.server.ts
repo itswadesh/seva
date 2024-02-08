@@ -21,9 +21,8 @@ export const actions: Actions = {
 
 		console.log(previousData)
 
-
 		const newData = await db.insert(SangatData).values({
-			items
+			items 
 		})
 
 		console.log(newData)

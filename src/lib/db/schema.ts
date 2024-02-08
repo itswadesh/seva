@@ -17,28 +17,6 @@ export const ClientProfile = pgTable('ClientProfile', {
     ApprovedBy: text('ApprovedBy'),
     ApprovalDT: timestamp('ApprovalDT'),
     Active: boolean('Active'),
-    DeviceID_Client: text('DeviceID_Client'),
-    CanViewReports: boolean('CanViewReports'),
-    CanCollect: boolean('CanCollect'),
-    CanGiveBack: boolean('CanGiveBack'),
-    AadhaarNo: text('AadhaarNo'),
-    Sewadar_ID_Duplicate: text('Sewadar_ID_Duplicate'),
-    OwnProfile: boolean('OwnProfile'),
-    DuplicateDeviceID: text('DuplicateDeviceID'),
-    ClientSevaRating: integer('ClientSevaRating'),
-    ClientSevaRemarks: text('ClientSevaRemarks'),
-    ClientAndroidVer: real('ClientAndroidVer'),
-    ClientRAM: integer('ClientRAM'),
-    ClientMobileDate: timestamp('ClientMobileDate'),
-    ProfileCreateDate: timestamp('ProfileCreateDate'),
-    MumbaiSewaOption: boolean('MumbaiSewaOption').default(false),
-    SPC: boolean('SPC').default(false),
-    RecommededSewa1: text('RecommededSewa1'),
-    RecommededSewa2: text('RecommededSewa2'),
-    QualificationLevel: text('QualificationLevel'),
-    QualificationDetails: text('QualificationDetails'),
-    ComputerProgramming: text('ComputerProgramming'),
-    MobileUsage: text('MobileUsage')
 });
 
 export const SangatData = pgTable('SangatData', {

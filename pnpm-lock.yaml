@@ -26,6 +26,9 @@ dependencies:
   html5-qrcode:
     specifier: ^2.3.8
     version: 2.3.8
+  jsqr:
+    specifier: ^1.4.0
+    version: 1.4.0
   lucide-svelte:
     specifier: ^0.323.0
     version: 0.323.0(svelte@4.2.10)
@@ -38,6 +41,9 @@ dependencies:
   svelte-qr-scanner:
     specifier: ^1.1.0
     version: 1.1.0
+  svelte-routing:
+    specifier: ^2.11.0
+    version: 2.11.0
   sveltekit-superforms:
     specifier: ^1.13.4
     version: 1.13.4(@sveltejs/kit@2.5.0)(svelte@4.2.10)(zod@3.22.4)
@@ -3506,6 +3512,10 @@ packages:
     resolution: {integrity: sha512-AilxAyFOAcK5wA1+LeaySVBrHsGQvUFCDWXKpZjzaL0PqW+xfBOttn8GNtWKFWqneyMZj41MWF9Kl6iPWLwgOA==}
     dev: true
 
+  /jsqr@1.4.0:
+    resolution: {integrity: sha512-dxLob7q65Xg2DvstYkRpkYtmKm2sPJ9oFhrhmudT1dZvNFFTlroai3AWSpLey/w5vMcLBXRgOJsbXpdN9HzU/A==}
+    dev: false
+
   /keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
     dependencies:
@@ -4568,6 +4578,10 @@ packages:
     resolution: {integrity: sha512-8ybSBhGxceNpfCZYgEcoDsX8QVd59X+GhTw7+gUNRYE9qTXPqb7zFMRElLLozd3NTTSf6r3RCG87YKlN0na0DQ==}
     dependencies:
       instascan: github.com/schmich/instascan/b0f9519f2dd2a6661e67066d6ed678e621dd5ce2
+    dev: false
+
+  /svelte-routing@2.11.0:
+    resolution: {integrity: sha512-oNJz2A8g5ZqBDuxUWMJLpU9XXGZ40Fz5uRvrGlpENs5C2QWK5m7YKiGINssN9yI/22f9wi4F5oTTkDaTyryolw==}
     dev: false
 
   /svelte2tsx@0.6.27(svelte@4.2.10)(typescript@5.3.3):

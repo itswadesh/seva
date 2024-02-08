@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { collectionstore } from '$lib/store/collectionStore';
+	import { collectionstore, updateStore } from '$lib/store/collectionStore';
 	import ItemForm from './itemsForm.svelte';
 	export let data;
 	let capturedImageURI: string;
@@ -9,7 +9,6 @@
 	let additemsCheck = false;
 	let addItemImages = false;
 	let scanQr = false;
-	let totalItems = 0;
 
 	const initialState = {
 		ID: '',
@@ -30,32 +29,34 @@
 	};
 
 	const handleAddItems = () => {
-		initialState.CollectSangatFaceImage = capturedImageURI;
+		const updatedState = {
+			CollectSangatFaceImage: capturedImageURI
+		};
+		updateStore(updatedState);
 		additemsCheck = !additemsCheck;
 	};
 
 	const handleChangeImageSaved = (e: any) => {
 		capturedImageURI = URL.createObjectURL(e.target.files[0]);
+		console.log(capturedImageURI);
 	};
 	const handleChangeItemImageSaved1 = (e: any) => {
 		capturedItemImageUrl1 = URL.createObjectURL(e.target.files[0]);
-		initialState.ItemsImageFront = capturedItemImageUrl1;
-		collectionstore.update(() => initialState);
+		console.log(capturedItemImageUrl1);
+		const updatedState = {
+			ItemsImageFront: capturedItemImageUrl1 
+		};
+		updateStore(updatedState);
 	};
 	const handleChangeItemImageSaved2 = (e: any) => {
 		capturedItemImageUrl2 = URL.createObjectURL(e.target.files[0]);
-		initialState.ItemsImageFront = capturedItemImageUrl2;
-		collectionstore.update(() => initialState);
+		console.log(capturedItemImageUrl2);
+		const updatedState = {
+			ItemsImageBack: capturedItemImageUrl2 
+		};
 	};
 
 	const handleItemImages = () => {
-		initialState.Mobiles = Number(data.form?.data?.mobile);
-		initialState.EarPhone = Number(data.form?.data?.earphones);
-		initialState.EarPod = Number(data.form?.data?.earpods);
-		initialState.Charger = Number(data.form?.data?.charger);
-		initialState.SmartWatch = Number(data.form?.data?.smartwatch);
-		initialState.Others = Number(data.form?.data?.others);
-		initialState.TotalItems = totalItems;
 		addItemImages = !addItemImages;
 	};
 </script>

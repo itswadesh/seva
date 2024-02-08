@@ -6,7 +6,7 @@
 </script>
 
 <div class="mx-32 text-center">
-	<Form.Root {form} schema={formSchema} let:config>
+	<Form.Root method="POST" {form} schema={formSchema} let:config>
 		<Form.Field {config} name="mobile">
 			<Form.Item>
 				<Form.Label>Mobile</Form.Label>

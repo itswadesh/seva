@@ -23,6 +23,15 @@ const initialState = {
 export const collectionstore = writable(initialState);
 
 // Update function to update the store state
-export function updateStore(newState) {
-    collectionstore.update(() => newState);
+// Update function to update specific properties of the store state
+export function updateStore(updatedProperties: Partial<typeof initialState>) {
+    console.log('updateStore', updatedProperties);
+    collectionstore.update(currentState => {
+        return {
+            ...currentState,
+            ...updatedProperties
+        };
+    });
+    console.log('collectionstore', collectionstore);
 }
+

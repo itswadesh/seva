@@ -20,7 +20,7 @@
 
     function start() {
         html5Qrcode.start(
-            { facingMode: { exact: "environment" } }, // Use "environment" for the rear camera
+            { facingMode: 'environment'  }, // Use "environment" for the rear camera
             {
                 fps: 10,
                 qrbox: { width: 250, height: 250 }
@@ -48,7 +48,7 @@
         const form = document.getElementById('scan') as HTMLFormElement;
         if (form) form.submit();
 
-        navigate('/');
+        navigate('/collect');
         
     }
 

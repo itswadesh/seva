@@ -1,14 +1,24 @@
 <script>
+	import { saveCollectedItems } from '$lib/services/SaveCollectedItems';
+
+	// import { saveCollectedItems } from '$lib/services/SaveCollectedItems';
+	import { collectionstore } from '$lib/store/collectionStore';
 	import { Html5Qrcode } from 'html5-qrcode';
 	import { onMount } from 'svelte';
-
+    
 	let scanning = false;
 
 	let html5Qrcode;
+	let getStoreValue
 
-	onMount(init);
+	onMount(() => {
+		initScanner();
+		collectionstore.subscribe((value) => {
+			getStoreValue = value
+		});
+	});
 
-	function init() {
+	function initScanner() {
 		html5Qrcode = new Html5Qrcode('reader');
 		start();
 	}
@@ -30,10 +40,16 @@
 		await html5Qrcode.stop();
 		scanning = false;
 	}
+    
 
-	function onScanSuccess(decodedText, decodedResult) {
-		alert(`Code matched = ${decodedText}`);
+	async function onScanSuccess(decodedText, decodedResult) {
+		getStoreValue.TokenNo = decodedText;
+		collectionstore.update(() => getStoreValue);
 		console.log(decodedResult);
+		stop()
+		prompt(getStoreValue)
+		await saveCollectedItems()
+
 	}
 
 	function onScanFailure(error) {
@@ -43,11 +59,11 @@
 
 <main>
 	<reader id="reader" />
-	<!-- {#if scanning}
+	{#if scanning}
         <button on:click={stop}>stop</button>
     {:else}
         <button on:click={start}>start</button>
-    {/if} -->
+    {/if}
 </main>
 
 <style>

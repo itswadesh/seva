@@ -1,6 +1,7 @@
 <script>
 	import { Button } from '$lib/components/ui/button';
 	import Input from "$lib/components/ui/input/input.svelte";
+	import { _handleSubmit } from './+page.server';
 	$: isLogged = false;
     let username = "";
 	let password = "";
@@ -17,9 +18,9 @@
 	const handleLogin = async () => {
 
 		try{
-			// const newData = _handleSubmit(username, password)
+			const newData = _handleSubmit(username, password)
 			isLogged = true;
-			// prompt(`Logged in successfully ${newData}`);
+			prompt(`Logged in successfully ${newData}`);
 
 		} catch (e) {
 			console.log(e);
@@ -39,14 +40,6 @@
 		</div>
 	</div>
 {:else} 
-<main class="flex flex-col items-center justify-center mt-16">
-	<h1 class="text-4xl font-semibold mb-8 text-center">
-	  Welcome to the Seva Portal
-	</h1>
-	<p class="text-lg text-center mb-8">Providing essential services for all citizens</p>
-	import { Button } from '$lib/components/ui/button';
-</script>
-
 <main class="flex flex-col items-center justify-center">
 	<h1 class="mb-8 text-center text-4xl font-semibold">Welcome to the Seva Portal</h1>
 	<p class="mb-8 text-center text-lg">Providing essential services for all citizens</p>

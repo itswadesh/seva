@@ -1,21 +1,25 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
     import { updateStore } from '$lib/store/collectionStore';
     import { Html5Qrcode } from 'html5-qrcode';
     import { onMount } from 'svelte';
-    import { navigate } from 'svelte-routing';
-
+    export let data 
     let scanning = false;
 
     let html5Qrcode: Html5Qrcode;
 
     onMount(() => {
-        initScanner();
+        if (data.isscanned) {
+            goto('/collect')
+        } else {
+            initScanner();
+        }
     });
 
     function initScanner() {
         html5Qrcode = new Html5Qrcode('reader');
-        start();
+        if (!data.isscanned) start();
     }
 
     function start() {
@@ -37,20 +41,21 @@
     }
 
     async function onScanSuccess(decodedText: any, decodedResult: any) {
-        let getStoreValue = decodedText;
-        const updatedState = {
-            TokenNo: decodedText
-        }
-        updateStore(updatedState)
-        console.log(decodedResult);
-        stop();
-
-        const form = document.getElementById('scan') as HTMLFormElement;
-        if (form) form.submit();
-
-        navigate('/collect');
-        
+    const updatedState = {
+        TokenNo: decodedText
     }
+    updateStore(updatedState)
+    console.log(decodedResult);
+    stop();  
+    console.log('decodedText', decodedText);
+    console.log('onsubmit');
+    const form = document.getElementById('scan') as HTMLFormElement;
+    if (form) {
+        form.submit();
+    }
+    data.isscanned = false
+    console.log('onsubmit done');
+}
 
     function onScanFailure(error: any) {
         console.warn(`Code scan error = ${error}`);

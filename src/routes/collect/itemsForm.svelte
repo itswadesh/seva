@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Form from '$lib/components/ui/form';
 	import { formSchema, type FormSchema } from './schema';
 	import type { SuperValidated } from 'sveltekit-superforms';
@@ -49,5 +50,6 @@
 				<Form.Validation />
 			</Form.Item>
 		</Form.Field>
+		<Button type="submit" class="w-full" variant="secondary">Submit</Button>
 	</Form.Root>
 </div>

@@ -1,31 +1,54 @@
-import { SangatData } from '$lib/db/schema'
-import { db } from '$lib/db/server'
-import { collectionstore } from '$lib/store/collectionStore'
-import type { Actions, PageServerLoad } from './$types'
+import { SangatData } from '$lib/db/schema';
+import { db } from '$lib/db/server';
+import { collectionstore } from '$lib/store/collectionStore';
+import type { Actions, PageServerLoad } from './$types';
 
+let isScanned = false;
 export const load: PageServerLoad = async () => {
-
-}
+    return {
+        isscanned: isScanned
+    };
+};
 
 export const actions: Actions = {
-    
-	async default() {
-        let items
-		collectionstore.subscribe(value => {
-			items = value
-		}) 
+    async default() {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let items: any;
+        collectionstore.subscribe((value) => {
+            items = value;
+        });
 
-		console.log(items)
+        try {
+            console.log(items);
 
-		const previousData = await db.select().from(SangatData)
+            const newData = await db.insert(SangatData).values({
+                TokenNo: items?.TokenNo,
+                Collect_SewadarID: items?.Collect_SewadarID,
+                Collect_SewadarName: items?.Collect_SewadarName,
+                Mobiles: items?.Mobiles,
+                EarPhone: items?.EarPhone,
+                EarPod: items?.EarPod,
+                PowerBank: items?.PowerBank,
+                Charger: items?.Charger,
+                SmartWatch: items?.SmartWatch,
+                Others: items?.Others,
+                TotalItems: items?.TotalItems,
+                CollectSangatFaceImage: items?.CollectSangatFaceImage,
+                ItemsImageBack: items?.ItemsImageBack,
+                ItemsImageFront: items?.ItemsImageFront
+            });
 
-		console.log(previousData)
+            console.log('data inserted', newData);
 
-		const newData = await db.insert(SangatData).values({
-			items 
-		})
+            if (newData) {
+                isScanned = true;
+            } else {
+                isScanned = false; // Reset to false if insertion fails
+            }
 
-		console.log(newData)
-
-	}
-}
+        } catch (error) {
+            console.error('Error inserting data:', error);
+            isScanned = false; // Reset to false if insertion fails
+        }
+    }
+};

@@ -1,34 +1,21 @@
-<script>
-	// import { toast } from '$lib/utils';
+<script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import Input from '$lib/components/ui/input/input.svelte';
-	// import { _handleSubmit } from './+page.server';
+	import * as Form from '$lib/components/ui/form';
+	import { formSchema, type LoginFormSchema } from './loginSchema';
+	import type { SuperValidated } from 'sveltekit-superforms';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	export let form: SuperValidated<LoginFormSchema>;
+    export let data
 
-	$: isLogged = false;
-	let username = '';
-	let password = '';
-
-	const handleChange = (e) => {
-		if (e.target.name === 'username') {
-			username = e.target.value;
-		} else {
-			password = e.target.value;
-		}
-
-		console.log(username, password);
-	};
-	const handleLogin = async () => {
-		try {
-			// const newData = _handleSubmit(username, password)
-
-			isLogged = true;
-			// prompt(`Logged in successfully ${newData}`);
-
-			// toast(``)
-		} catch (e) {
-			console.log(e);
-		}
-	};
+	$: isLogged = data.islogged
+	onMount(() => {
+    console.log('isLogged', isLogged);
+    if (isLogged) {
+        console.log('redirecting to /collect');
+        goto('/collect');
+    }
+});
 </script>
 
 {#if !isLogged}
@@ -36,27 +23,24 @@
 		class="relative mt-16 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700"
 		role="alert"
 	>
-		<Input
-			name="username"
-			type="text"
-			placeholder="Enter your Id"
-			class="mb-4"
-			on:change={handleChange}
-			value={username}
-		/>
-		<Input
-			name="password"
-			type="password"
-			placeholder="Enter your password"
-			class="mb-4"
-			on:change={handleChange}
-			value={password}
-		/>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<div on:click={handleLogin}>
-			<Button class="w-full" variant="secondary">Login</Button>
-		</div>
+	<Form.Root method="POST" {form} schema={formSchema} let:config>
+		<Form.Field {config} name="username">
+			<Form.Item>
+				<Form.Label>Username</Form.Label>
+				<Form.Input />
+				<Form.Validation />
+			</Form.Item>
+		</Form.Field>
+		<Form.Field {config} name="password">
+			<Form.Item>
+				<Form.Label>Password</Form.Label>
+				<Form.Input />
+				<Form.Validation />
+			</Form.Item>
+		</Form.Field>
+		<Button type="submit" class="w-full" variant="secondary">
+			Submit </Button>
+	</Form.Root>
 	</div>
 {:else}
 	<main class="flex flex-col items-center justify-center">

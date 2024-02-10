@@ -3,6 +3,7 @@ import { pgTable, serial, text, boolean, integer, timestamp, real } from 'drizzl
 export const ClientProfile = pgTable('ClientProfile', {
     ID: serial('ID').primaryKey(),
     Sewadar_ID: text('Sewadar_ID'),
+    password: text('password'),
     ProfileLevel: text('ProfileLevel'),
     Module: text('Module'),
     Role: text('Role'),

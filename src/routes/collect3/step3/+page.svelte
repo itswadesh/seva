@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { updateStore } from '$lib/store/collectionStore';
   import { onMount } from 'svelte'
+	import ItemsForm from '../step2/itemsForm.svelte';
   
   let data={}
 
@@ -19,7 +20,7 @@
 
 </script>
 
-<h1>Step 3</h1>
+<h1>Scan Token QR</h1>
 <svelte:component	this="{QR}"/>
 
 <input bind:value={data.Collect_SewadarID} placeholder="Enter SewadarID" />

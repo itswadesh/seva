@@ -37,9 +37,10 @@
     if (code) {
       const data = { Collect_SewadarID: code.data}
       updateStore(data);
+      stopScan()
       goto('/preview');
       // Stop scanning once a QR code is detected
-      scanning = false;
+      // scanning = false;
     }
     requestAnimationFrame(scanLoop);
   }

@@ -6,7 +6,8 @@
 
 	export let form: SuperValidated<FormSchema>;
 </script>
-
+{JSON.stringify(form)}
+{JSON.stringify(formSchema)}
 <Form.Root method="POST" {form} schema={formSchema} let:config class="flex flex-col gap-5">
 	<div class="flex flex-col gap-2">
 		<Form.Field {config} name="mobile">

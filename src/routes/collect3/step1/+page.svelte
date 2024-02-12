@@ -1,6 +1,7 @@
 <script lang="ts">
  import { goto } from '$app/navigation';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import Input from '$lib/components/ui/input/input.svelte';
 	import { collectionstore, updateStore } from '$lib/store/collectionStore';
 	let capturedImageURI: string;
 
@@ -18,10 +19,11 @@ let data={}
 
 </script>
 
-<h1>Step 1</h1>
+<h1>Take Person Photo</h1>
+<form on:submit|preventDefault={nextStep}>
 <div>
 		
-				<input
+				<Input
 					type="file"
 					name="image"
 					accept="image/*"
@@ -29,4 +31,5 @@ let data={}
 					on:change={handleChangeImageSaved}
 				/>
 	</div>
-<button on:click={nextStep}>Next</button>
+	<Button type="submit" class="w-full" variant="secondary"  >Submit</Button>
+</form>

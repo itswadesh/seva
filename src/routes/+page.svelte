@@ -1,46 +1,49 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import * as Form from '$lib/components/ui/form';
 	import { formSchema, type LoginFormSchema } from './loginSchema';
-	import type { SuperValidated } from 'sveltekit-superforms';
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	export let form: SuperValidated<LoginFormSchema>;
-    export let data
+	import { onMount } from 'svelte';
+	import * as Form from '$lib/components/ui/form';
+	import type { SuperValidated } from 'sveltekit-superforms';
 
-	$: isLogged = data.islogged
+	export let form: SuperValidated<LoginFormSchema>;
+	export let data;
+
+	$: isLogged = data.islogged;
+
 	onMount(() => {
-    console.log('isLogged', isLogged);
-    if (isLogged) {
-        console.log('redirecting to /collect');
-        goto('/collect');
-    }
-});
+		console.log('isLogged', isLogged);
+
+		if (isLogged) {
+			console.log('redirecting to /collect');
+			goto('/collect');
+		}
+	});
 </script>
 
 {#if !isLogged}
-	<div
-		class="relative mt-16 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700"
-		role="alert"
-	>
-	<Form.Root method="POST" {form} schema={formSchema} let:config>
-		<Form.Field {config} name="username">
-			<Form.Item>
-				<Form.Label>Username</Form.Label>
-				<Form.Input />
-				<Form.Validation />
-			</Form.Item>
-		</Form.Field>
-		<Form.Field {config} name="password">
-			<Form.Item>
-				<Form.Label>Password</Form.Label>
-				<Form.Input />
-				<Form.Validation />
-			</Form.Item>
-		</Form.Field>
-		<Button type="submit" class="w-full" variant="secondary">
-			Submit </Button>
-	</Form.Root>
+	<div class="rounded border p-5" role="alert">
+		<Form.Root method="POST" {form} schema={formSchema} let:config class="flex flex-col gap-5">
+			<div class="flex flex-col gap-2">
+				<Form.Field {config} name="username">
+					<Form.Item>
+						<Form.Label>Username</Form.Label>
+						<Form.Input />
+						<Form.Validation />
+					</Form.Item>
+				</Form.Field>
+
+				<Form.Field {config} name="password">
+					<Form.Item>
+						<Form.Label>Password</Form.Label>
+						<Form.Input />
+						<Form.Validation />
+					</Form.Item>
+				</Form.Field>
+			</div>
+
+			<Button type="submit" class="w-full">Submit</Button>
+		</Form.Root>
 	</div>
 {:else}
 	<main class="flex flex-col items-center justify-center">

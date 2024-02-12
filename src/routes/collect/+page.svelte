@@ -2,30 +2,32 @@
 	import { Button } from '$lib/components/ui/button';
 	import { collectionstore, updateStore } from '$lib/store/collectionStore';
 	import ItemForm from './itemsForm.svelte';
+
 	export let data;
+
+	let addItemImages = false;
+	let additemsCheck = false;
 	let capturedImageURI: string;
 	let capturedItemImageUrl1: string;
 	let capturedItemImageUrl2: string;
-	let additemsCheck = false;
-	let addItemImages = false;
 	let scanQr = false;
 
 	const initialState = {
-		ID: '',
-		TokenNo: 0,
+		Charger: 0,
 		Collect_SewadarID: '',
 		Collect_SewadarName: '',
-		Mobiles: 0,
+		CollectSangatFaceImage: '',
 		EarPhone: 0,
 		EarPod: 0,
-		PowerBank: 0,
-		Charger: 0,
-		SmartWatch: 0,
-		Others: 0,
-		TotalItems: 0,
-		CollectSangatFaceImage: '',
+		ID: '',
 		ItemsImageBack: '',
-		ItemsImageFront: ''
+		ItemsImageFront: '',
+		Mobiles: 0,
+		Others: 0,
+		PowerBank: 0,
+		SmartWatch: 0,
+		TokenNo: 0,
+		TotalItems: 0
 	};
 
 	const handleAddItems = () => {
@@ -40,19 +42,21 @@
 		capturedImageURI = URL.createObjectURL(e.target.files[0]);
 		console.log(capturedImageURI);
 	};
+
 	const handleChangeItemImageSaved1 = (e: any) => {
 		capturedItemImageUrl1 = URL.createObjectURL(e.target.files[0]);
 		console.log(capturedItemImageUrl1);
 		const updatedState = {
-			ItemsImageFront: capturedItemImageUrl1 
+			ItemsImageFront: capturedItemImageUrl1
 		};
 		updateStore(updatedState);
 	};
+
 	const handleChangeItemImageSaved2 = (e: any) => {
 		capturedItemImageUrl2 = URL.createObjectURL(e.target.files[0]);
 		console.log(capturedItemImageUrl2);
 		const updatedState = {
-			ItemsImageBack: capturedItemImageUrl2 
+			ItemsImageBack: capturedItemImageUrl2
 		};
 	};
 
@@ -68,39 +72,54 @@
 </svelte:head>
 
 {#if !additemsCheck && !addItemImages && !scanQr}
-	<main class="mt-12 flex flex-1 flex-col items-center justify-center">
+	<div>
 		{#if !capturedImageURI}
+			<div>
+				<p class="mb-1">Please upload photo</p>
+
+				<input
+					type="file"
+					name="image"
+					accept="image/*"
+					capture="environment"
+					on:change={handleChangeImageSaved}
+				/>
+			</div>
+		{:else}
+			<div class="flex flex-col items-center justify-center gap-5">
+				<!-- svelte-ignore a11y-img-redundant-alt -->
+				<img src={capturedImageURI} alt="Captured Image" class="h-64 w-64" />
+
+				<Button variant="default" class="w-full" on:click={handleAddItems}>Add Items</Button>
+			</div>
+		{/if}
+	</div>
+{:else if additemsCheck && !addItemImages && !scanQr}
+	<div class="flex flex-col gap-5">
+		<ItemForm form={data.form} />
+
+		<Button variant="default" class="w-full" on:click={handleItemImages}>Take Images</Button>
+	</div>
+{:else}
+	<div class="flex flex-col gap-5">
+		<div class="flex flex-col gap-5">
 			<input
 				type="file"
 				name="image"
 				accept="image/*"
 				capture="environment"
-				on:change={handleChangeImageSaved}
+				on:change={handleChangeItemImageSaved1}
 			/>
-		{:else}
-			<!-- svelte-ignore a11y-img-redundant-alt -->
-			<img src={capturedImageURI} alt="Captured Image" class="h-64 w-64" />
-			<Button variant="default" class="mt-4" on:click={handleAddItems}>Add Items</Button>
-		{/if}
-	</main>
-{:else if additemsCheck && !addItemImages && !scanQr}
-	<ItemForm form={data.form} />
-	<Button variant="default" class="mt-4" on:click={handleItemImages}>Take Images</Button>
-{:else}
-	<input
-		type="file"
-		name="image"
-		accept="image/*"
-		capture="environment"
-		on:change={handleChangeItemImageSaved1}
-	/>
-	<input
-		type="file"
-		name="image"
-		accept="image/*"
-		capture="environment"
-		on:change={handleChangeItemImageSaved2}
-	/>
 
-	<Button variant="default" class="mt-4" href="/scan">Proceed To Scan QR</Button>
+			<input
+				type="file"
+				name="image"
+				accept="image/*"
+				capture="environment"
+				on:change={handleChangeItemImageSaved2}
+			/>
+		</div>
+
+		<Button variant="default" class="w-full" href="/scan">Proceed To Scan QR</Button>
+	</div>
 {/if}

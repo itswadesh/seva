@@ -2,21 +2,21 @@ import { writable } from 'svelte/store';
 
 // Define the initial state
 const initialState = {
-    ID: '',
-    TokenNo: 0,
+    Charger: 0,
     Collect_SewadarID: '',
     Collect_SewadarName: '',
-    Mobiles: 0,
+    CollectSangatFaceImage: '',
     EarPhone: 0,
     EarPod: 0,
-    PowerBank: 0,
-    Charger: 0,
-    SmartWatch: 0,
-    Others: 0,
-    TotalItems: 0,
-    CollectSangatFaceImage:'',
+    ID: '',
     ItemsImageBack: '',
     ItemsImageFront: '',
+    Mobiles: 0,
+    Others: 0,
+    PowerBank: 0,
+    SmartWatch: 0,
+    TokenNo: 0,
+    TotalItems: 0,
 };
 
 // Create a writable store with the initial state
@@ -24,12 +24,13 @@ export const collectionstore = writable(initialState);
 
 export function updateStore(updatedProperties: Partial<typeof initialState>) {
     console.log('updateStore', updatedProperties);
+
     collectionstore.update(currentState => {
         return {
             ...currentState,
             ...updatedProperties
         };
     });
+
     console.log('collectionstore', collectionstore);
 }
-

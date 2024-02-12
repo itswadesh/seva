@@ -30,24 +30,40 @@ export const load = async () => {
 
 export const actions: Actions = {
 	default: async (event) => {
-		const data = await event.request.formData()
+		const formData = await event.request.formData()
 
-		const form = await superValidate(data, formSchema);
+		const charger = formData.get('charger')
+		const earphones = formData.get('earphones')
+		const earpods = formData.get('earpods')
+		const mobile = formData.get('mobile')
+		const others = formData.get('others')
+		const smartwatch = formData.get('smartwatch')
 
-		if (!form.valid) {
-			return fail(400, {
-				form,
-			});
-		}
+		// const data = {
+		// 	charger,
+		// 	earphones,
+		// 	earpods,
+		// 	mobile,
+		// 	others,
+		// 	smartwatch,
+		// }
+
+		// const form = await superValidate(data, formSchema);
+
+		// if (!form.valid) {
+		// 	return fail(400, {
+		// 		form,
+		// 	});
+		// }
 
 		const updatedState = {
-			Mobiles: Number(form.data.mobile),
-			EarPhone: Number(form.data.earphones),
-			EarPod: Number(form.data.earpods),
-			Charger: Number(form.data.charger),
-			SmartWatch: Number(form.data.smartwatch),
-			Others: Number(form.data.others),
-			TotalItems: initialState.Mobiles + initialState.EarPhone + initialState.EarPod + initialState.Charger + initialState.SmartWatch + initialState.Others
+			Charger: Number(charger),
+			EarPhone: Number(earphones),
+			EarPod: Number(earpods),
+			Mobiles: Number(mobile),
+			Others: Number(others),
+			SmartWatch: Number(smartwatch),
+			TotalItems: Number(charger) + Number(earphones) + Number(earpods) + Number(mobile) + Number(others) + Number(smartwatch)
 		};
 
 		updateStore(updatedState);

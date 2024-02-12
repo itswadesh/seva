@@ -3,4 +3,6 @@
 	// import logoWhite from '$lib/assets/logo-white.png';
 </script>
 
-<nav class="border-b p-3 text-center text-3xl font-bold uppercase sm:px-10">SEVA</nav>
+<nav class="flex items-center justify-center border-b p-3 sm:px-10">
+	<a href="/" class="block text-center text-3xl font-bold uppercase"> SEVA </a>
+</nav>

@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { Button } from '$lib/components/ui/button';
 	import { collectionstore, updateStore } from '$lib/store/collectionStore';
+	import { onMount } from 'svelte';
 	import ItemForm from './itemsForm.svelte';
 
 	export let data;
@@ -29,6 +31,22 @@
 		TokenNo: 0,
 		TotalItems: 0
 	};
+
+	$: collectionstoreRes = {};
+
+	onMount(() => {
+		if (browser) {
+			collectionstoreRes = collectionstore;
+
+			collectionstore.subscribe((value) => {
+				if (value) {
+					collectionstoreRes = value;
+				}
+			});
+
+			console.log('collectionstoreRes', collectionstoreRes);
+		}
+	});
 
 	const handleAddItems = () => {
 		const updatedState = {

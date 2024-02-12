@@ -23,5 +23,5 @@
 <h1>Scan Token QR</h1>
 <svelte:component	this="{QR}"/>
 
-<input bind:value={data.Collect_SewadarID} placeholder="Enter SewadarID" />
+<input bind:value={data.ID} placeholder="Enter Token No" />
 <!-- <button on:click={nextStep}>Finish</button> -->

@@ -59,6 +59,7 @@
 	const handleChangeImageSaved = (e: any) => {
 		capturedImageURI = URL.createObjectURL(e.target.files[0]);
 		console.log(capturedImageURI);
+		updateStore({ CollectSangatFaceImage: capturedImageURI });
 	};
 
 	const handleChangeItemImageSaved1 = (e: any) => {

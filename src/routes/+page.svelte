@@ -16,7 +16,7 @@
 
 		if (isLogged) {
 			console.log('redirecting to /collect');
-			goto('/collect');
+			goto('/collect3/step1');
 		}
 	});
 </script>
@@ -50,7 +50,7 @@
 		<h1 class="mb-8 text-center text-4xl font-semibold">Welcome to the Seva Portal</h1>
 		<p class="mb-8 text-center text-lg">Providing essential services for all citizens</p>
 		<div class="flex items-center">
-			<a href="/collect">
+			<a href="/collect3/step1">
 				<Button class="mr-4">Collect Now</Button>
 			</a>
 

@@ -1,27 +1,53 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
+
+
+	import Button from '$lib/components/ui/button/button.svelte';
 	import { updateStore } from '$lib/store/collectionStore';
-  import { onMount } from 'svelte'
-	import ItemsForm from '../step2/itemsForm.svelte';
-  
-  let data={}
+let data
+let capturedItemImageUrl1
+let capturedItemImageUrl2
 
-  function nextStep() {
-  //  updateStore(data);
-    goto('/preview');
-  }
+	const handleChangeItemImageSaved1 = (e: any) => {
+		capturedItemImageUrl1 = URL.createObjectURL(e.target.files[0]);
+		console.log(capturedItemImageUrl1);
+		const updatedState = {
+			ItemsImageFront: capturedItemImageUrl1
+		};
+		updateStore(updatedState);
+	};
 
-  let QR
-  onMount(async() => {
-    const QRModule = await import('./QrScan.svelte')
-	  QR = QRModule.default
-  })
+	const handleChangeItemImageSaved2 = (e: any) => {
+		capturedItemImageUrl2 = URL.createObjectURL(e.target.files[0]);
+		console.log(capturedItemImageUrl2);
+		const updatedState = {
+			ItemsImageBack: capturedItemImageUrl2
+		};
+    updateStore(updatedState)
 
+	};
 
-</script>
+  </script>
+<form>
+  <div class="flex flex-col gap-5">
+		<div class="flex flex-col gap-5">
+			<input
+				type="file"
+				name="image"
+				accept="image/*"
+				capture="environment"
+				on:change={handleChangeItemImageSaved1}
+			/>
 
-<h1>Scan Token QR</h1>
-<svelte:component	this="{QR}"/>
+			<input
+				type="file"
+				name="image"
+				accept="image/*"
+				capture="environment"
+				on:change={handleChangeItemImageSaved2}
+			/>
+		</div>
 
-<input bind:value={data.ID} placeholder="Enter Token No" />
-<!-- <button on:click={nextStep}>Finish</button> -->
+		<Button variant="default" class="w-full" href="/collect3/step4">Proceed To Scan Token</Button>
+	</div>
+</form>

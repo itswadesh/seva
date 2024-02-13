@@ -139,6 +139,6 @@
 			/>
 		</div>
 
-		<Button variant="default" class="w-full" href="/scan">Proceed To Scan QR</Button>
+		<Button variant="default" class="w-full" href="/scan">Proceed To Scan Token</Button>
 	</div>
 {/if}

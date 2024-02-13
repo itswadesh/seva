@@ -19,7 +19,7 @@ let data={}
 
 </script>
 
-<h1>Take Person Photo</h1>
+<h1 class="flex justify-center border-b font-bold text-xl">Take Visitor Photo</h1>
 <form on:submit|preventDefault={nextStep}>
 <div>
 		
@@ -31,5 +31,5 @@ let data={}
 					on:change={handleChangeImageSaved}
 				/>
 	</div>
-	<Button type="submit" class="w-full" variant="secondary"  >Submit</Button>
+	<Button type="submit" class="w-full"  >Submit</Button>
 </form>

@@ -33,5 +33,5 @@
 				<Input bind:value={data.Others}  placeholder="Others" type="number" min="0" />
 	</div>
 
-	<Button type="submit" class="w-full" variant="secondary">Submit</Button>
+	<Button type="submit" class="w-full" >Submit</Button>
 </form>

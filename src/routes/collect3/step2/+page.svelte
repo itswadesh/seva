@@ -12,7 +12,7 @@ let data={}
   }
 </script>
 
-<h1>Enter Item Details</h1>
+<h1 class="flex justify-center border-b font-bold text-xl">Enter Item Details</h1>
 <!-- <input bind:value={data.Charger} placeholder="Charger" />
 <input bind:value={data.EarPhone} placeholder="Earphone" /> -->
 <!-- <form on:submit|preventDefault={nextStep}> -->

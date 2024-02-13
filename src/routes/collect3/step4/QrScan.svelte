@@ -28,14 +28,14 @@
   }
 
   function scanLoop() {
-    if (!scanning) return;
+    if (!scanning && !videoElement) return;
     canvasElement.width = videoElement.videoWidth;
     canvasElement.height = videoElement.videoHeight;
     canvasElement.getContext('2d').drawImage(videoElement, 0, 0);
     const imageData = canvasElement.getContext('2d').getImageData(0, 0, canvasElement.width, canvasElement.height);
     const code = jsQR(imageData.data, imageData.width, imageData.height);
-    if (code) {
-      const data = { Collect_SewadarID: code.data}
+    if (code?.data) {
+      const data = { TokenNo: code.data}
       updateStore(data);
       stopScan()
       goto('/preview');
@@ -62,5 +62,5 @@
 <div>
   <video bind:this={videoElement}></video>
   <canvas style="display: none;" bind:this={canvasElement}></canvas>
-  <button on:click={stopScan}>Stop Scanning</button>
+  <!-- <button on:click={stopScan}>Stop Scanning</button> -->
 </div>

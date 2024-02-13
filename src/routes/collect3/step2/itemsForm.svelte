@@ -11,7 +11,14 @@
 	// export let form: SuperValidated<FormSchema>;
 	export let data = {}
 	const save = () => {
-		 updateStore(data)
+		let total_no_of_items = 0;
+		for (const key in data) {
+			if (data[key] == undefined || data[key] == null || data[key] == "") {
+				total_no_of_items += 0;
+			} else total_no_of_items += Number(data[key]);
+		}
+		data.TotalItems = total_no_of_items;
+		updateStore(data)
     goto('/collect3/step3');
 	}
 </script>

@@ -10,7 +10,6 @@ let capturedItemImageUrl2
 
 	const handleChangeItemImageSaved1 = (e: any) => {
 		capturedItemImageUrl1 = URL.createObjectURL(e.target.files[0]);
-		console.log(capturedItemImageUrl1);
 		const updatedState = {
 			ItemsImageFront: capturedItemImageUrl1
 		};
@@ -19,7 +18,6 @@ let capturedItemImageUrl2
 
 	const handleChangeItemImageSaved2 = (e: any) => {
 		capturedItemImageUrl2 = URL.createObjectURL(e.target.files[0]);
-		console.log(capturedItemImageUrl2);
 		const updatedState = {
 			ItemsImageBack: capturedItemImageUrl2
 		};

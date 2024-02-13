@@ -12,9 +12,14 @@ let data={}
     goto('/collect3/step2');
   }
   
+
+
 	const handleChangeImageSaved = (e: any) => {
 		capturedImageURI = URL.createObjectURL(e.target.files[0]);
-		console.log(capturedImageURI);
+		const updatedState = {
+			CollectSangatFaceImage: capturedImageURI
+		};
+		updateStore(updatedState);
 	};
 
 </script>

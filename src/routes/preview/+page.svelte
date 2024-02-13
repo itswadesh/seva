@@ -6,6 +6,7 @@
   
   let formData ={}
   function submitData() {
+
   }
   
 	onMount(() => {
@@ -29,4 +30,7 @@
   {/each}
 </ul>
 
-<Button class="w-full mt-4" on:click={submitData}>Submit</Button>
+<form method="POST" class="flex flex-col gap-5">
+
+	<Button class="w-full mt-4" type="submit">Submit</Button>
+</form>

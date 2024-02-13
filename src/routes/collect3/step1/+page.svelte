@@ -23,13 +23,13 @@ let data={}
 <form on:submit|preventDefault={nextStep}>
 <div>
 		
-				<Input
-					type="file"
-					name="image"
-					accept="image/*"
-					capture="environment"
-					on:change={handleChangeImageSaved}
-				/>
+	<input
+	type="file"
+	name="image"
+	accept="image/*"
+	capture="environment"
+	on:change={handleChangeImageSaved}
+/>
 	</div>
 	<Button type="submit" class="w-full"  >Submit</Button>
 </form>

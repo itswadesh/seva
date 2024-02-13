@@ -1,18 +1,35 @@
-<script lang="ts">
-    export let data
+  <script lang="ts">
+    export let data;
   </script>
-  
-  <div>
-    <ul>
-      {#each data.result as item}
-        
-          <ul class="mb-2 ">
-            {#each Object.entries(item) as [key, value]}
-              <li > <span class="mx-4 font-extrabold mb-1">{key}</span> -  <span>{value}</span></li>
+
+  <svelte:head>
+    <style>
+      /* Exclude layout styles */
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </svelte:head>
+
+  <div class="hidden md:block">
+    <table class="table-auto">
+      <thead>
+        <tr>
+          {#each Object.keys(data.result[0]) as key}
+            <th class="px-4 py-2">{key}</th>
+          {/each}
+        </tr>
+      </thead>
+      <tbody>
+        {#each data.result as item}
+          <tr>
+            {#each Object.values(item) as value}
+              <td class="border px-4 py-2">{value}</td>
             {/each}
-          </ul>
-        
-      {/each}
-    </ul>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
   </div>
-  
+

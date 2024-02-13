@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SangatData } from '$lib/db/schema';
 import { db } from '$lib/db/server';
-import { collectionstore } from '$lib/store/collectionStore';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
     async default() {
-        let items: any;
-        collectionstore.subscribe((value) => {
-            items = value;
-        });
 
         try {
             const newData = await db.insert(SangatData).values({

@@ -1,35 +1,37 @@
-  <script lang="ts">
-    export let data;
-  </script>
+<script lang="ts">
+	export let data;
+</script>
 
-  <svelte:head>
-    <style>
-      /* Exclude layout styles */
-      body {
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </svelte:head>
+<div class="relative overflow-x-auto border shadow-md sm:rounded-lg">
+	<table class="w-full text-left text-xs rtl:text-right">
+		<thead class="uppercase">
+			<tr>
+				{#each Object.keys(data.result[0]) as key, dx}
+					<th
+						scope="col"
+						class="px-6 py-3
+						{dx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}"
+					>
+						{key}
+					</th>
+				{/each}
+			</tr>
+		</thead>
 
-  <div class="hidden md:block">
-    <table class="table-auto">
-      <thead>
-        <tr>
-          {#each Object.keys(data.result[0]) as key}
-            <th class="px-4 py-2">{key}</th>
-          {/each}
-        </tr>
-      </thead>
-      <tbody>
-        {#each data.result as item}
-          <tr>
-            {#each Object.values(item) as value}
-              <td class="border px-4 py-2">{value}</td>
-            {/each}
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
-
+		<tbody>
+			{#each data.result as item, ix}
+				<tr class="border-b border-gray-200">
+					{#each Object.values(item) as value, vx}
+						<th
+							scope="row"
+							class="whitespace-nowrap px-6 py-4
+							{vx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}"
+						>
+							{value || '_'}
+						</th>
+					{/each}
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+</div>

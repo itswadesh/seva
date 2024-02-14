@@ -1,4 +1,4 @@
-<footer class="flex flex-col items-center justify-center gap-5 p-3 text-center sm:px-10">
+<footer class="flex flex-col items-center justify-center gap-5 p-3 text-center">
 	<div class="w-20">
 		<hr />
 	</div>

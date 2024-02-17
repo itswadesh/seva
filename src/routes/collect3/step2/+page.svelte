@@ -1,10 +1,11 @@
 <script>
+	import { collectionstore, updateStore } from '$lib/store/collectionStore';
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { collectionstore, updateStore } from '$lib/store/collectionStore';
 	import ItemsForm from './itemsForm.svelte';
 
 	let data = {};
+
 	function nextStep() {
 		// Update dataStore with the collected data
 		updateStore(data);

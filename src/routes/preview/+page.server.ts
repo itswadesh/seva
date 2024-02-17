@@ -4,7 +4,10 @@ import { db } from '$lib/db/server';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-    async default() {
+    async default(event) {
+        const items = Object.fromEntries(await event.request.formData())
+
+        // console.log('items', items);
 
         try {
             const newData = await db.insert(SangatData).values({

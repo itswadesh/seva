@@ -32,12 +32,18 @@ dependencies:
   postgres:
     specifier: ^3.4.3
     version: 3.4.3
+  radix-icons-svelte:
+    specifier: ^1.2.1
+    version: 1.2.1
   svelte-material-ui:
     specifier: 7.0.0-beta.16
     version: 7.0.0-beta.16(svelte@4.2.10)(typescript@5.3.3)
   svelte-routing:
     specifier: ^2.11.0
     version: 2.11.0
+  svelte-sonner:
+    specifier: ^0.3.17
+    version: 0.3.17(svelte@4.2.10)
   sveltekit-superforms:
     specifier: ^1.13.4
     version: 1.13.4(@sveltejs/kit@2.5.0)(svelte@4.2.10)(zod@3.22.4)
@@ -4158,6 +4164,10 @@ packages:
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  /radix-icons-svelte@1.2.1:
+    resolution: {integrity: sha512-svmiMd0ocpdTm9cvAz0klcZpnh639lVctj6psQiawd4pYalVzOG4cX+JizAgRckyTAsRVdzObP7D2EBrSfdghA==}
+    dev: false
+
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
@@ -4585,6 +4595,14 @@ packages:
 
   /svelte-routing@2.11.0:
     resolution: {integrity: sha512-oNJz2A8g5ZqBDuxUWMJLpU9XXGZ40Fz5uRvrGlpENs5C2QWK5m7YKiGINssN9yI/22f9wi4F5oTTkDaTyryolw==}
+    dev: false
+
+  /svelte-sonner@0.3.17(svelte@4.2.10):
+    resolution: {integrity: sha512-jociRGESILpHi6fIIcqGYE1bWAfK4ZeTLHuXxNgGMhG1FwhNRIK1bsCbXEl8/AjRV8aiNXtkS/+IlQtvb2jR9g==}
+    peerDependencies:
+      svelte: '>=3 <5'
+    dependencies:
+      svelte: 4.2.10
     dev: false
 
   /svelte2tsx@0.6.27(svelte@4.2.10)(typescript@5.3.3):

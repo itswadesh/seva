@@ -4,7 +4,7 @@
 
 <div class="relative overflow-x-auto border shadow-md sm:rounded-lg">
 	<table class="w-full text-left text-xs rtl:text-right">
-		<thead class="uppercase">
+		<thead class="whitespace-nowrap uppercase">
 			<tr>
 				{#each Object.keys(data.result[0]) as key, dx}
 					<th
@@ -12,7 +12,7 @@
 						class="px-6 py-3
 						{dx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}"
 					>
-						{key}
+						{key.replace('_', ' ')}
 					</th>
 				{/each}
 			</tr>
@@ -24,7 +24,7 @@
 					{#each Object.values(item) as value, vx}
 						<th
 							scope="row"
-							class="whitespace-nowrap px-6 py-4
+							class=" whitespace-nowrap px-6 py-4 font-normal
 							{vx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}"
 						>
 							{value || '_'}

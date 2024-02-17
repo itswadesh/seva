@@ -7,7 +7,10 @@
 	import Nav from '$lib/components/seva/Nav.svelte';
 </script>
 
-<main class="mx-auto flex min-h-screen w-full max-w-md flex-col justify-between border-l border-r">
+<main
+	class="mx-auto flex min-h-screen w-full flex-col justify-between border-l border-r
+	{$page.url?.pathname === '/admin' ? 'max-w-full' : ' max-w-md'}"
+>
 	<div class="h-full">
 		<!-- Nav -->
 

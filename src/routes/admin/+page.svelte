@@ -12,7 +12,7 @@
 						class="px-6 py-3
 						{dx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}"
 					>
-						{key.replace('_', ' ')}
+						{key.replace(/_/g, ' ')}
 					</th>
 				{/each}
 			</tr>

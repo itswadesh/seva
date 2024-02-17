@@ -2,7 +2,7 @@
 	export let data;
 </script>
 
-<div class="relative overflow-x-auto border shadow-md sm:rounded-lg">
+<div class="relative h-[75vh] overflow-x-auto border shadow-md sm:rounded-lg">
 	<table class="w-full text-left text-xs rtl:text-right">
 		<thead class="whitespace-nowrap uppercase">
 			<tr>

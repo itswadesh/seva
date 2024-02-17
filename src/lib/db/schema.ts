@@ -23,7 +23,7 @@ export const ClientProfile = pgTable('ClientProfile', {
 export const SangatData = pgTable('SangatData', {
     ID: serial('ID').primaryKey(),
     DuplicateToken: text('DuplicateToken'),
-    TokenNo: real('TokenNo'),
+    TokenNo: text('TokenNo'),
     Module: text('Module'),
     Collect_SewadarID: text('Collect_SewadarID'),
     Collect_SewadarUK: integer('Collect_SewadarUK'),

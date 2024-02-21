@@ -13,12 +13,12 @@
 		goto(`/collect3/step${step}`);
 	};
 
-	$:isComplete=(step:number)=>{
-		return currentStep > step
-	}
-	$:isDisabled=(step:number)=>{
-		return currentStep < step
-	}
+	$: isComplete = (step: number) => {
+		return currentStep > step;
+	};
+	$: isDisabled = (step: number) => {
+		return currentStep < step;
+	};
 </script>
 
 <main
@@ -34,7 +34,7 @@
 			<div class="grid grid-cols-5 gap-2 overflow-x-auto p-3">
 				<Button
 					variant={currentStepUrl.includes('/step1') ? 'default' : 'secondary'}
-					class="w-full {isComplete(1) ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(1) ? 'bg-green-200' : ''}"
 					on:click={() => gotoo(1)}
 				>
 					Step1
@@ -42,7 +42,7 @@
 
 				<Button
 					variant={currentStepUrl.includes('/step2') ? 'default' : 'secondary'}
-					class="w-full {isComplete(2) ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(2) ? 'bg-green-200' : ''}"
 					on:click={() => gotoo(2)}
 					disabled={isDisabled(2)}
 				>
@@ -51,7 +51,7 @@
 
 				<Button
 					variant={currentStepUrl.includes('/step3') ? 'default' : 'secondary'}
-					class="w-full {isComplete(3) ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(3) ? 'bg-green-200' : ''}"
 					on:click={() => gotoo(3)}
 					disabled={isDisabled(3)}
 				>
@@ -60,7 +60,7 @@
 
 				<Button
 					variant={currentStepUrl.includes('/step4') ? 'default' : 'secondary'}
-					class="w-full {isComplete(4) ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(4) ? 'bg-green-200' : ''}"
 					on:click={() => gotoo(4)}
 					disabled={isDisabled(4)}
 				>
@@ -69,7 +69,7 @@
 
 				<Button
 					variant={currentStepUrl.includes('/preview') ? 'default' : 'secondary'}
-					class="w-full {isComplete(5) ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(5) ? 'bg-green-200' : ''}"
 					on:click={() => goto('/preview')}
 					disabled={isDisabled(5)}>Preview</Button
 				>

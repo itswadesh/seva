@@ -1,5 +1,5 @@
 # features
-
+display store data if data available, can move to any step if data available, display face then item image then code at preview with show all details button, preview should not be disabled
 ## Image handling
 
 compress image to 100kb befoe saving

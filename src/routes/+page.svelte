@@ -12,6 +12,8 @@
 
 	$: isLogged = data.islogged;
 
+	let loading = false;
+
 	onMount(() => {
 		console.log('isLogged', isLogged);
 
@@ -36,7 +38,7 @@
 					<Form.Item>
 						<Form.Label>Username</Form.Label>
 
-						<Form.Input />
+						<Form.Input placeholder="Enter user name" />
 
 						<Form.Validation />
 					</Form.Item>
@@ -47,7 +49,7 @@
 						<Form.Label>Password</Form.Label>
 
 						<div class="relative">
-							<Form.Input type={showPassword ? 'text' : 'password'} />
+							<Form.Input type={showPassword ? 'text' : 'password'} placeholder="Enter password" />
 
 							<button
 								type="button"
@@ -67,7 +69,7 @@
 				</Form.Field>
 			</div>
 
-			<Button type="submit" class="w-full">Submit</Button>
+			<Button type="submit" {loading} class="w-full">Submit</Button>
 		</Form.Root>
 	</div>
 {:else}

@@ -60,3 +60,33 @@ export const flyAndScale = (
         easing: cubicOut
     };
 };
+
+export const compressImage = (file: File, quality: number): Promise<string> => {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const img = new Image();
+            img.src = e.target.result as string;
+
+            img.onload = function () {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Set canvas dimensions to the image dimensions
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                // Draw the image on the canvas
+                ctx.drawImage(img, 0, 0);
+
+                // Convert the canvas content to base64-encoded data URL
+                const compressedDataURL = canvas.toDataURL('image/jpeg', quality);
+
+                resolve(compressedDataURL);
+            };
+        };
+
+        reader.readAsDataURL(file);
+    });
+};

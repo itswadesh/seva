@@ -4,7 +4,16 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import ItemsForm from './itemsForm.svelte';
 
-	let data = {};
+	let data = {
+		Bag: 0,
+		Charger: 0,
+		EarPhone: 0,
+		EarPod: 0,
+		Laptop: 0,
+		Mobiles: 0,
+		Others: 0,
+		SmartWatch: 0
+	};
 
 	function nextStep() {
 		// Update dataStore with the collected data

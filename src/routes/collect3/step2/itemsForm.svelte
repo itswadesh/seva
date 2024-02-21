@@ -1,27 +1,55 @@
 <script lang="ts">
+	import { Button } from '$lib/components/misiki/button';
 	import { formSchema, type FormSchema } from './schema';
 	import { goto } from '$app/navigation';
-	import { Input } from '$lib/components/ui/input';
+	import { Input } from '$lib/components/misiki/input';
+	import { Plus, Minus } from 'radix-icons-svelte';
 	import { updateStore } from '$lib/store/collectionStore';
 	import * as Form from '$lib/components/ui/form';
-	import Button from '$lib/components/ui/button/button.svelte';
 	import type { SuperValidated } from 'sveltekit-superforms';
 
 	// export let form: SuperValidated<FormSchema>;
 	export let data = {
-		Mobiles: 0,
+		Bag: 0,
+		Charger: 0,
 		EarPhone: 0,
 		EarPod: 0,
-		Charger: 0,
-		SmartWatch: 0,
+		Laptop: 0,
+		Mobiles: 0,
 		Others: 0,
-		TotalItems: 0
+		SmartWatch: 0
 	};
+
+	let loading = false;
 	let total = 0;
-	const getTotal = ()=>{
-		total=+(data.Mobiles||'0')+ +(data.EarPhone||'0')+ +(data.EarPod||'0')+ +(data.Charger||'0')+ +(data.SmartWatch||'0')+ +(data.Others||'0');
+
+	const getTotal = () => {
+		total =
+			+(data.Bag || 0) +
+			+(data.Charger || 0) +
+			+(data.EarPhone || 0) +
+			+(data.EarPod || 0) +
+			+(data.Laptop || 0) +
+			+(data.Mobiles || 0) +
+			+(data.Others || 0) +
+			+(data.SmartWatch || 0);
+	};
+
+	function handleIncrement(item) {
+		++data[item];
+		getTotal();
 	}
+
+	function handleDecrement(item) {
+		if (data[item] > 0) {
+			--data[item];
+			getTotal();
+		}
+	}
+
 	const save = () => {
+		loading = true;
+
 		let total_no_of_items = 0;
 
 		for (const key in data) {
@@ -33,27 +61,54 @@
 		data.TotalItems = total_no_of_items;
 
 		updateStore(data);
+
+		loading = false;
+
 		goto('/collect3/step3');
 	};
 </script>
 
-<form method="POST" on:submit|preventDefault={save} class="flex flex-col gap-5">
-	<div class="flex flex-col gap-2">
-		<Input bind:value={data.Mobiles} placeholder="Mobile" type="number" min="0" on:change={getTotal} />
+<form method="POST" on:submit|preventDefault={save} class="flex flex-col gap-8">
+	<div class="flex flex-col gap-4">
+		{#each Object.entries(data) as [key, value] (key)}
+			<div class="flex items-end gap-2">
+				<div class="flex-1">
+					<Input
+						bind:value={data[key]}
+						label={key.charAt(0).toUpperCase() + key.slice(1)}
+						placeholder={`Enter the number of ${key.toLowerCase()}`}
+						type="number"
+						min="0"
+						on:input={getTotal}
+					/>
+				</div>
 
-		<Input bind:value={data.EarPhone} placeholder="Earphones" type="number" min="0" on:change={getTotal} />
+				<div class="flex items-center gap-2">
+					<Button
+						variant="outline"
+						class="rounded-full px-2.5"
+						on:click={() => handleIncrement(key)}
+					>
+						<Plus class="h-5 w-5" />
+					</Button>
 
-		<Input bind:value={data.EarPod} placeholder="Earpods" type="number" min="0"  on:change={getTotal}/>
+					<Button
+						variant="outline"
+						class="rounded-full px-2.5"
+						on:click={() => handleDecrement(key)}
+					>
+						<Minus class="h-5 w-5" />
+					</Button>
+				</div>
+			</div>
+		{/each}
 
-		<Input bind:value={data.Charger} placeholder="Charger" type="number" min="0"  on:change={getTotal}/>
+		<hr />
 
-		<Input bind:value={data.SmartWatch} placeholder="Smartwatch" type="number" min="0"  on:change={getTotal}/>
-
-		<Input bind:value={data.Others} placeholder="Others" type="number" min="0" on:change={getTotal} />
-		
-		<Input value={total} placeholder="Total" disabled type="number" min="0" />
-
+		<div class="font-bold">
+			Total Items :- {total}
+		</div>
 	</div>
 
-	<Button type="submit" class="w-full">Next Step</Button>
+	<Button type="submit" {loading} disabled={!total} class="w-full">Next Step</Button>
 </form>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import { EyeClosed, EyeOpen } from 'radix-icons-svelte';
 	import { formSchema, type LoginFormSchema } from './loginSchema';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
@@ -19,6 +20,12 @@
 			goto('/collect3/step1');
 		}
 	});
+
+	let showPassword = false;
+
+	function togglePasswordVisibility() {
+		showPassword = !showPassword;
+	}
 </script>
 
 {#if !isLogged}
@@ -28,7 +35,9 @@
 				<Form.Field {config} name="username">
 					<Form.Item>
 						<Form.Label>Username</Form.Label>
+
 						<Form.Input />
+
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>
@@ -36,7 +45,23 @@
 				<Form.Field {config} name="password">
 					<Form.Item>
 						<Form.Label>Password</Form.Label>
-						<Form.Input type="password" />
+
+						<div class="relative">
+							<Form.Input type={showPassword ? 'text' : 'password'} />
+
+							<button
+								type="button"
+								class="absolute right-2 top-1/2 -translate-y-1/2 transform"
+								on:click={togglePasswordVisibility}
+							>
+								{#if showPassword}
+									<EyeOpen />
+								{:else}
+									<EyeClosed />
+								{/if}
+							</button>
+						</div>
+
 						<Form.Validation />
 					</Form.Item>
 				</Form.Field>

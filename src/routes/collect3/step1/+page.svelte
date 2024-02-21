@@ -3,18 +3,35 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
+	import { compressImage } from '$lib/utils';
 
 	let capturedImageURI: string;
-
 	let data = {};
+	let loading = false;
 
 	function nextStep() {
+		loading = true;
 		updateStore(data);
+		loading = false;
 		goto('/collect3/step2');
 	}
 
-	const handleChangeImageSaved = (e: any) => {
-		capturedImageURI = URL.createObjectURL(e.target.files[0]);
+	const handleChangeImageSaved = async (e: any) => {
+		const file = e.target.files[0];
+
+		// Check if the file size is already below 100kb
+		if (file.size <= 100 * 1024) {
+			capturedImageURI = URL.createObjectURL(file);
+			updateStore({ CollectSangatFaceImage: capturedImageURI });
+			return;
+		}
+
+		const compressedDataURL = await compressImage(file, 0.5); // Adjust quality as needed
+
+		// Set the source of the compressed image
+		capturedImageURI = compressedDataURL;
+
+		// console.log('compressed capturedImageURI', capturedImageURI);
 
 		const updatedState = {
 			CollectSangatFaceImage: capturedImageURI
@@ -29,8 +46,8 @@
 		Take Visitor Photo
 	</h1>
 
-	<form on:submit|preventDefault={nextStep} class="flex flex-col gap-5">
-		<div class="flex flex-col gap-2">
+	<form on:submit|preventDefault={nextStep} class="flex flex-col gap-8">
+		<div class="flex flex-col gap-4">
 			<div class="flex w-full items-center justify-center">
 				<label
 					for="image-2"
@@ -60,6 +77,7 @@
 							</p>
 						</div>
 					{/if}
+
 					<input
 						id="image-2"
 						type="file"
@@ -73,6 +91,6 @@
 			</div>
 		</div>
 
-		<Button type="submit" class="w-full">Next Step</Button>
+		<Button type="submit" class="w-full" {loading} disabled={!capturedImageURI}>Next Step</Button>
 	</form>
 </div>

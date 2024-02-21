@@ -1,14 +1,37 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { updateStore } from '$lib/store/collectionStore';
-	import Button from '$lib/components/ui/button/button.svelte';
+	import { Button } from '$lib/components/misiki/button';
+	import { compressImage } from '$lib/utils';
 
 	let capturedItemImageUrl1;
 	let capturedItemImageUrl2;
-	let data;
+	let loading = false;
+	let data = {};
 
-	const handleChangeItemImageSaved1 = (e: any) => {
-		capturedItemImageUrl1 = URL.createObjectURL(e.target.files[0]);
+	function nextStep() {
+		loading = true;
+		updateStore(data);
+		loading = false;
+		goto('/collect3/step4');
+	}
+
+	const handleChangeItemImageSaved1 = async (e: any) => {
+		const file = e.target.files[0];
+
+		// Check if the file size is already below 100kb
+		if (file.size <= 100 * 1024) {
+			capturedItemImageUrl1 = URL.createObjectURL(file);
+			updateStore({ ItemsImageFront: capturedItemImageUrl1 });
+			return;
+		}
+
+		const compressedDataURL = await compressImage(file, 0.5); // Adjust quality as needed
+
+		// Set the source of the compressed image
+		capturedItemImageUrl1 = compressedDataURL;
+
+		// console.log('compressed capturedItemImageUrl1', capturedItemImageUrl1);
 
 		const updatedState = {
 			ItemsImageFront: capturedItemImageUrl1
@@ -17,8 +40,22 @@
 		updateStore(updatedState);
 	};
 
-	const handleChangeItemImageSaved2 = (e: any) => {
-		capturedItemImageUrl2 = URL.createObjectURL(e.target.files[0]);
+	const handleChangeItemImageSaved2 = async (e: any) => {
+		const file = e.target.files[0];
+
+		// Check if the file size is already below 100kb
+		if (file.size <= 100 * 1024) {
+			capturedItemImageUrl2 = URL.createObjectURL(file);
+			updateStore({ ItemsImageBack: capturedItemImageUrl2 });
+			return;
+		}
+
+		const compressedDataURL = await compressImage(file, 0.5); // Adjust quality as needed
+
+		// Set the source of the compressed image
+		capturedItemImageUrl2 = compressedDataURL;
+
+		// console.log('compressed capturedItemImageUrl2', capturedItemImageUrl2);
 
 		const updatedState = {
 			ItemsImageBack: capturedItemImageUrl2
@@ -33,8 +70,8 @@
 		Upload Products Photo
 	</h1>
 
-	<div class="flex flex-col gap-5">
-		<div class="flex flex-col gap-2">
+	<form on:submit|preventDefault={nextStep} class="flex flex-col gap-8">
+		<div class="flex flex-col gap-4">
 			<div class="flex w-full items-center justify-center">
 				<label
 					for="image-1"
@@ -127,6 +164,8 @@
 			</div>
 		</div>
 
-		<Button variant="default" class="w-full" href="/collect3/step4">Proceed To Scan Token</Button>
-	</div>
+		<Button type="submit" class="w-full" {loading} disabled={!capturedItemImageUrl1}>
+			Proceed To Scan Token
+		</Button>
+	</form>
 </form>

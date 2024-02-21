@@ -1,7 +1,7 @@
 import { ClientProfile } from '$lib/db/schema';
 import { db } from '$lib/db/server';
 import { eq, and } from 'drizzle-orm';
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, type Actions, redirect } from '@sveltejs/kit';
 import { formSchema } from './loginSchema';
 import { superValidate } from 'sveltekit-superforms/server';
 
@@ -41,6 +41,7 @@ export const actions: Actions = {
 
 		if (checkLoggedin.length > 0) {
 			isLogged = true
+			redirect(307, '/collect3/step1')
 		}
 	},
 };

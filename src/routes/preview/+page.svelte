@@ -6,10 +6,10 @@
 	import { onMount } from 'svelte';
 	import { Reload } from 'radix-icons-svelte';
 	import { toast } from 'svelte-sonner';
-	import Button from '$lib/components/ui/button/button.svelte';
+	import Button from '$lib/components/misiki/button/button.svelte';
 
 	let formData = {};
-	let isLoading = false;
+	let loading = false;
 
 	function submitData() {}
 
@@ -20,6 +20,8 @@
 					formData = value;
 				}
 			});
+
+			console.log('formData', formData);
 		}
 	});
 </script>
@@ -31,14 +33,14 @@
 		method="POST"
 		class="flex flex-col gap-5"
 		use:enhance={() => {
-			isLoading = true;
+			loading = true;
 
 			return async (result) => {
-				// console.log('result', result);
+				console.log('result', result);
 
-				isLoading = false;
+				loading = false;
 
-				if (result?.status === 200) {
+				if (result?.result?.status === 204) {
 					goto('/collect3/step1');
 				} else {
 					toast('Something went wrong', {
@@ -59,15 +61,19 @@
 					{index % 2 === 0 ? 'bg-white' : 'bg-secondary'}"
 				>
 					<div class="col-span-1 flex items-center justify-between gap-2 p-2">
-						<span>
-							{key}
+						<span class="capitalize">
+							{key.replace(/_/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2')}
 						</span>
 
 						<span> : </span>
 					</div>
 
 					<div class="col-span-1 p-2 font-semibold">
-						{value}
+						{#if key === 'CollectSangatFaceImage' || key === 'ItemsImageBack' || key === 'ItemsImageFront'}
+							<img src={value} alt={key} class="h-20 w-auto object-contain object-left" />
+						{:else}
+							{value || '-'}
+						{/if}
 					</div>
 
 					<input type="hidden" name={key} {value} />
@@ -75,13 +81,6 @@
 			{/each}
 		</ul>
 
-		<Button class="w-full" type="submit" disabled={isLoading}>
-			{#if isLoading}
-				<Reload class="mr-2 h-4 w-4 animate-spin" />
-				Please wait
-			{:else}
-				Submit
-			{/if}
-		</Button>
+		<Button type="submit" {loading}>Submit</Button>
 	</form>
 </div>

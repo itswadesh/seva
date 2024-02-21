@@ -1,18 +1,29 @@
-# create-svelte
+# features
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+## Image handling
 
-## Creating a project
+compress image to 100kb befoe saving
 
-If you're seeing this, you've probably already done this step. Congrats!
+save image inside folder `ProgramId/SewadarId/A_random_number.jpg`
+save image inside folder `ProgramId/SewadarId/F_random_number.jpg`
+save image inside folder `ProgramId/SewadarId/B_random_number.jpg`
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Enable Next Button
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+Step-1: Without profile pic Next button will not be highlighted
+Step-2: Disable Next button when item count = 0
+Step-3: Without uploading front pic Next button will not be highlighted
+
+## Features
+
+Add Laptop, Bag in items form
+User label for textbox with cart like + - buttons in Step-2
+
+## login
+
+Mobile number will be unique
+userid: phone
+password: dob (ddmmyyyy)
 
 ## Developing
 
@@ -21,8 +32,6 @@ Once you've created a project and installed dependencies with `npm install` (or 
 ```bash
 npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
 ## Building
@@ -34,5 +43,3 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

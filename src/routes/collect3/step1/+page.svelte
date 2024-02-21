@@ -73,6 +73,6 @@
 			</div>
 		</div>
 
-		<Button type="submit" class="w-full">Submit</Button>
+		<Button type="submit" class="w-full">Next Step</Button>
 	</form>
 </div>

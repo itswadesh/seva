@@ -7,11 +7,18 @@
 	import Nav from '$lib/components/seva/Nav.svelte';
 
 	$: currentStepUrl = $page?.url?.pathname;
-	$: currentStep = currentStepUrl.split('/')[2].match(/\d+/);
-	
+	$: currentStep = currentStepUrl.split('/')[2]?.match(/\d+/) || 0;
+
 	const gotoo = (step: number) => {
 		goto(`/collect3/step${step}`);
 	};
+
+	$:isComplete=(step:number)=>{
+		return currentStep > step
+	}
+	$:isDisabled=(step:number)=>{
+		return currentStep < step
+	}
 </script>
 
 <main
@@ -27,7 +34,7 @@
 			<div class="grid grid-cols-5 gap-2 overflow-x-auto p-3">
 				<Button
 					variant={currentStepUrl.includes('/step1') ? 'default' : 'secondary'}
-					class="w-full {currentStep > 1 ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(1) ? 'bg-green-500 text-white' : ''}"
 					on:click={() => gotoo(1)}
 				>
 					Step1
@@ -35,36 +42,36 @@
 
 				<Button
 					variant={currentStepUrl.includes('/step2') ? 'default' : 'secondary'}
-					class="w-full {currentStep > 2 ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(2) ? 'bg-green-500 text-white' : ''}"
 					on:click={() => gotoo(2)}
-					disabled={currentStep < 2}
+					disabled={isDisabled(2)}
 				>
 					Step2
 				</Button>
 
 				<Button
 					variant={currentStepUrl.includes('/step3') ? 'default' : 'secondary'}
-					class="w-full {currentStep > 3 ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(3) ? 'bg-green-500 text-white' : ''}"
 					on:click={() => gotoo(3)}
-					disabled={currentStep < 3}
+					disabled={isDisabled(3)}
 				>
 					Step3
 				</Button>
 
 				<Button
 					variant={currentStepUrl.includes('/step4') ? 'default' : 'secondary'}
-					class="w-full {currentStep > 4 ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(4) ? 'bg-green-500 text-white' : ''}"
 					on:click={() => gotoo(4)}
-					disabled={currentStep < 4}
+					disabled={isDisabled(4)}
 				>
 					Step4
 				</Button>
 
 				<Button
 					variant={currentStepUrl.includes('/preview') ? 'default' : 'secondary'}
-					class="w-full {currentStep > 5 ? 'bg-green-500 text-white' : ''}"
+					class="w-full {isComplete(5) ? 'bg-green-500 text-white' : ''}"
 					on:click={() => goto('/preview')}
-					disabled={currentStep < 5}>Preview</Button
+					disabled={isDisabled(5)}>Preview</Button
 				>
 			</div>
 		{/if}

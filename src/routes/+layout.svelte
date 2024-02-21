@@ -1,10 +1,17 @@
-<script>
+<script lang="ts">
 	import '../app.pcss';
 	import { Button } from '$lib/components/ui/button';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/seva/Footer.svelte';
 	import Nav from '$lib/components/seva/Nav.svelte';
+
+	$: currentStepUrl = $page?.url?.pathname;
+	$: currentStep = currentStepUrl.split('/')[2].match(/\d+/);
+	
+	const gotoo = (step: number) => {
+		goto(`/collect3/step${step}`);
+	};
 </script>
 
 <main
@@ -19,41 +26,45 @@
 		{#if $page.url.pathname !== '/'}
 			<div class="grid grid-cols-5 gap-2 overflow-x-auto p-3">
 				<Button
-					variant={$page?.url?.pathname.includes('/step1') ? 'default' : 'secondary'}
-					class="w-full"
-					on:click={() => goto('/collect3/step1')}
+					variant={currentStepUrl.includes('/step1') ? 'default' : 'secondary'}
+					class="w-full {currentStep > 1 ? 'bg-green-500 text-white' : ''}"
+					on:click={() => gotoo(1)}
 				>
 					Step1
 				</Button>
 
 				<Button
-					variant={$page?.url?.pathname.includes('/step2') ? 'default' : 'secondary'}
-					class="w-full"
-					on:click={() => goto('/collect3/step2')}
+					variant={currentStepUrl.includes('/step2') ? 'default' : 'secondary'}
+					class="w-full {currentStep > 2 ? 'bg-green-500 text-white' : ''}"
+					on:click={() => gotoo(2)}
+					disabled={currentStep < 2}
 				>
 					Step2
 				</Button>
 
 				<Button
-					variant={$page?.url?.pathname.includes('/step3') ? 'default' : 'secondary'}
-					class="w-full"
-					on:click={() => goto('/collect3/step3')}
+					variant={currentStepUrl.includes('/step3') ? 'default' : 'secondary'}
+					class="w-full {currentStep > 3 ? 'bg-green-500 text-white' : ''}"
+					on:click={() => gotoo(3)}
+					disabled={currentStep < 3}
 				>
 					Step3
 				</Button>
 
 				<Button
-					variant={$page?.url?.pathname.includes('/step4') ? 'default' : 'secondary'}
-					class="w-full"
-					on:click={() => goto('/collect3/step4')}
+					variant={currentStepUrl.includes('/step4') ? 'default' : 'secondary'}
+					class="w-full {currentStep > 4 ? 'bg-green-500 text-white' : ''}"
+					on:click={() => gotoo(4)}
+					disabled={currentStep < 4}
 				>
 					Step4
 				</Button>
 
 				<Button
-					variant={$page?.url?.pathname.includes('/preview') ? 'default' : 'secondary'}
-					class="w-full"
-					on:click={() => goto('/preview')}>Preview</Button
+					variant={currentStepUrl.includes('/preview') ? 'default' : 'secondary'}
+					class="w-full {currentStep > 5 ? 'bg-green-500 text-white' : ''}"
+					on:click={() => goto('/preview')}
+					disabled={currentStep < 5}>Preview</Button
 				>
 			</div>
 		{/if}

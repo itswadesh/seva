@@ -76,7 +76,7 @@
 			<div class="w-32 bg-gray-200 p-4 text-center">1</div>
 		</div>
 		<div
-			class="flex items-center justify-center rounded-xl border-4 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"
+			class="flex items-center justify-center border-4 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"
 		>
 			{formData.TokenNo}
 		</div>

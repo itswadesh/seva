@@ -102,7 +102,7 @@
 
 		<hr />
 		<div class="fixed bottom-0 left-0 w-full">
-			<div class="flex items-center bg-black font-bold text-white">
+			<div class="flex items-center bg-black pl-4 font-bold text-white">
 				Total Items :
 				<span class="ml-1 mr-3 text-7xl">{total}</span>
 				<button

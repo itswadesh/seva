@@ -32,57 +32,59 @@
 
 		{#if $page.url.pathname !== '/'}
 			<div class="grid grid-cols-5 gap-2 overflow-x-auto px-3 pb-1 pt-3">
-				<!-- variant={currentStepUrl.includes('/step1') ? 'default' : 'secondary'} -->
-				<Button
-					variant="secondary"
-					class="w-full {isComplete(1) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/step1')
-						? 'bg-blue-500'
-						: 'secondary'}"
+				<button
+					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(1)
+						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						: ''} {currentStepUrl.includes('/step1')
+						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+						: ''}"
 					on:click={() => gotoo(1)}
 				>
 					Step1
-				</Button>
+				</button>
 
-				<Button
-					variant="secondary"
-					class="w-full {isComplete(2) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/step2')
-						? 'bg-blue-500'
-						: 'secondary'}"
+				<button
+					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(2)
+						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						: ''} {currentStepUrl.includes('/step2')
+						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+						: ''}"
 					on:click={() => gotoo(2)}
 					disabled={isDisabled(2)}
 				>
 					Step2
-				</Button>
+				</button>
 
-				<Button
-					variant="secondary"
-					class="w-full {isComplete(3) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/step3')
-						? 'bg-blue-500'
-						: 'secondary'}"
+				<button
+					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(3)
+						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						: ''} {currentStepUrl.includes('/step3')
+						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+						: ''}"
 					on:click={() => gotoo(3)}
 					disabled={isDisabled(3)}
 				>
 					Step3
-				</Button>
+				</button>
 
-				<Button
-					variant="secondary"
-					class="w-full {isComplete(4) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/step4')
-						? 'bg-blue-500'
-						: 'secondary'}"
+				<button
+					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(4)
+						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						: ''} {currentStepUrl.includes('/step4')
+						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+						: ''}"
 					on:click={() => gotoo(4)}
 					disabled={isDisabled(4)}
 				>
 					Step4
-				</Button>
+				</button>
 
-				<Button
-					variant="secondary"
-					class="w-full {isComplete(5) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/preview')
-						? 'bg-blue-500'
-						: 'secondary'}"
+				<button
+					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(5)
+						? 'bg-green-200'
+						: ''} {currentStepUrl.includes('/preview') ? 'bg-blue-200' : 'secondary'}"
 					on:click={() => goto('/preview')}
-					disabled={isDisabled(5)}>Preview</Button
+					disabled={isDisabled(5)}>Preview</button
 				>
 			</div>
 		{/if}

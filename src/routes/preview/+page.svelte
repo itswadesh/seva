@@ -56,7 +56,7 @@
 			<img
 				src={formData.CollectSangatFaceImage}
 				alt="Sangat Face Missing"
-				class="h-20 w-auto object-contain object-left"
+				class="h-40 w-auto object-contain object-left"
 			/>
 			<div class="flex flex-col items-center">
 				<img

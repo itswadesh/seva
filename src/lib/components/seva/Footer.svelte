@@ -3,5 +3,5 @@
 		<hr />
 	</div>
 
-	<p>@2024 All Rights Reserved</p>
+	<!-- <p>@2024 All Rights Reserved</p> -->
 </footer>

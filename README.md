@@ -1,5 +1,7 @@
 # features
+
 display store data if data available, can move to any step if data available, display face then item image then code at preview with show all details button, preview should not be disabled
+
 ## Image handling
 
 compress image to 100kb befoe saving
@@ -43,3 +45,12 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
+
+### Meeting 27-Feb-2024
+
+Add a homepage with buttons
+Step-1: Make height 100% use full frame
+Step-2: Change order of items
+Step-3: Increasee height of both the frames
+Loading at login screen
+Pass login info to header and while saving

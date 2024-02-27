@@ -42,16 +42,14 @@
 </script>
 
 <div>
-	<h1 class="mb-10 text-center text-xl font-bold underline underline-offset-8">
-		Take Visitor Photo
-	</h1>
+	<h1 class="mb-2 text-xl font-bold">Take Sangat Face Image</h1>
 
 	<form on:submit|preventDefault={nextStep} class="flex flex-col gap-8">
 		<div class="flex flex-col gap-4">
 			<div class="flex w-full items-center justify-center">
 				<label
 					for="image-2"
-					class="dark:hover:bg-bray-800 flex h-40 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+					class="dark:hover:bg-bray-800 flex h-80 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
 				>
 					{#if capturedImageURI}
 						<img src={capturedImageURI} alt="" class="h-full w-full object-contain object-center" />
@@ -72,8 +70,8 @@
 								/>
 							</svg>
 
-							<p class="text-sm font-semibold text-gray-500 dark:text-gray-400">
-								Click to upload profile photo
+							<p class="text-2xl font-bold text-gray-500 dark:text-gray-400">
+								Click to Take Picture
 							</p>
 						</div>
 					{/if}

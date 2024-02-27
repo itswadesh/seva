@@ -5,14 +5,14 @@
 	import ItemsForm from './itemsForm.svelte';
 
 	let data = {
-		Bag: 0,
+		Mobiles: 0,
 		Charger: 0,
 		EarPhone: 0,
 		EarPod: 0,
+		SmartWatch: 0,
 		Laptop: 0,
-		Mobiles: 0,
-		Others: 0,
-		SmartWatch: 0
+		Bag: 0,
+		Others: 0
 	};
 
 	function nextStep() {
@@ -23,9 +23,7 @@
 </script>
 
 <div>
-	<h1 class="mb-10 text-center text-xl font-bold underline underline-offset-8">
-		Enter Item Details
-	</h1>
+	<h1 class="mb-2 text-xl font-bold">Enter Item Details :</h1>
 
 	<!-- <input bind:value={data.Charger} placeholder="Charger" />
     

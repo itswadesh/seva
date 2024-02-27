@@ -27,8 +27,6 @@
 </script>
 
 <div>
-	<h1 class="mb-10 text-center text-xl font-bold underline underline-offset-8">List of Items</h1>
-
 	<form
 		method="POST"
 		class="flex flex-col gap-5"
@@ -54,7 +52,35 @@
 			};
 		}}
 	>
-		<ul class="m-0 flex list-none flex-col divide-y border p-0 text-sm">
+		<div class="grid grid-cols-2">
+			<img
+				src={formData.CollectSangatFaceImage}
+				alt="Sangat Face Missing"
+				class="h-20 w-auto object-contain object-left"
+			/>
+			<div class="flex flex-col items-center">
+				<img
+					src={formData.ItemsImageFront}
+					alt="Front Image Missing"
+					class="h-20 w-auto object-contain object-left"
+				/>
+				<img
+					src={formData.ItemsImageBack}
+					alt="Back Image Missing"
+					class="h-20 w-auto object-contain object-left"
+				/>
+			</div>
+		</div>
+		<div class="flex items-center gap-5 text-3xl font-bold">
+			<div class="w-full bg-gray-200 p-4">Total Items</div>
+			<div class="w-32 bg-gray-200 p-4 text-center">1</div>
+		</div>
+		<div
+			class="flex items-center justify-center rounded-xl border-4 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"
+		>
+			{formData.TokenNo}
+		</div>
+		<!-- <ul class="m-0 flex list-none flex-col divide-y border p-0 text-sm">
 			{#each Object.entries(formData) as [key, value], index}
 				<li
 					class="grid grid-cols-2 items-center
@@ -79,7 +105,7 @@
 					<input type="hidden" name={key} {value} />
 				</li>
 			{/each}
-		</ul>
+		</ul> -->
 
 		<Button type="submit" {loading}>Submit</Button>
 	</form>

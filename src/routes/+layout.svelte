@@ -31,18 +31,23 @@
 		<Nav />
 
 		{#if $page.url.pathname !== '/'}
-			<div class="grid grid-cols-5 gap-2 overflow-x-auto p-3">
+			<div class="grid grid-cols-5 gap-2 overflow-x-auto px-3 pb-1 pt-3">
+				<!-- variant={currentStepUrl.includes('/step1') ? 'default' : 'secondary'} -->
 				<Button
-					variant={currentStepUrl.includes('/step1') ? 'default' : 'secondary'}
-					class="w-full {isComplete(1) ? 'bg-green-200' : ''}"
+					variant="secondary"
+					class="w-full {isComplete(1) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/step1')
+						? 'bg-blue-500'
+						: 'secondary'}"
 					on:click={() => gotoo(1)}
 				>
 					Step1
 				</Button>
 
 				<Button
-					variant={currentStepUrl.includes('/step2') ? 'default' : 'secondary'}
-					class="w-full {isComplete(2) ? 'bg-green-200' : ''}"
+					variant="secondary"
+					class="w-full {isComplete(2) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/step2')
+						? 'bg-blue-500'
+						: 'secondary'}"
 					on:click={() => gotoo(2)}
 					disabled={isDisabled(2)}
 				>
@@ -50,8 +55,10 @@
 				</Button>
 
 				<Button
-					variant={currentStepUrl.includes('/step3') ? 'default' : 'secondary'}
-					class="w-full {isComplete(3) ? 'bg-green-200' : ''}"
+					variant="secondary"
+					class="w-full {isComplete(3) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/step3')
+						? 'bg-blue-500'
+						: 'secondary'}"
 					on:click={() => gotoo(3)}
 					disabled={isDisabled(3)}
 				>
@@ -59,8 +66,10 @@
 				</Button>
 
 				<Button
-					variant={currentStepUrl.includes('/step4') ? 'default' : 'secondary'}
-					class="w-full {isComplete(4) ? 'bg-green-200' : ''}"
+					variant="secondary"
+					class="w-full {isComplete(4) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/step4')
+						? 'bg-blue-500'
+						: 'secondary'}"
 					on:click={() => gotoo(4)}
 					disabled={isDisabled(4)}
 				>
@@ -68,15 +77,17 @@
 				</Button>
 
 				<Button
-					variant={currentStepUrl.includes('/preview') ? 'default' : 'secondary'}
-					class="w-full {isComplete(5) ? 'bg-green-200' : ''}"
+					variant="secondary"
+					class="w-full {isComplete(5) ? 'bg-green-200' : ''}, {currentStepUrl.includes('/preview')
+						? 'bg-blue-500'
+						: 'secondary'}"
 					on:click={() => goto('/preview')}
 					disabled={isDisabled(5)}>Preview</Button
 				>
 			</div>
 		{/if}
 
-		<div class="flex-1 p-3">
+		<div class="flex-1 px-3 py-1">
 			<slot />
 		</div>
 	</div>

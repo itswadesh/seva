@@ -1,23 +1,20 @@
 <script lang="ts">
 	import { Button } from '$lib/components/misiki/button';
-	import { formSchema, type FormSchema } from './schema';
 	import { goto } from '$app/navigation';
 	import { Input } from '$lib/components/misiki/input';
 	import { Plus, Minus } from 'radix-icons-svelte';
 	import { updateStore } from '$lib/store/collectionStore';
-	import * as Form from '$lib/components/ui/form';
-	import type { SuperValidated } from 'sveltekit-superforms';
 
 	// export let form: SuperValidated<FormSchema>;
 	export let data = {
-		Bag: 0,
+		Mobiles: 0,
 		Charger: 0,
 		EarPhone: 0,
 		EarPod: 0,
+		SmartWatch: 0,
 		Laptop: 0,
-		Mobiles: 0,
-		Others: 0,
-		SmartWatch: 0
+		Bag: 0,
+		Others: 0
 	};
 
 	let loading = false;
@@ -104,11 +101,19 @@
 		{/each}
 
 		<hr />
-
-		<div class="font-bold">
-			Total Items :- {total}
+		<div class="fixed bottom-0 left-0 w-full">
+			<div class="flex items-center bg-black font-bold text-white">
+				Total Items :
+				<span class="ml-1 mr-3 text-7xl">{total}</span>
+				<button
+					type="submit"
+					{loading}
+					disabled={loading || !total}
+					class="ml-2 mr-4 w-full bg-white p-3 text-black"
+				>
+					Next Step
+				</button>
+			</div>
 		</div>
 	</div>
-
-	<Button type="submit" {loading} disabled={!total} class="w-full">Next Step</Button>
 </form>

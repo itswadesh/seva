@@ -66,9 +66,7 @@
 </script>
 
 <form>
-	<h1 class="mb-10 text-center text-xl font-bold underline underline-offset-8">
-		Upload Products Photo
-	</h1>
+	<h1 class="mb-2 text-xl font-bold">Upload Items Picture</h1>
 
 	<form on:submit|preventDefault={nextStep} class="flex flex-col gap-8">
 		<div class="flex flex-col gap-4">
@@ -100,8 +98,8 @@
 								/>
 							</svg>
 
-							<p class="text-sm font-semibold text-gray-500 dark:text-gray-400">
-								Click to upload first image
+							<p class="text-2xl font-bold text-gray-500 dark:text-gray-400">
+								Click to take Front Image
 							</p>
 						</div>
 					{/if}
@@ -146,8 +144,8 @@
 								/>
 							</svg>
 
-							<p class="text-sm font-semibold text-gray-500 dark:text-gray-400">
-								Click to upload second image
+							<p class="text-2xl font-bold text-gray-500 dark:text-gray-400">
+								Click to take Back Image
 							</p>
 						</div>
 					{/if}

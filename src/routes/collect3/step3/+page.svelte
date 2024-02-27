@@ -66,7 +66,7 @@
 </script>
 
 <form>
-	<h1 class="mb-2 text-xl font-bold">Upload Items Picture</h1>
+	<h1 class="mb-2 text-xl font-bold text-blue-500">Upload Items Picture</h1>
 
 	<form on:submit|preventDefault={nextStep} class="flex flex-col gap-8">
 		<div class="flex flex-col gap-4">

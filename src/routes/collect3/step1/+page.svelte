@@ -42,7 +42,7 @@
 </script>
 
 <div>
-	<h1 class="mb-2 text-xl font-bold">Take Sangat Face Image</h1>
+	<h1 class="mb-2 text-xl font-bold text-blue-500">Take Sangat Face Image</h1>
 
 	<form on:submit|preventDefault={nextStep} class="flex flex-col gap-8">
 		<div class="flex flex-col gap-4">

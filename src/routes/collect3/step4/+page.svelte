@@ -9,7 +9,7 @@
 </script>
 
 <div>
-	<h1 class="mb-10 text-center text-xl font-bold underline underline-offset-8">Scan Token QR</h1>
+	<h1 class="mb-2 text-xl font-bold text-blue-500">Scan Token QR</h1>
 
 	<div>
 		<svelte:component this={QR} />

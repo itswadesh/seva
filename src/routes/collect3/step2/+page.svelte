@@ -23,7 +23,7 @@
 </script>
 
 <div>
-	<h1 class="mb-2 text-xl font-bold">Enter Item Details :</h1>
+	<h1 class="mb-2 text-xl font-bold text-blue-500">Enter Item Details :</h1>
 
 	<!-- <input bind:value={data.Charger} placeholder="Charger" />
     

@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button'
+	import { enhance } from '$app/forms'
 	import { EyeClosed, EyeOpen } from 'radix-icons-svelte'
 	import { formSchema, type LoginFormSchema } from './loginSchema'
 	import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import * as Form from '$lib/components/ui/form'
+	import Button from '$lib/components/misiki/button/button.svelte'
+	import Input from '$lib/components/misiki/input/input.svelte'
 	import type { SuperValidated } from 'sveltekit-superforms'
 
 	export let form: SuperValidated<LoginFormSchema>
@@ -12,7 +14,9 @@
 
 	$: isLogged = data.islogged
 
+	let email = ''
 	let loading = false
+	let password = ''
 
 	onMount(() => {
 		console.log('isLogged', isLogged)
@@ -31,46 +35,60 @@
 </script>
 
 {#if !isLogged}
-	<div class="rounded border p-5" role="alert">
-		<Form.Root method="POST" {form} schema={formSchema} let:config class="flex flex-col gap-5">
-			<div class="flex flex-col gap-2">
-				<Form.Field {config} name="username">
-					<Form.Item>
-						<Form.Label>Username</Form.Label>
+	<div class="py-10">
+		<h2 class="mb-5 text-center text-2xl font-bold">LogIn</h2>
 
-						<Form.Input placeholder="Enter user name" />
+		<form
+			action="/"
+			method="POST"
+			class="flex flex-col gap-8"
+			use:enhance={() => {
+				loading = true
 
-						<Form.Validation />
-					</Form.Item>
-				</Form.Field>
+				return async ({ result }) => {
+					// console.log('result', result)
 
-				<Form.Field {config} name="password">
-					<Form.Item>
-						<Form.Label>Password</Form.Label>
+					loading = false
+				}
+			}}
+		>
+			<div class="flex flex-col gap-4">
+				<Input
+					id="email"
+					name="email"
+					label="Email"
+					bind:value={email}
+					placeholder="Enter your email"
+					required
+				/>
 
-						<div class="relative">
-							<Form.Input type={showPassword ? 'text' : 'password'} placeholder="Enter password" />
+				<div class="relative">
+					<Input
+						id="password"
+						type={showPassword ? 'text' : 'password'}
+						name="password"
+						label="Password"
+						bind:value={password}
+						placeholder="Enter your password"
+						required
+					/>
 
-							<button
-								type="button"
-								class="absolute right-2 top-1/2 -translate-y-1/2 transform"
-								on:click={togglePasswordVisibility}
-							>
-								{#if showPassword}
-									<EyeOpen />
-								{:else}
-									<EyeClosed />
-								{/if}
-							</button>
-						</div>
-
-						<Form.Validation />
-					</Form.Item>
-				</Form.Field>
+					<button
+						type="button"
+						class="absolute right-2 top-[38px] transform"
+						on:click={togglePasswordVisibility}
+					>
+						{#if showPassword}
+							<EyeOpen />
+						{:else}
+							<EyeClosed />
+						{/if}
+					</button>
+				</div>
 			</div>
 
-			<Button type="submit" {loading} class="w-full">Submit</Button>
-		</Form.Root>
+			<Button type="submit" {loading}>Sign in</Button>
+		</form>
 	</div>
 {:else}
 	<main class="flex flex-col items-center justify-center">

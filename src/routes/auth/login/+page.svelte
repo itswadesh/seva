@@ -1,9 +1,9 @@
 <script>
 	import { goto } from '$app/navigation'
-	import Button from '$lib/components/ui/button/button.svelte'
-	import Input from '$lib/components/ui/input/input.svelte'
 	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
+	import Button from '$lib/components/misiki/button/button.svelte'
+	import Input from '$lib/components/misiki/input/input.svelte'
 
 	export let data
 	let { supabase } = data

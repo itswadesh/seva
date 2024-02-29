@@ -1,5 +1,5 @@
 <script>
-	import { Home } from 'radix-icons-svelte';
+	import { Home } from 'radix-icons-svelte'
 
 	// import logoBlack from '$lib/assets/logo-black.png';
 	// import logoWhite from '$lib/assets/logo-white.png';

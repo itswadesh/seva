@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { formSchema, type FormSchema } from './schema';
-	import * as Form from '$lib/components/ui/form';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import { formSchema, type FormSchema } from './schema'
+	import * as Form from '$lib/components/ui/form'
+	import Button from '$lib/components/ui/button/button.svelte'
+	import type { SuperValidated } from 'sveltekit-superforms'
 
-	export let form: SuperValidated<FormSchema>;
+	export let form: SuperValidated<FormSchema>
 </script>
+
 {JSON.stringify(form)}
 {JSON.stringify(formSchema)}
 <Form.Root method="POST" {form} schema={formSchema} let:config class="flex flex-col gap-5">

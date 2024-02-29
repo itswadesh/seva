@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount } from 'svelte'
 
-	let QR;
+	let QR
 	onMount(async () => {
-		const QRModule = await import('./QrScan.svelte');
-		QR = QRModule.default;
-	});
+		const QRModule = await import('./QrScan.svelte')
+		QR = QRModule.default
+	})
 </script>
 
 <div>

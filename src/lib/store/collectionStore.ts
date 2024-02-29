@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable } from 'svelte/store'
 
 // Define the initial state
 const initialState = {
@@ -17,16 +17,16 @@ const initialState = {
 	SmartWatch: 0,
 	TokenNo: 0,
 	TotalItems: 0
-};
+}
 
 // Create a writable store with the initial state
-export const collectionstore = writable(initialState);
+export const collectionstore = writable(initialState)
 
 export function updateStore(updatedProperties: Partial<typeof initialState>) {
 	collectionstore.update((currentState) => {
 		return {
 			...currentState,
 			...updatedProperties
-		};
-	});
+		}
+	})
 }

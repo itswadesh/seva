@@ -1,26 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SangatData } from '$lib/db/schema'
 import { db } from '$lib/db/server'
-import { collectionstore } from '$lib/store/collectionStore'
-import type { Actions, PageServerLoad } from './$types'
-
-let isScanned = false
-export const load: PageServerLoad = async () => {
-	return {
-		isscanned: isScanned
-	}
-}
+import type { Actions } from './$types'
 
 export const actions: Actions = {
-	async default() {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		let items: any
-		collectionstore.subscribe((value) => {
-			items = value
-		})
+	async default(event) {
+		const items = Object.fromEntries(await event.request.formData())
+
+		// console.log('items', items);
 
 		try {
-			console.log(items)
-
 			const newData = await db.insert(SangatData).values({
 				TokenNo: items?.TokenNo,
 				Collect_SewadarID: items?.Collect_SewadarID,
@@ -39,15 +28,8 @@ export const actions: Actions = {
 			})
 
 			console.log('data inserted', newData)
-
-			if (newData) {
-				isScanned = true
-			} else {
-				isScanned = false // Reset to false if insertion fails
-			}
 		} catch (error) {
 			console.error('Error inserting data:', error)
-			isScanned = false // Reset to false if insertion fails
 		}
 	}
 }

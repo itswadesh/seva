@@ -1,68 +1,68 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { updateStore } from '$lib/store/collectionStore';
-	import { Button } from '$lib/components/misiki/button';
-	import { compressImage } from '$lib/utils';
+	import { goto } from '$app/navigation'
+	import { updateStore } from '$lib/store/collectionStore'
+	import { Button } from '$lib/components/misiki/button'
+	import { compressImage } from '$lib/utils'
 
-	let capturedItemImageUrl1;
-	let capturedItemImageUrl2;
-	let loading = false;
-	let data = {};
+	let capturedItemImageUrl1
+	let capturedItemImageUrl2
+	let loading = false
+	let data = {}
 
 	function nextStep() {
-		loading = true;
-		updateStore(data);
-		loading = false;
-		goto('/collect3/step4');
+		loading = true
+		updateStore(data)
+		loading = false
+		goto('/collect3/step4')
 	}
 
 	const handleChangeItemImageSaved1 = async (e: any) => {
-		const file = e.target.files[0];
+		const file = e.target.files[0]
 
 		// Check if the file size is already below 100kb
 		if (file.size <= 100 * 1024) {
-			capturedItemImageUrl1 = URL.createObjectURL(file);
-			updateStore({ ItemsImageFront: capturedItemImageUrl1 });
-			return;
+			capturedItemImageUrl1 = URL.createObjectURL(file)
+			updateStore({ ItemsImageFront: capturedItemImageUrl1 })
+			return
 		}
 
-		const compressedDataURL = await compressImage(file, 0.5); // Adjust quality as needed
+		const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
 
 		// Set the source of the compressed image
-		capturedItemImageUrl1 = compressedDataURL;
+		capturedItemImageUrl1 = compressedDataURL
 
 		// console.log('compressed capturedItemImageUrl1', capturedItemImageUrl1);
 
 		const updatedState = {
 			ItemsImageFront: capturedItemImageUrl1
-		};
+		}
 
-		updateStore(updatedState);
-	};
+		updateStore(updatedState)
+	}
 
 	const handleChangeItemImageSaved2 = async (e: any) => {
-		const file = e.target.files[0];
+		const file = e.target.files[0]
 
 		// Check if the file size is already below 100kb
 		if (file.size <= 100 * 1024) {
-			capturedItemImageUrl2 = URL.createObjectURL(file);
-			updateStore({ ItemsImageBack: capturedItemImageUrl2 });
-			return;
+			capturedItemImageUrl2 = URL.createObjectURL(file)
+			updateStore({ ItemsImageBack: capturedItemImageUrl2 })
+			return
 		}
 
-		const compressedDataURL = await compressImage(file, 0.5); // Adjust quality as needed
+		const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
 
 		// Set the source of the compressed image
-		capturedItemImageUrl2 = compressedDataURL;
+		capturedItemImageUrl2 = compressedDataURL
 
 		// console.log('compressed capturedItemImageUrl2', capturedItemImageUrl2);
 
 		const updatedState = {
 			ItemsImageBack: capturedItemImageUrl2
-		};
+		}
 
-		updateStore(updatedState);
-	};
+		updateStore(updatedState)
+	}
 </script>
 
 <form>

@@ -1,7 +1,7 @@
-import { fail, type Actions } from '@sveltejs/kit';
-import { formSchema } from './schema';
-import { superValidate } from 'sveltekit-superforms/server';
-import { updateStore } from '$lib/store/collectionStore';
+import { fail, type Actions } from '@sveltejs/kit'
+import { formSchema } from './schema'
+import { superValidate } from 'sveltekit-superforms/server'
+import { updateStore } from '$lib/store/collectionStore'
 
 const initialState = {
 	Charger: 0,
@@ -18,15 +18,14 @@ const initialState = {
 	PowerBank: 0,
 	SmartWatch: 0,
 	TokenNo: 0,
-	TotalItems: 0,
-};
+	TotalItems: 0
+}
 
 export const load = async () => {
 	return {
 		form: await superValidate(formSchema)
-	};
-};
-
+	}
+}
 
 export const actions: Actions = {
 	default: async (event) => {
@@ -63,9 +62,15 @@ export const actions: Actions = {
 			Mobiles: Number(mobile),
 			Others: Number(others),
 			SmartWatch: Number(smartwatch),
-			TotalItems: Number(charger) + Number(earphones) + Number(earpods) + Number(mobile) + Number(others) + Number(smartwatch)
-		};
+			TotalItems:
+				Number(charger) +
+				Number(earphones) +
+				Number(earpods) +
+				Number(mobile) +
+				Number(others) +
+				Number(smartwatch)
+		}
 
-		updateStore(updatedState);
-	},
-};
+		updateStore(updatedState)
+	}
+}

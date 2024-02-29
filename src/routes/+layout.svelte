@@ -1,24 +1,24 @@
 <script lang="ts">
-	import '../app.pcss';
-	import { Button } from '$lib/components/ui/button';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import Footer from '$lib/components/seva/Footer.svelte';
-	import Nav from '$lib/components/seva/Nav.svelte';
+	import '../app.pcss'
+	import { Button } from '$lib/components/ui/button'
+	import { goto } from '$app/navigation'
+	import { page } from '$app/stores'
+	import Footer from '$lib/components/seva/Footer.svelte'
+	import Nav from '$lib/components/seva/Nav.svelte'
 
-	$: currentStepUrl = $page?.url?.pathname;
-	$: currentStep = currentStepUrl.split('/')[2]?.match(/\d+/) || 0;
+	$: currentStepUrl = $page?.url?.pathname
+	$: currentStep = currentStepUrl.split('/')[2]?.match(/\d+/) || 0
 
 	const gotoo = (step: number) => {
-		goto(`/collect3/step${step}`);
-	};
+		goto(`/collect3/step${step}`)
+	}
 
 	$: isComplete = (step: number) => {
-		return currentStep > step;
-	};
+		return currentStep > step
+	}
 	$: isDisabled = (step: number) => {
-		return currentStep < step;
-	};
+		return currentStep < step
+	}
 </script>
 
 <main

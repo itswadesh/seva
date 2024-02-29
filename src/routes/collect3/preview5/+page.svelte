@@ -1,29 +1,40 @@
 <script>
-	import { browser } from '$app/environment';
-	import { collectionstore } from '$lib/store/collectionStore';
-	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import { Reload } from 'radix-icons-svelte';
-	import { toast } from 'svelte-sonner';
-	import Button from '$lib/components/misiki/button/button.svelte';
+	import { browser } from '$app/environment'
+	import { collectionstore } from '$lib/store/collectionStore'
+	import { enhance } from '$app/forms'
+	import { goto } from '$app/navigation'
+	import { onMount } from 'svelte'
+	import { Reload } from 'radix-icons-svelte'
+	import { toast } from 'svelte-sonner'
+	import Button from '$lib/components/misiki/button/button.svelte'
 
-	let formData = {};
-	let loading = false;
+	let formData = {}
+	let loading = false
 
-	function submitData() {}
+	const getTotalitems = () => {
+		const total =
+			+(formData.Bag || 0) +
+			+(formData.Charger || 0) +
+			+(formData.EarPhone || 0) +
+			+(formData.EarPod || 0) +
+			+(formData.Laptop || 0) +
+			+(formData.Mobiles || 0) +
+			+(formData.Others || 0) +
+			+(formData.SmartWatch || 0)
+		return total
+	}
 
 	onMount(() => {
 		if (browser) {
 			collectionstore.subscribe((value) => {
 				if (value) {
-					formData = value;
+					formData = value
 				}
-			});
+			})
 
-			console.log('formData', formData);
+			console.log('formData', formData)
 		}
-	});
+	})
 </script>
 
 <div>
@@ -31,15 +42,15 @@
 		method="POST"
 		class="flex flex-col gap-5"
 		use:enhance={() => {
-			loading = true;
+			loading = true
 
 			return async (result) => {
-				console.log('result', result);
+				console.log('result', result)
 
-				loading = false;
+				loading = false
 
 				if (result?.result?.status === 204) {
-					goto('/collect3/step1');
+					goto('/collect3/step1')
 				} else {
 					toast('Something went wrong', {
 						description: result?.error?.message,
@@ -47,9 +58,9 @@
 							label: 'Ok',
 							onClick: () => console.log('Ok')
 						}
-					});
+					})
 				}
-			};
+			}
 		}}
 	>
 		<div class="grid grid-cols-2">
@@ -73,7 +84,9 @@
 		</div>
 		<div class="flex items-center gap-5 text-3xl font-bold">
 			<div class="w-full bg-gray-200 p-4">Total Items</div>
-			<div class="w-32 bg-gray-200 p-4 text-center">1</div>
+			<div class="w-32 bg-gray-200 p-4 text-center">
+				{getTotalitems()}
+			</div>
 		</div>
 		<div
 			class="flex items-center justify-center border-4 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"

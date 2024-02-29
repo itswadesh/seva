@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let data;
+	export let data
 	// console.log('zzzzzzzzzzzzzzzzzz', data);
 </script>
 

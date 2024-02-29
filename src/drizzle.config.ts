@@ -1,8 +1,8 @@
-import type { Config } from 'drizzle-kit';
-import 'dotenv/config';
-const { DATABASE_URL } = process.env;
+import type { Config } from 'drizzle-kit'
+import 'dotenv/config'
+const { DATABASE_URL } = process.env
 if (!DATABASE_URL) {
-	throw new Error('No url');
+	throw new Error('No url')
 }
 export default {
 	schema: './src/lib/db/schema.ts',
@@ -11,4 +11,4 @@ export default {
 	dbCredentials: {
 		connectionString: DATABASE_URL
 	}
-} satisfies Config;
+} satisfies Config

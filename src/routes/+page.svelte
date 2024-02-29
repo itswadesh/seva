@@ -1,32 +1,32 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
-	import { EyeClosed, EyeOpen } from 'radix-icons-svelte';
-	import { formSchema, type LoginFormSchema } from './loginSchema';
-	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import * as Form from '$lib/components/ui/form';
-	import type { SuperValidated } from 'sveltekit-superforms';
+	import { Button } from '$lib/components/ui/button'
+	import { EyeClosed, EyeOpen } from 'radix-icons-svelte'
+	import { formSchema, type LoginFormSchema } from './loginSchema'
+	import { goto } from '$app/navigation'
+	import { onMount } from 'svelte'
+	import * as Form from '$lib/components/ui/form'
+	import type { SuperValidated } from 'sveltekit-superforms'
 
-	export let form: SuperValidated<LoginFormSchema>;
-	export let data;
+	export let form: SuperValidated<LoginFormSchema>
+	export let data
 
-	$: isLogged = data.islogged;
+	$: isLogged = data.islogged
 
-	let loading = false;
+	let loading = false
 
 	onMount(() => {
-		console.log('isLogged', isLogged);
+		console.log('isLogged', isLogged)
 
 		if (isLogged) {
-			console.log('redirecting to /collect');
-			goto('/collect3/step1');
+			console.log('redirecting to /collect')
+			goto('/collect3/step1')
 		}
-	});
+	})
 
-	let showPassword = false;
+	let showPassword = false
 
 	function togglePasswordVisibility() {
-		showPassword = !showPassword;
+		showPassword = !showPassword
 	}
 </script>
 

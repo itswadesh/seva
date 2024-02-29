@@ -1,8 +1,8 @@
 <script>
-	import { collectionstore, updateStore } from '$lib/store/collectionStore';
-	import { goto } from '$app/navigation';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import ItemsForm from './itemsForm.svelte';
+	import { collectionstore, updateStore } from '$lib/store/collectionStore'
+	import { goto } from '$app/navigation'
+	import Button from '$lib/components/ui/button/button.svelte'
+	import ItemsForm from './itemsForm.svelte'
 
 	let data = {
 		Mobiles: 0,
@@ -13,12 +13,12 @@
 		Laptop: 0,
 		Bag: 0,
 		Others: 0
-	};
+	}
 
 	function nextStep() {
 		// Update dataStore with the collected data
-		updateStore(data);
-		goto('/collect3/step3');
+		updateStore(data)
+		goto('/collect3/step3')
 	}
 </script>
 

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Button } from '$lib/components/misiki/button';
-	import { goto } from '$app/navigation';
-	import { Input } from '$lib/components/misiki/input';
-	import { Plus, Minus } from 'radix-icons-svelte';
-	import { updateStore } from '$lib/store/collectionStore';
+	import { Button } from '$lib/components/misiki/button'
+	import { goto } from '$app/navigation'
+	import { Input } from '$lib/components/misiki/input'
+	import { Plus, Minus } from 'radix-icons-svelte'
+	import { updateStore } from '$lib/store/collectionStore'
 
 	// export let form: SuperValidated<FormSchema>;
 	export let data = {
@@ -15,10 +15,10 @@
 		Laptop: 0,
 		Bag: 0,
 		Others: 0
-	};
+	}
 
-	let loading = false;
-	let total = 0;
+	let loading = false
+	let total = 0
 
 	const getTotal = () => {
 		total =
@@ -29,40 +29,40 @@
 			+(data.Laptop || 0) +
 			+(data.Mobiles || 0) +
 			+(data.Others || 0) +
-			+(data.SmartWatch || 0);
-	};
+			+(data.SmartWatch || 0)
+	}
 
 	function handleIncrement(item) {
-		++data[item];
-		getTotal();
+		++data[item]
+		getTotal()
 	}
 
 	function handleDecrement(item) {
 		if (data[item] > 0) {
-			--data[item];
-			getTotal();
+			--data[item]
+			getTotal()
 		}
 	}
 
 	const save = () => {
-		loading = true;
+		loading = true
 
-		let total_no_of_items = 0;
+		let total_no_of_items = 0
 
 		for (const key in data) {
 			if (data[key] == undefined || data[key] == null || data[key] == '') {
-				total_no_of_items += 0;
-			} else total_no_of_items += Number(data[key]);
+				total_no_of_items += 0
+			} else total_no_of_items += Number(data[key])
 		}
 
-		data.TotalItems = total_no_of_items;
+		data.TotalItems = total_no_of_items
 
-		updateStore(data);
+		updateStore(data)
 
-		loading = false;
+		loading = false
 
-		goto('/collect3/step3');
-	};
+		goto('/collect3/step3')
+	}
 </script>
 
 <form method="POST" on:submit|preventDefault={save} class="flex flex-col gap-8">

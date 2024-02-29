@@ -1,27 +1,27 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
-	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
-	import { Html5Qrcode } from 'html5-qrcode';
-	import { onMount } from 'svelte';
-	import { updateStore } from '$lib/store/collectionStore';
+	import { Button } from '$lib/components/ui/button'
+	import { enhance } from '$app/forms'
+	import { goto } from '$app/navigation'
+	import { Html5Qrcode } from 'html5-qrcode'
+	import { onMount } from 'svelte'
+	import { updateStore } from '$lib/store/collectionStore'
 
-	export let data;
+	export let data
 
-	let scanning = false;
-	let html5Qrcode: Html5Qrcode;
+	let scanning = false
+	let html5Qrcode: Html5Qrcode
 
 	onMount(() => {
 		if (data.isscanned) {
-			goto('/collect');
+			goto('/collect')
 		} else {
-			initScanner();
+			initScanner()
 		}
-	});
+	})
 
 	function initScanner() {
-		html5Qrcode = new Html5Qrcode('reader');
-		if (!data.isscanned) start();
+		html5Qrcode = new Html5Qrcode('reader')
+		if (!data.isscanned) start()
 	}
 
 	function start() {
@@ -33,34 +33,34 @@
 			},
 			onScanSuccess,
 			onScanFailure
-		);
-		scanning = true;
+		)
+		scanning = true
 	}
 
 	async function stop() {
-		await html5Qrcode.stop();
-		scanning = false;
+		await html5Qrcode.stop()
+		scanning = false
 	}
 
 	async function onScanSuccess(decodedText: any, decodedResult: any) {
 		const updatedState = {
 			TokenNo: decodedText
-		};
-		updateStore(updatedState);
-		console.log(decodedResult);
-		stop();
-		console.log('decodedText', decodedText);
-		console.log('onsubmit');
-		const form = document.getElementById('scan') as HTMLFormElement;
-		if (form) {
-			form.submit();
 		}
-		data.isscanned = false;
-		console.log('onsubmit done');
+		updateStore(updatedState)
+		console.log(decodedResult)
+		stop()
+		console.log('decodedText', decodedText)
+		console.log('onsubmit')
+		const form = document.getElementById('scan') as HTMLFormElement
+		if (form) {
+			form.submit()
+		}
+		data.isscanned = false
+		console.log('onsubmit done')
 	}
 
 	function onScanFailure(error: any) {
-		console.warn(`Code scan error = ${error}`);
+		console.warn(`Code scan error = ${error}`)
 	}
 </script>
 
@@ -78,8 +78,8 @@
 		id="scan"
 		use:enhance={() => {
 			return async (result) => {
-				console.log('result', result);
-			};
+				console.log('result', result)
+			}
 		}}
 	></form>
 </main>

@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import { Button } from '$lib/components/ui/button';
-	import { collectionstore, updateStore } from '$lib/store/collectionStore';
-	import { onMount } from 'svelte';
-	import ItemForm from './itemsForm.svelte';
+	import { browser } from '$app/environment'
+	import { Button } from '$lib/components/ui/button'
+	import { collectionstore, updateStore } from '$lib/store/collectionStore'
+	import { onMount } from 'svelte'
+	import ItemForm from './itemsForm.svelte'
 
-	export let data;
+	export let data
 
-	let addItemImages = false;
-	let additemsCheck = false;
-	let capturedImageURI: string;
-	let capturedItemImageUrl1: string;
-	let capturedItemImageUrl2: string;
-	let scanQr = false;
+	let addItemImages = false
+	let additemsCheck = false
+	let capturedImageURI: string
+	let capturedItemImageUrl1: string
+	let capturedItemImageUrl2: string
+	let scanQr = false
 
 	const initialState = {
 		Charger: 0,
@@ -30,58 +30,58 @@
 		SmartWatch: 0,
 		TokenNo: 0,
 		TotalItems: 0
-	};
+	}
 
-	$: collectionstoreRes = {};
+	$: collectionstoreRes = {}
 
 	onMount(() => {
 		if (browser) {
-			collectionstoreRes = collectionstore;
+			collectionstoreRes = collectionstore
 
 			collectionstore.subscribe((value) => {
 				if (value) {
-					collectionstoreRes = value;
+					collectionstoreRes = value
 				}
-			});
+			})
 
-			console.log('collectionstoreRes', collectionstoreRes);
+			console.log('collectionstoreRes', collectionstoreRes)
 		}
-	});
+	})
 
 	const handleAddItems = () => {
 		const updatedState = {
 			CollectSangatFaceImage: capturedImageURI
-		};
-		updateStore(updatedState);
-		additemsCheck = !additemsCheck;
-	};
+		}
+		updateStore(updatedState)
+		additemsCheck = !additemsCheck
+	}
 
 	const handleChangeImageSaved = (e: any) => {
-		capturedImageURI = URL.createObjectURL(e.target.files[0]);
-		console.log(capturedImageURI);
-		updateStore({ CollectSangatFaceImage: capturedImageURI });
-	};
+		capturedImageURI = URL.createObjectURL(e.target.files[0])
+		console.log(capturedImageURI)
+		updateStore({ CollectSangatFaceImage: capturedImageURI })
+	}
 
 	const handleChangeItemImageSaved1 = (e: any) => {
-		capturedItemImageUrl1 = URL.createObjectURL(e.target.files[0]);
-		console.log(capturedItemImageUrl1);
+		capturedItemImageUrl1 = URL.createObjectURL(e.target.files[0])
+		console.log(capturedItemImageUrl1)
 		const updatedState = {
 			ItemsImageFront: capturedItemImageUrl1
-		};
-		updateStore(updatedState);
-	};
+		}
+		updateStore(updatedState)
+	}
 
 	const handleChangeItemImageSaved2 = (e: any) => {
-		capturedItemImageUrl2 = URL.createObjectURL(e.target.files[0]);
-		console.log(capturedItemImageUrl2);
+		capturedItemImageUrl2 = URL.createObjectURL(e.target.files[0])
+		console.log(capturedItemImageUrl2)
 		const updatedState = {
 			ItemsImageBack: capturedItemImageUrl2
-		};
-	};
+		}
+	}
 
 	const handleItemImages = () => {
-		addItemImages = !addItemImages;
-	};
+		addItemImages = !addItemImages
+	}
 </script>
 
 <svelte:head>

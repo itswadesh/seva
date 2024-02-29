@@ -81,11 +81,15 @@
 
 				<button
 					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(5)
-						? 'bg-green-200'
-						: ''} {currentStepUrl.includes('/preview') ? 'bg-blue-200' : 'secondary'}"
+						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						: ''} {currentStepUrl.includes('/preview')
+						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+						: ''}"
 					on:click={() => goto('/preview')}
-					disabled={isDisabled(5)}>Preview</button
+					disabled={isDisabled(5)}
 				>
+					Preview
+				</button>
 			</div>
 		{/if}
 

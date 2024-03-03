@@ -47,16 +47,16 @@
 			TokenNo: decodedText
 		}
 		updateStore(updatedState)
-		console.log(decodedResult)
+		// console.log(decodedResult)
 		stop()
-		console.log('decodedText', decodedText)
-		console.log('onsubmit')
+		// console.log('decodedText', decodedText)
+		// console.log('onsubmit')
 		const form = document.getElementById('scan') as HTMLFormElement
 		if (form) {
 			form.submit()
 		}
 		data.isscanned = false
-		console.log('onsubmit done')
+		// console.log('onsubmit done')
 	}
 
 	function onScanFailure(error: any) {
@@ -78,7 +78,7 @@
 		id="scan"
 		use:enhance={() => {
 			return async (result) => {
-				console.log('result', result)
+				// console.log('result', result)
 			}
 		}}
 	></form>

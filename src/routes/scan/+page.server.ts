@@ -19,7 +19,7 @@ export const actions: Actions = {
 		})
 
 		try {
-			console.log(items)
+			// console.log(items)
 
 			const newData = await db.insert(SangatData).values({
 				TokenNo: items?.TokenNo,
@@ -38,7 +38,7 @@ export const actions: Actions = {
 				ItemsImageFront: items?.ItemsImageFront
 			})
 
-			console.log('data inserted', newData)
+			// console.log('data inserted', newData)
 
 			if (newData) {
 				isScanned = true

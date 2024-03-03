@@ -44,7 +44,7 @@
 				}
 			})
 
-			console.log('collectionstoreRes', collectionstoreRes)
+			// console.log('collectionstoreRes', collectionstoreRes)
 		}
 	})
 

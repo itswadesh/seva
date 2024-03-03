@@ -19,10 +19,10 @@
 	let password = ''
 
 	onMount(() => {
-		console.log('isLogged', isLogged)
+		// console.log('isLogged', isLogged)
 
 		if (isLogged) {
-			console.log('redirecting to /collect')
+			// console.log('redirecting to /collect')
 			goto('/collect3/step1')
 		}
 	})

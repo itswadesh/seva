@@ -45,12 +45,12 @@
 			loading = true
 
 			return async (result) => {
-				console.log('result', result)
+				// console.log('result', result)
 
 				loading = false
 
 				if (result?.result?.status === 204) {
-					clearStore()
+					// clearStore()
 					goto('/collect3/step1')
 				} else {
 					toast('Something went wrong', {
@@ -64,6 +64,7 @@
 			}
 		}}
 	>
+		{JSON.stringify(formData)}
 		<div class="grid grid-cols-2">
 			<img
 				src={formData.CollectSangatFaceImage}
@@ -128,7 +129,7 @@
 		>
 			{formData.TokenNo}
 		</div>
-		<!-- <ul class="m-0 flex list-none flex-col divide-y border p-0 text-sm">
+		<ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
 			{#each Object.entries(formData) as [key, value], index}
 				<li
 					class="grid grid-cols-2 items-center
@@ -153,7 +154,7 @@
 					<input type="hidden" name={key} {value} />
 				</li>
 			{/each}
-		</ul> -->
+		</ul>
 
 		<Button type="submit" {loading}>Submit</Button>
 	</form>

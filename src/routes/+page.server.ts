@@ -41,7 +41,7 @@ export const actions = {
 				and(eq(ClientProfile.Sewadar_ID, form.email), eq(ClientProfile.password, form.password))
 			)
 
-		console.log('data fetche from DB', checkLoggedin.length)
+		// console.log('data fetche from DB', checkLoggedin.length)
 
 		if (checkLoggedin.length > 0) {
 			isLogged = true

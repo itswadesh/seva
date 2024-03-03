@@ -7,7 +7,7 @@ export const actions: Actions = {
 	async default(event) {
 		const items = Object.fromEntries(await event.request.formData())
 
-		// console.log('items', items);
+		// console.log('items', items)
 
 		try {
 			const newData = await db.insert(SangatData).values({
@@ -27,7 +27,7 @@ export const actions: Actions = {
 				ItemsImageFront: items?.ItemsImageFront
 			})
 
-			console.log('data inserted', newData)
+			// console.log('data inserted', newData)
 		} catch (error) {
 			console.error('Error inserting data:', error)
 		}

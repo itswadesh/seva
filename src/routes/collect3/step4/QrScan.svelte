@@ -30,7 +30,8 @@
 	}
 
 	function scanLoop() {
-		if (!scanning && !videoElement) return
+		if (!videoElement) return
+		if (!scanning) return
 		canvasElement.width = videoElement.videoWidth
 		canvasElement.height = videoElement.videoHeight
 		canvasElement.getContext('2d').drawImage(videoElement, 0, 0)
@@ -42,7 +43,7 @@
 			const data = { TokenNo: code.data }
 			updateStore(data)
 			stopScan()
-			goto('/collect3/preview')
+			goto('/collect3/preview5')
 			// Stop scanning once a QR code is detected
 			// scanning = false;
 		}

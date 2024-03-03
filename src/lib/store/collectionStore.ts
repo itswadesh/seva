@@ -12,6 +12,8 @@ const initialState = {
 	ItemsImageBack: '',
 	ItemsImageFront: '',
 	Mobiles: 0,
+	Laptop: 0,
+	Bag: 0,
 	Others: 0,
 	PowerBank: 0,
 	SmartWatch: 0,
@@ -24,9 +26,16 @@ export const collectionstore = writable(initialState)
 
 export function updateStore(updatedProperties: Partial<typeof initialState>) {
 	collectionstore.update((currentState) => {
+		// console.log(currentState, updatedProperties, { ...currentState, ...updatedProperties })
 		return {
 			...currentState,
 			...updatedProperties
 		}
+	})
+}
+
+export function clearStore() {
+	collectionstore.update(() => {
+		return initialState
 	})
 }

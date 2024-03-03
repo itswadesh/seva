@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 	import { browser } from '$app/environment'
-	import { collectionstore } from '$lib/store/collectionStore'
+	import { clearStore, collectionstore, updateStore } from '$lib/store/collectionStore'
 	import { enhance } from '$app/forms'
 	import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
@@ -8,11 +8,11 @@
 	import { toast } from 'svelte-sonner'
 	import Button from '$lib/components/misiki/button/button.svelte'
 
-	let formData = {}
+	let formData: any = {}
 	let loading = false
-
+	let total = 0
 	const getTotalitems = () => {
-		const total =
+		total =
 			+(formData.Bag || 0) +
 			+(formData.Charger || 0) +
 			+(formData.EarPhone || 0) +
@@ -20,7 +20,8 @@
 			+(formData.Laptop || 0) +
 			+(formData.Mobiles || 0) +
 			+(formData.Others || 0) +
-			+(formData.SmartWatch || 0)
+			+(formData.SmartWatch || 0) +
+			+(formData.PowerBank || 0)
 		return total
 	}
 
@@ -29,10 +30,9 @@
 			collectionstore.subscribe((value) => {
 				if (value) {
 					formData = value
+					getTotalitems()
 				}
 			})
-
-			console.log('formData', formData)
 		}
 	})
 </script>
@@ -50,6 +50,7 @@
 				loading = false
 
 				if (result?.result?.status === 204) {
+					clearStore()
 					goto('/collect3/step1')
 				} else {
 					toast('Something went wrong', {
@@ -70,22 +71,56 @@
 				class="h-40 w-auto object-contain object-left"
 			/>
 			<div class="flex flex-col items-center">
-				<img
-					src={formData.ItemsImageFront}
-					alt="Front Image Missing"
-					class="h-20 w-auto object-contain object-left"
-				/>
-				<img
-					src={formData.ItemsImageBack}
-					alt="Back Image Missing"
-					class="h-20 w-auto object-contain object-left"
-				/>
+				{#if !formData.ItemsImageFront}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="mb-2 h-8 w-8 text-gray-500 dark:text-gray-400"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+						/>
+					</svg>
+				{:else}
+					<img
+						src={formData.ItemsImageFront}
+						alt="Front Image Missing"
+						class="h-20 w-auto object-contain object-left"
+					/>
+				{/if}
+				{#if !formData.ItemsImageBack}
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+						stroke="currentColor"
+						class="mb-2 h-8 w-8 text-gray-500 dark:text-gray-400"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+						/>
+					</svg>
+				{:else}
+					<img
+						src={formData.ItemsImageBack}
+						alt="Back Image Missing"
+						class="h-20 w-auto object-contain object-left"
+					/>
+				{/if}
 			</div>
 		</div>
 		<div class="flex items-center gap-5 text-3xl font-bold">
 			<div class="w-full bg-gray-200 p-4">Total Items</div>
 			<div class="w-32 bg-gray-200 p-4 text-center">
-				{getTotalitems()}
+				{total}
 			</div>
 		</div>
 		<div

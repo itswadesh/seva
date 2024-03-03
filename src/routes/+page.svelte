@@ -46,8 +46,9 @@
 				loading = true
 
 				return async ({ result }) => {
-					// console.log('result', result)
-
+					if (result.status == 307) {
+						goto(result.location)
+					}
 					loading = false
 				}
 			}}

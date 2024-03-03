@@ -4,11 +4,20 @@
 	import Button from '$lib/components/ui/button/button.svelte'
 	import Input from '$lib/components/ui/input/input.svelte'
 	import { compressImage } from '$lib/utils'
+	import { onMount } from 'svelte'
+	import { browser } from '$app/environment'
 
 	let capturedImageURI: string
-	let data = {}
+	let data: any = {}
 	let loading = false
 
+	onMount(() => {
+		if (browser) {
+			collectionstore.subscribe((value) => {
+				data.CollectSangatFaceImage = value.CollectSangatFaceImage
+			})
+		}
+	})
 	function nextStep() {
 		loading = true
 		updateStore(data)
@@ -17,7 +26,7 @@
 	}
 
 	const handleChangeImageSaved = async (e: any) => {
-		const file = e.target.files[0]
+		const file = e.target.files[0] || {}
 
 		// Check if the file size is already below 100kb
 		if (file.size <= 100 * 1024) {
@@ -51,8 +60,12 @@
 					for="image-2"
 					class="dark:hover:bg-bray-800 flex h-80 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
 				>
-					{#if capturedImageURI}
-						<img src={capturedImageURI} alt="" class="h-full w-full object-contain object-center" />
+					{#if capturedImageURI || data.CollectSangatFaceImage}
+						<img
+							src={capturedImageURI || data.CollectSangatFaceImage}
+							alt=""
+							class="h-full w-full object-contain object-center"
+						/>
 					{:else}
 						<div class="flex flex-col items-center justify-center pb-6 pt-5">
 							<svg
@@ -89,6 +102,11 @@
 			</div>
 		</div>
 
-		<Button type="submit" class="w-full" {loading} disabled={!capturedImageURI}>Next Step</Button>
+		<Button
+			type="submit"
+			class="w-full"
+			{loading}
+			disabled={!capturedImageURI && !data.CollectSangatFaceImage}>Next Step</Button
+		>
 	</form>
 </div>

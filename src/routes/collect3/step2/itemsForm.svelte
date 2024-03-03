@@ -3,7 +3,12 @@
 	import { goto } from '$app/navigation'
 	import { Input } from '$lib/components/misiki/input'
 	import { Plus, Minus } from 'radix-icons-svelte'
-	import { updateStore } from '$lib/store/collectionStore'
+	import { updateStore, collectionstore } from '$lib/store/collectionStore'
+	import { onMount } from 'svelte'
+	import { browser } from '$app/environment'
+
+	let loading = false
+	let total = 0
 
 	// export let form: SuperValidated<FormSchema>;
 	export let data = {
@@ -17,9 +22,6 @@
 		Others: 0
 	}
 
-	let loading = false
-	let total = 0
-
 	const getTotal = () => {
 		total =
 			+(data.Bag || 0) +
@@ -31,6 +33,22 @@
 			+(data.Others || 0) +
 			+(data.SmartWatch || 0)
 	}
+
+	onMount(() => {
+		if (browser) {
+			collectionstore.subscribe((value) => {
+				data.Mobiles = value.Mobiles
+				data.Charger = value.Charger
+				data.EarPhone = value.EarPhone
+				data.EarPod = value.EarPod
+				data.SmartWatch = value.SmartWatch
+				data.Laptop = value.Laptop
+				data.Bag = value.Bag
+				data.Others = value.Others
+				getTotal()
+			})
+		}
+	})
 
 	function handleIncrement(item) {
 		++data[item]
@@ -109,9 +127,13 @@
 					type="submit"
 					{loading}
 					disabled={loading || !total}
-					class="ml-2 mr-4 w-full bg-white p-3 text-black"
+					class="ml-2 mr-4 w-full bg-white p-3 text-black {total < 1 ? 'opacity-40' : ''}"
 				>
-					Next Step
+					{#if total < 1}
+						Please add items
+					{:else}
+						Next Step
+					{/if}
 				</button>
 			</div>
 		</div>

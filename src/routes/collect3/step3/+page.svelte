@@ -1,13 +1,24 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
-	import { updateStore } from '$lib/store/collectionStore'
+	import { collectionstore, updateStore } from '$lib/store/collectionStore'
 	import { Button } from '$lib/components/misiki/button'
 	import { compressImage } from '$lib/utils'
+	import { onMount } from 'svelte'
+	import { browser } from '$app/environment'
 
 	let capturedItemImageUrl1
 	let capturedItemImageUrl2
 	let loading = false
-	let data = {}
+	let data: any = {}
+
+	onMount(() => {
+		if (browser) {
+			collectionstore.subscribe((value) => {
+				data.ItemsImageFront = value.ItemsImageFront
+				data.ItemsImageBack = value.ItemsImageBack
+			})
+		}
+	})
 
 	function nextStep() {
 		loading = true
@@ -17,7 +28,7 @@
 	}
 
 	const handleChangeItemImageSaved1 = async (e: any) => {
-		const file = e.target.files[0]
+		const file = e.target.files[0] || {}
 
 		// Check if the file size is already below 100kb
 		if (file.size <= 100 * 1024) {
@@ -41,7 +52,7 @@
 	}
 
 	const handleChangeItemImageSaved2 = async (e: any) => {
-		const file = e.target.files[0]
+		const file = e.target.files[0] || {}
 
 		// Check if the file size is already below 100kb
 		if (file.size <= 100 * 1024) {
@@ -75,9 +86,9 @@
 					for="image-1"
 					class="dark:hover:bg-bray-800 flex h-40 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
 				>
-					{#if capturedItemImageUrl1}
+					{#if capturedItemImageUrl1 || data.ItemsImageFront}
 						<img
-							src={capturedItemImageUrl1}
+							src={capturedItemImageUrl1 || data.ItemsImageFront}
 							alt=""
 							class="h-full w-full object-contain object-center"
 						/>
@@ -121,9 +132,9 @@
 					for="image-2"
 					class="dark:hover:bg-bray-800 flex h-40 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
 				>
-					{#if capturedItemImageUrl2}
+					{#if capturedItemImageUrl2 || data.ItemsImageBack}
 						<img
-							src={capturedItemImageUrl2}
+							src={capturedItemImageUrl2 || data.ItemsImageBack}
 							alt=""
 							class="h-full w-full object-contain object-center"
 						/>
@@ -162,7 +173,12 @@
 			</div>
 		</div>
 
-		<Button type="submit" class="w-full" {loading} disabled={!capturedItemImageUrl1}>
+		<Button
+			type="submit"
+			class="w-full"
+			{loading}
+			disabled={!capturedItemImageUrl1 && !data.ItemsImageFront && !data.ItemsImageBack}
+		>
 			Proceed To Scan Token
 		</Button>
 	</form>

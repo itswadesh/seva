@@ -50,7 +50,7 @@
 				loading = false
 
 				if (result?.result?.status === 204) {
-					// clearStore()
+					clearStore()
 					goto('/collect3/step1')
 				} else {
 					toast('Something went wrong', {

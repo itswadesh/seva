@@ -48,8 +48,7 @@
 				console.log('result', result?.result?.error, result?.result?.error?.message)
 
 				loading = false
-
-				if (result?.result?.status === 204) {
+				if (result?.result?.status === 200) {
 					clearStore()
 					goto('/collect3/step1')
 				} else {

@@ -17,7 +17,15 @@ export const ClientProfile = pgTable('ClientProfile', {
 	Approved: boolean('Approved'),
 	ApprovedBy: text('ApprovedBy'),
 	ApprovalDT: timestamp('ApprovalDT'),
-	Active: boolean('Active')
+	Active: boolean('Active'),
+	createdAt: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updatedAt: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
 })
 
 export const SangatData = pgTable('SangatData', {
@@ -56,7 +64,15 @@ export const SangatData = pgTable('SangatData', {
 	AdminHold_RequestedBy: text('AdminHold_RequestedBy'),
 	Validation: text('Validation'),
 	ValidationDT: timestamp('ValidationDT'),
-	ErrorReason: text('ErrorReason')
+	ErrorReason: text('ErrorReason'),
+	createdAt: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updatedAt: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
 })
 
 export const ProgramInfo = pgTable('ProgramInfo', {
@@ -68,7 +84,15 @@ export const ProgramInfo = pgTable('ProgramInfo', {
 	ProgramBy: text('ProgramBy'),
 	Active: boolean('Active'),
 	ProgramValidity: timestamp('ProgramValidity'),
-	ProgramAdmin: text('ProgramAdmin')
+	ProgramAdmin: text('ProgramAdmin'),
+	createdAt: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updatedAt: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
 })
 
 export const TokenMaster = pgTable('TokenMaster', {
@@ -82,11 +106,27 @@ export const TokenMaster = pgTable('TokenMaster', {
 	PositionCodeOld: text('PositionCodeOld'),
 	Color: text('Color'),
 	Print: boolean('Print'),
-	Bag: boolean('Bag')
+	Bag: boolean('Bag'),
+	createdAt: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updatedAt: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
 })
 
 export const Complaints = pgTable('complaints', {
 	id: serial('id').primaryKey(),
 	pbno: text('pbno').notNull(),
-	comment: text('comment')
+	comment: text('comment'),
+	createdAt: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updatedAt: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
 })

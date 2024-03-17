@@ -45,7 +45,7 @@
 			loading = true
 
 			return async (result) => {
-				console.log('result', result?.error?.message, result?.error?.code)
+				console.log('result', result)
 
 				loading = false
 

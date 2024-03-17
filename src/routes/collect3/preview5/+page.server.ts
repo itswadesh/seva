@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SangatData } from '$lib/db/schema'
 import { db } from '$lib/db/server'
+import { fail } from '@sveltejs/kit'
 import type { Actions } from './$types'
 
 export const actions: Actions = {
@@ -28,8 +29,9 @@ export const actions: Actions = {
 			})
 			return newData
 			// console.log('data inserted', newData)
-		} catch (error) {
-			console.error('Error inserting data:', error)
+		} catch (e: any) {
+			console.error('Error inserting data:', e)
+			fail(e.status, { message: e.body?.message })
 		}
 	}
 }

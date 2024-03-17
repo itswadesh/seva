@@ -94,6 +94,9 @@
 	"editor.linkedEditing": true,
 	// Respect keyboard mappings
 	"keyboard.dispatch": "keyCode",
-	"workbench.editor.empty.hint": "hidden"
+	"workbench.editor.empty.hint": "hidden",
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	}
 	// "workbench.activityBar.location": "hidden"
 }

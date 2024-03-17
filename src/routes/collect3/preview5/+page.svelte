@@ -45,7 +45,7 @@
 			loading = true
 
 			return async (result) => {
-				console.log('result', result)
+				console.log('result', result?.result?.error, result?.result?.error?.message)
 
 				loading = false
 
@@ -54,7 +54,7 @@
 					goto('/collect3/step1')
 				} else {
 					toast('Something went wrong', {
-						description: result?.error?.message,
+						description: result?.result?.error?.message,
 						action: {
 							label: 'Ok',
 							onClick: () => console.log('Ok')

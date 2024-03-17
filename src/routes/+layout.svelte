@@ -30,11 +30,11 @@
 
 		<Nav />
 
-		{#if $page.url.pathname !== '/'}
+		{#if $page.url.pathname !== '/' && $page.url.pathname !== '/auth/login'}
 			<div class="grid grid-cols-5 gap-2 overflow-x-auto px-3 pb-1 pt-3">
 				<button
 					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(1)
-						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						? 'border border-green-500 bg-green-200 font-bold text-black'
 						: ''} {currentStepUrl.includes('/step1')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"
@@ -45,7 +45,7 @@
 
 				<button
 					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(2)
-						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						? 'border border-green-500 bg-green-200 font-bold text-black'
 						: ''} {currentStepUrl.includes('/step2')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"
@@ -57,7 +57,7 @@
 
 				<button
 					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(3)
-						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						? 'border border-green-500 bg-green-200 font-bold text-black'
 						: ''} {currentStepUrl.includes('/step3')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"
@@ -69,7 +69,7 @@
 
 				<button
 					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(4)
-						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						? 'border border-green-500 bg-green-200 font-bold text-black'
 						: ''} {currentStepUrl.includes('/step4')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"
@@ -81,7 +81,7 @@
 
 				<button
 					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(5)
-						? 'border border-green-500 bg-green-200 font-bold text-green-500'
+						? 'border border-green-500 bg-green-200 font-bold text-black'
 						: ''} {currentStepUrl.includes('/preview')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"

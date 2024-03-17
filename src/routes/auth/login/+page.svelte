@@ -33,12 +33,14 @@
 
 		<form on:submit={handleSignIn} class="w-full space-y-4">
 			<div>
-				<label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+				<label for="email" class="block text-sm font-medium text-gray-700">
+					User Name (Mobile):
+				</label>
 				<Input
 					id="email"
 					name="email"
 					bind:value={email}
-					placeholder="Enter your email"
+					placeholder="Enter your username/mobile no"
 					required
 					class="mt-1 block w-full rounded-md px-3  py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>
@@ -70,11 +72,11 @@
 				{/if}</Button
 			>
 		</form>
-		<Button
+		<!-- <Button
 			variant="link"
 			on:click={() => goto('/auth/signup')}
 			class="mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2"
 			>Join as author. Signup Now</Button
-		>
+		> -->
 	</div>
 </div>

@@ -64,7 +64,6 @@
 			}
 		}}
 	>
-		{JSON.stringify(formData)}
 		<div class="grid grid-cols-2">
 			<img
 				src={formData.CollectSangatFaceImage}
@@ -125,7 +124,7 @@
 			</div>
 		</div>
 		<div
-			class="flex items-center justify-center border-4 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"
+			class="flex items-center justify-center border-2 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"
 		>
 			{formData.TokenNo}
 		</div>

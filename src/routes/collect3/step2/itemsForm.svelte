@@ -84,11 +84,14 @@
 </script>
 
 <form method="POST" on:submit|preventDefault={save} class="flex flex-col gap-8">
-	<div class="flex flex-col gap-4">
+	<div class="mb-16 flex flex-col gap-4">
 		{#each Object.entries(data) as [key, value] (key)}
 			<div class="flex items-end gap-2">
 				<div class="flex-1">
 					<Input
+						class={data[key] > 0
+							? 'border border-green-500 bg-green-50 text-xl font-bold text-green-500'
+							: ''}
 						bind:value={data[key]}
 						label={key.charAt(0).toUpperCase() + key.slice(1)}
 						placeholder={`Enter the number of ${key.toLowerCase()}`}

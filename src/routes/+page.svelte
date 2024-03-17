@@ -57,9 +57,9 @@
 				<Input
 					id="email"
 					name="email"
-					label="Email"
+					label="User Name (Mobile)"
 					bind:value={email}
-					placeholder="Enter your email"
+					placeholder="Enter your mobile number"
 					required
 				/>
 

@@ -46,6 +46,10 @@ export const actions = {
 		if (checkLoggedin.length > 0) {
 			isLogged = true
 			redirect(307, '/collect3/step1')
+		}else{
+			return fail(400, {
+				form
+			})
 		}
 	}
 }

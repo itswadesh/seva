@@ -8,6 +8,7 @@ import { superValidate } from 'sveltekit-superforms/server'
 let isLogged = false
 
 export const load = async () => {
+	redirect(307, '/collect3/step1')
 	return {
 		form: await superValidate(formSchema),
 		islogged: isLogged
@@ -46,7 +47,7 @@ export const actions = {
 		if (checkLoggedin.length > 0) {
 			isLogged = true
 			redirect(307, '/collect3/step1')
-		}else{
+		} else {
 			return fail(400, {
 				form
 			})

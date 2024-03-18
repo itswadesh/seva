@@ -21,10 +21,10 @@
 	onMount(() => {
 		// console.log('isLogged', isLogged)
 
-		if (isLogged) {
+		// if (isLogged) {
 			// console.log('redirecting to /collect')
 			goto('/collect3/step1')
-		}
+		// }
 	})
 
 	let showPassword = false

@@ -1,7 +1,7 @@
 import type { Config } from 'drizzle-kit'
 import 'dotenv/config'
-const DATABASE_URL = "postgresql://ritikranjan12:dfxQamq8Jz7j@ep-fragrant-sun-a177s6ib.ap-southeast-1.aws.neon.tech/seva?sslmode=require";
-
+// const DATABASE_URL = "postgresql://ritikranjan12:dfxQamq8Jz7j@ep-fragrant-sun-a177s6ib.ap-southeast-1.aws.neon.tech/seva?sslmode=require";
+const DATABASE_URL = 'postgres://postgres:unknown@148.113.8.188:5432/misiki'
 // if (!process.env.DATABASE_URL) {
 // 	throw new Error('No url')
 // }

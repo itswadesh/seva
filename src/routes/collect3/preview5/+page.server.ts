@@ -27,8 +27,8 @@ export const actions: Actions = {
 				ItemsImageBack: '', //items?.ItemsImageBack,
 				ItemsImageFront: '', //items?.ItemsImageFront
 			})
-			return newData
 			console.log('data inserted', newData)
+			return newData
 		} catch (e: any) {
 			console.error('Error inserting data:', e)
 			fail(e.status, { message: e.body?.message })

@@ -64,13 +64,13 @@
 		}}
 	>
 		<div class="grid grid-cols-2">
-			<!-- <img
+			<img
 				src={formData.CollectSangatFaceImage}
 				alt="Sangat Face Missing"
 				class="h-40 w-auto object-contain object-left"
-			/> -->
+			/>
 			<div class="flex flex-col items-center">
-				<!-- {#if !formData.ItemsImageFront}
+				{#if !formData.ItemsImageFront}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -113,7 +113,7 @@
 						alt="Back Image Missing"
 						class="h-20 w-auto object-contain object-left"
 					/>
-				{/if} -->
+				{/if}
 			</div>
 		</div>
 		<div class="flex items-center gap-5 text-3xl font-bold">
@@ -148,8 +148,9 @@
 							{value || '-'}
 						{/if}
 					</div>
-
-					<input type="hidden" name={key} {value} />
+					{#if key !== 'CollectSangatFaceImage' && key !== 'ItemsImageBack' && key !== 'ItemsImageFront'}
+						<input type="hidden" name={key} {value} />
+					{/if}
 				</li>
 			{/each}
 		</ul>

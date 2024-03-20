@@ -8,27 +8,27 @@ export const actions: Actions = {
 	async default(event) {
 		const items = Object.fromEntries(await event.request.formData())
 
-		// console.log('items', items)
+		console.log('items', items)
 
 		try {
 			const newData = await db.insert(SangatData).values({
 				TokenNo: items?.TokenNo,
 				Collect_SewadarID: items?.Collect_SewadarID,
 				Collect_SewadarName: items?.Collect_SewadarName,
-				Mobiles: items?.Mobiles,
-				EarPhone: items?.EarPhone,
-				EarPod: items?.EarPod,
-				PowerBank: items?.PowerBank,
-				Charger: items?.Charger,
-				SmartWatch: items?.SmartWatch,
-				Others: items?.Others,
-				TotalItems: items?.TotalItems,
+				Mobiles: +items?.Mobiles,
+				EarPhone: +items?.EarPhone,
+				EarPod: +items?.EarPod,
+				PowerBank: +items?.PowerBank,
+				Charger: +items?.Charger,
+				SmartWatch: +items?.SmartWatch,
+				Others: +items?.Others,
+				TotalItems: +items?.TotalItems,
 				CollectSangatFaceImage: '', //items?.CollectSangatFaceImage,
 				ItemsImageBack: '', //items?.ItemsImageBack,
 				ItemsImageFront: '', //items?.ItemsImageFront
 			})
 			return newData
-			// console.log('data inserted', newData)
+			console.log('data inserted', newData)
 		} catch (e: any) {
 			console.error('Error inserting data:', e)
 			fail(e.status, { message: e.body?.message })

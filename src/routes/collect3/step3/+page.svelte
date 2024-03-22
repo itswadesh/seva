@@ -28,51 +28,70 @@
 	}
 
 	const handleChangeItemImageSaved1 = async (e: any) => {
-		const file = e.target.files[0] || {}
+		const file = e.target.files[0];
+    if (!file) {
+        console.error('No file selected');
+        return;
+    }
+    const formData = new FormData();
+    formData.append('file', file);
+		formData.append('type', 'sangatitem')
 
-		// Check if the file size is already below 100kb
-		if (file.size <= 100 * 1024) {
-			capturedItemImageUrl1 = URL.createObjectURL(file)
-			updateStore({ ItemsImageFront: capturedItemImageUrl1 })
-			return
-		}
+    try {
+        const response = await fetch('/auth/savefile', {
+            method: 'POST',
+            body: formData,
+        });
 
-		const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
+        if (!response.ok) {
+            throw new Error(`Server responded with ${response.status}`);
+        }
 
-		// Set the source of the compressed image
-		capturedItemImageUrl1 = compressedDataURL
+        const result = await response.json();
+        console.log('File uploaded successfully:', result);
 
-		// console.log('compressed capturedItemImageUrl1', capturedItemImageUrl1);
-
-		const updatedState = {
-			ItemsImageFront: capturedItemImageUrl1
+        const updatedState = {
+			ItemsImageFront: result.filePath
 		}
 
 		updateStore(updatedState)
-	}
+    } catch (error) {
+        console.error('Error uploading file:', error);
+    }
+}
 
 	const handleChangeItemImageSaved2 = async (e: any) => {
-		const file = e.target.files[0] || {}
+		const file = e.target.files[0];
+    if (!file) {
+        console.error('No file selected');
+        return;
+    }
+    const formData = new FormData();
+    formData.append('file', file);
+		formData.append('type', 'sangatitem')
 
-		// Check if the file size is already below 100kb
-		if (file.size <= 100 * 1024) {
-			capturedItemImageUrl2 = URL.createObjectURL(file)
-			updateStore({ ItemsImageBack: capturedItemImageUrl2 })
-			return
-		}
+    try {
+        const response = await fetch('/auth/savefile', {
+            method: 'POST',
+            body: formData,
+        });
 
-		const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
+        if (!response.ok) {
+            throw new Error(`Server responded with ${response.status}`);
+        }
 
-		// Set the source of the compressed image
-		capturedItemImageUrl2 = compressedDataURL
+        const result = await response.json();
+        console.log('File uploaded successfully:', result);
 
-		// console.log('compressed capturedItemImageUrl2', capturedItemImageUrl2);
-
-		const updatedState = {
-			ItemsImageBack: capturedItemImageUrl2
+        const updatedState = {
+			ItemsImageBack: result.filePath
 		}
 
 		updateStore(updatedState)
+    } catch (error) {
+        console.error('Error uploading file:', error);
+    }
+		
 	}
 </script>
 

@@ -23,9 +23,9 @@ export const actions: Actions = {
 				SmartWatch: +items?.SmartWatch,
 				Others: +items?.Others,
 				TotalItems: +items?.TotalItems,
-				CollectSangatFaceImage: '', //items?.CollectSangatFaceImage,
-				ItemsImageBack: '', //items?.ItemsImageBack,
-				ItemsImageFront: '', //items?.ItemsImageFront
+				CollectSangatFaceImage: items?.CollectSangatFaceImage,
+				ItemsImageBack: items?.ItemsImageBack,
+				ItemsImageFront: items?.ItemsImageFront
 			})
 			console.log('data inserted', newData)
 			return newData

@@ -3,10 +3,11 @@ import { pgTable, serial, text, boolean, integer, timestamp, real } from "drizzl
 export const movies = pgTable("movies", {
 	id: serial('id').primaryKey(),
 	title: text("title").notNull(),
-	director: text("director").notNull(),
-	genre: text("genre").notNull(),
-	duration: real("duration").notNull(),
-	release_date: timestamp("release_date").notNull(),
+	director: text("director"),
+	genre: text("genre"),
+	img: text("img"),
+	duration: real("duration"),
+	release_date: timestamp("release_date"),
 	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
@@ -20,9 +21,9 @@ export const movies = pgTable("movies", {
 export const theaters = pgTable("theaters", {
 	id: serial('id').primaryKey(),
 	name: text("name").notNull(),
-	address: text("address").notNull(),
-	city: text("city").notNull(),
-	capacity: integer("capacity").notNull(),
+	address: text("address"),
+	city: text("city"),
+	capacity: integer("capacity"),
 	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
@@ -60,7 +61,7 @@ export const seats = pgTable("seats", {
 		.references(() => theaters.id),
 	seat_number: text("seat_number").notNull(),
 	row_number: text("row_number").notNull(),
-	is_booked: boolean("is_booked").notNull(),
+	is_ghost: boolean("is_ghost"),
 	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
@@ -73,8 +74,8 @@ export const seats = pgTable("seats", {
 
 export const customers = pgTable("customers", {
 	id: serial('id').primaryKey(),
-	name: text("name").notNull(),
-	email: text("email").notNull(),
+	name: text("name"),
+	email: text("email"),
 	phone: text("phone").notNull(),
 	created_at: timestamp('created_at', {
 		precision: 6,
@@ -144,7 +145,7 @@ export const auditoriums = pgTable("auditoriums", {
 		.notNull()
 		.references(() => theaters.id),
 	name: text("name").notNull(),
-	capacity: integer("capacity").notNull(),
+	capacity: integer("capacity"),
 	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,

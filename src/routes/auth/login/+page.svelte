@@ -1,82 +1,102 @@
-<script>
-	import { goto } from '$app/navigation'
-	import { Reload } from 'radix-icons-svelte'
-	import { toast } from 'svelte-sonner'
+<script lang="ts">
+	import { enhance } from '$app/forms'
+	import { EyeClosed, EyeOpen } from 'radix-icons-svelte'
+	import { formSchema, type LoginFormSchema } from './loginSchema'
+	import { goto } from '../../loginSchemaon'
+	import { onMount } from 'svelte'
+	import * as Form from '$lib/components/ui/form'
 	import Button from '$lib/components/misiki/button/button.svelte'
 	import Input from '$lib/components/misiki/input/input.svelte'
+	import type { SuperValidated } from 'sveltekit-superforms'
 
+	export let form: SuperValidated<LoginFormSchema>
 	export let data
-	let { supabase } = data
-	$: ({ supabase } = data)
+
+	$: isLogged = data.islogged
 
 	let email = ''
-	let password = ''
-	let isLoading = false
-	const handleSignIn = async () => {
-		isLoading = true
-		const x = await supabase.auth.signInWithPassword({
-			email,
-			password
-		})
-		isLoading = false
-		if (x.error?.message) {
-			toast.error(x.error?.message)
-		} else {
-			goto('/')
-		}
+	let load../../$types.jsword = ''
+
+	onMount(() => {
+		
+	})
+
+	let showPassword = false
+
+	function togglePasswordVisibility() {
+		showPassword = !showPassword
 	}
 </script>
 
-<div class="flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-	<div class="w-full">
-		<h1 class="mb-6 text-center text-2xl font-bold">Sign In</h1>
+{#if !isLogged}
+	<div class="py-10">
+		<h2 class="mb-5 text-center text-2xl font-bold">LogIn</h2>
 
-		<form on:submit={handleSignIn} class="w-full space-y-4">
-			<div>
-				<label for="email" class="block text-sm font-medium text-gray-700">
-					User Name (Mobile):
-				</label>
+		<form
+			action="/"
+			method="POST"
+			class="flex flex-col gap-8"
+			use:enhance={() => {
+				loading = true
+
+				return async ({ result }) => {
+					if (result.status == 307) {
+						goto(result.location)
+					}
+					loading = false
+				}
+			}}
+		>
+			<div class="flex flex-col gap-4">
 				<Input
 					id="email"
 					name="email"
+					label="User Name (Mobile)"
 					bind:value={email}
-					placeholder="Enter your username/mobile no"
+					placeholder="Enter your mobile number"
 					required
-					class="mt-1 block w-full rounded-md px-3  py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>
+
+				<div class="relative">
+					<Input
+						id="password"
+						type={showPassword ? 'text' : 'password'}
+						name="password"
+						label="Password"
+						bind:value={password}
+						placeholder="Enter your password"
+						required
+					/>
+
+					<button
+						type="button"
+						class="absolute right-2 top-[38px] transform"
+						on:click={togglePasswordVisibility}
+					>
+						{#if showPassword}
+							<EyeOpen />
+						{:else}
+							<EyeClosed />
+						{/if}
+					</button>
+				</div>
 			</div>
 
-			<div>
-				<label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
-				<Input
-					id="password"
-					type="password"
-					name="password"
-					bind:value={password}
-					placeholder="Enter your password"
-					required
-					class="mt-1 block w-full rounded-md border px-3  py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<br />
-			<Button
-				disabled={isLoading}
-				type="submit"
-				class="flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2 "
-			>
-				{#if isLoading}
-					<Reload class="mr-2 h-4 w-4 animate-spin" />
-					Please wait
-				{:else}
-					Sign in
-				{/if}</Button
-			>
+			<Button type="submit" {loading}>Sign in</Button>
 		</form>
-		<!-- <Button
-			variant="link"
-			on:click={() => goto('/auth/signup')}
-			class="mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2"
-			>Join as author. Signup Now</Button
-		> -->
 	</div>
-</div>
+{:else}
+	<main class="flex flex-col items-center justify-center">
+		<h1 class="mb-8 text-center text-4xl font-semibold">Welcome to the Seva Portal</h1>
+
+		<p class="mb-8 text-center text-lg">Providing essential services for all citizens</p>
+
+		<div class="flex items-center">
+			<a href="/movies">
+				<Button class="mr-4">Movies Now</Button>
+			</a>
+
+			<a href="/services" class="text-sm text-gray-600 underline">View Our Services</a>
+		</div>
+	</main>
+{/if}

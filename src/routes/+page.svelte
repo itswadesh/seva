@@ -19,12 +19,7 @@
 	let password = ''
 
 	onMount(() => {
-		// console.log('isLogged', isLogged)
-
-		// if (isLogged) {
-			// console.log('redirecting to /collect')
-			goto('/collect3/step1')
-		// }
+		
 	})
 
 	let showPassword = false
@@ -98,8 +93,8 @@
 		<p class="mb-8 text-center text-lg">Providing essential services for all citizens</p>
 
 		<div class="flex items-center">
-			<a href="/collect3/step1">
-				<Button class="mr-4">Collect Now</Button>
+			<a href="/movies">
+				<Button class="mr-4">Movies Now</Button>
 			</a>
 
 			<a href="/services" class="text-sm text-gray-600 underline">View Our Services</a>

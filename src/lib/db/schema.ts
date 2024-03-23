@@ -1,132 +1,190 @@
-import { pgTable, serial, text, boolean, integer, timestamp, real, varchar } from 'drizzle-orm/pg-core'
+import { pgTable, serial, text, boolean, integer, timestamp, real } from "drizzle-orm/pg-core";
 
-export const ClientProfile = pgTable('ClientProfile', {
+export const movies = pgTable("movies", {
 	ID: serial('ID').primaryKey(),
-	Sewadar_ID: text('Sewadar_ID'),
-	password: text('password'),
-	ProfileLevel: text('ProfileLevel'),
-	Module: text('Module'),
-	Role: text('Role'),
-	Location: real('Location'),
-	Name: text('Name'),
-	Gender: text('Gender'),
-	DOB: timestamp('DOB'),
-	ClientImage: text('ClientImage'),
-	Centre: text('Centre'),
-	MobileNo: real('MobileNo'),
-	Approved: boolean('Approved'),
-	ApprovedBy: text('ApprovedBy'),
-	ApprovalDT: timestamp('ApprovalDT'),
-	Active: boolean('Active'),
-	createdAt: timestamp('created_at', {
+	movie_id: text("movie_id").primaryKey(),
+	title: text("title").notNull(),
+	director: text("director").notNull(),
+	genre: text("genre").notNull(),
+	duration: real("duration").notNull(),
+	release_date: timestamp("release_date").notNull(),
+	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
+	updated_at: timestamp('updated_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-})
+});
 
-export const SangatData = pgTable('SangatData', {
-	ID: serial('ID').primaryKey(),
-	DuplicateToken: varchar('DuplicateToken'),
-	TokenNo: varchar('TokenNo'),
-	Module: varchar('Module'),
-	Collect_SewadarID: varchar('Collect_SewadarID'),
-	Collect_SewadarUK: integer('Collect_SewadarUK'),
-	Collect_SewadarName: varchar('Collect_SewadarName'),
-	GiveBack_SewadarID: varchar('GiveBack_SewadarID'),
-	GiveBack_SewadarUK: integer('GiveBack_SewadarUK'),
-	GiveBack_SewadarName: varchar('GiveBack_SewadarName'),
-	ProgramID: integer('ProgramID'),
-	Mobiles: integer('Mobiles'),
-	EarPhone: integer('EarPhone'),
-	EarPod: integer('EarPod'),
-	PowerBank: integer('PowerBank'),
-	Charger: integer('Charger'),
-	SmartWatch: integer('SmartWatch'),
-	Laptop: integer('Laptop'),
-	Others: integer('Others'),
-	TotalItems: integer('TotalItems'),
-	CollectSangatFaceImage: varchar('CollectSangatFaceImage'),
-	GiveBackSangatFaceImage: varchar('GiveBackSangatFaceImage'),
-	ItemsImageFront: varchar('ItemsImageFront'),
-	ItemsImageBack: varchar('ItemsImageBack'),
-	Collet_DT: timestamp('Collet_DT'),
-	GiveBackStatus: varchar('GiveBackStatus'),
-	GiveBackDT: timestamp('GiveBackDT'),
-	DisputeReasonID: integer('DisputeReasonID'),
-	DisputeReason: varchar('DisputeReason'),
-	DeviceID_Client: varchar('DeviceID_Client'),
-	AdminHold: boolean('AdminHold'),
-	AdminHoldReason: varchar('AdminHoldReason'),
-	AdminHold_RequestedBy: varchar('AdminHold_RequestedBy'),
-	Validation: varchar('Validation'),
-	ValidationDT: timestamp('ValidationDT'),
-	ErrorReason: varchar('ErrorReason'),
-	createdAt: timestamp('created_at', {
+export const theaters = pgTable("theaters", {
+	theater_id: text("theater_id").primaryKey(),
+	name: text("name").notNull(),
+	address: text("address").notNull(),
+	city: text("city").notNull(),
+	capacity: integer("capacity").notNull(),
+	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
+	updated_at: timestamp('updated_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-})
+});
 
-export const ProgramInfo = pgTable('ProgramInfo', {
-	ProgramID: serial('ProgramID').primaryKey(),
-	ProgramCategory: text('ProgramCategory'),
-	ProgramLocation: text('ProgramLocation'),
-	ProgramStartDate: timestamp('ProgramStartDate'),
-	ProgramCompDate: timestamp('ProgramCompDate'),
-	ProgramBy: text('ProgramBy'),
-	Active: boolean('Active'),
-	ProgramValidity: timestamp('ProgramValidity'),
-	ProgramAdmin: text('ProgramAdmin'),
-	createdAt: timestamp('created_at', {
+export const showtimes = pgTable("showtimes", {
+	showtime_id: text("showtime_id").primaryKey(),
+	movie_id: text("movie_id")
+		.notNull()
+		.references(() => movies.movie_id),
+	theater_id: text("theater_id")
+		.notNull()
+		.references(() => theaters.theater_id),
+	start_time: timestamp("start_time").notNull(),
+	end_time: timestamp("end_time").notNull(),
+	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
+	updated_at: timestamp('updated_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-})
+});
 
-export const TokenMaster = pgTable('TokenMaster', {
-	ID: serial('ID').primaryKey(),
-	RefID: integer('RefID'),
-	ToKenNo: integer('ToKenNo'),
-	Module: text('Module'),
-	Panel: integer('Panel'),
-	ColourCode: text('ColourCode'),
-	PositionCode: text('PositionCode'),
-	PositionCodeOld: text('PositionCodeOld'),
-	Color: text('Color'),
-	Print: boolean('Print'),
-	Bag: boolean('Bag'),
-	createdAt: timestamp('created_at', {
+export const seats = pgTable("seats", {
+	seat_id: text("seat_id").primaryKey(),
+	theater_id: text("theater_id")
+		.notNull()
+		.references(() => theaters.theater_id),
+	seat_number: text("seat_number").notNull(),
+	row_number: text("row_number").notNull(),
+	is_booked: boolean("is_booked").notNull(),
+	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
+	updated_at: timestamp('updated_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-})
+});
 
-export const Complaints = pgTable('complaints', {
-	id: serial('id').primaryKey(),
-	pbno: text('pbno').notNull(),
-	comment: text('comment'),
-	createdAt: timestamp('created_at', {
+export const customers = pgTable("customers", {
+	customer_id: text("customer_id").primaryKey(),
+	name: text("name").notNull(),
+	email: text("email").notNull(),
+	phone: text("phone").notNull(),
+	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
+	updated_at: timestamp('updated_at', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-})
+});
+
+export const bookings = pgTable("bookings", {
+	booking_id: text("booking_id").primaryKey(),
+	customer_id: text("customer_id")
+		.notNull()
+		.references(() => customers.customer_id),
+	showtime_id: text("showtime_id")
+		.notNull()
+		.references(() => showtimes.showtime_id),
+	number_of_tickets: integer("number_of_tickets").notNull(),
+	total_price: real("total_price").notNull(),
+	booking_time: timestamp("booking_time").notNull(),
+	created_at: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updated_at: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+});
+
+export const cities = pgTable("cities", {
+	city_id: text("city_id").primaryKey(),
+	name: text("name").notNull(),
+	created_at: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updated_at: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+});
+
+export const city_cinemas = pgTable("city_cinemas", {
+	city_cinema_id: text("city_cinema_id").primaryKey(),
+	city_id: text("city_id")
+		.notNull()
+		.references(() => cities.city_id),
+	theater_id: text("theater_id")
+		.notNull()
+		.references(() => theaters.theater_id),
+	created_at: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updated_at: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+});
+
+export const auditoriums = pgTable("auditoriums", {
+	auditorium_id: text("auditorium_id").primaryKey(),
+	theater_id: text("theater_id")
+		.notNull()
+		.references(() => theaters.theater_id),
+	name: text("name").notNull(),
+	capacity: integer("capacity").notNull(),
+	created_at: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updated_at: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+});
+
+export const payments = pgTable("payments", {
+	payment_id: text("payment_id").primaryKey(),
+	booking_id: text("booking_id")
+		.notNull()
+		.references(() => bookings.booking_id),
+	amount: real("amount").notNull(),
+	payment_method_id: text("payment_method_id")
+		.notNull()
+		.references(() => payment_methods.method_id),
+	payment_time: timestamp("payment_time").notNull(),
+	created_at: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updated_at: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+});
+
+export const payment_methods = pgTable("payment_methods", {
+	method_id: text("method_id").primaryKey(),
+	name: text("name").notNull(),
+	created_at: timestamp('created_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+	updated_at: timestamp('updated_at', {
+		precision: 6,
+		withTimezone: true,
+	}).defaultNow(),
+});

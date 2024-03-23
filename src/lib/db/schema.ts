@@ -1,8 +1,7 @@
 import { pgTable, serial, text, boolean, integer, timestamp, real } from "drizzle-orm/pg-core";
 
 export const movies = pgTable("movies", {
-	ID: serial('ID').primaryKey(),
-	movie_id: text("movie_id").primaryKey(),
+	id: serial('id').primaryKey(),
 	title: text("title").notNull(),
 	director: text("director").notNull(),
 	genre: text("genre").notNull(),
@@ -19,7 +18,7 @@ export const movies = pgTable("movies", {
 });
 
 export const theaters = pgTable("theaters", {
-	theater_id: text("theater_id").primaryKey(),
+	id: serial('id').primaryKey(),
 	name: text("name").notNull(),
 	address: text("address").notNull(),
 	city: text("city").notNull(),
@@ -35,13 +34,13 @@ export const theaters = pgTable("theaters", {
 });
 
 export const showtimes = pgTable("showtimes", {
-	showtime_id: text("showtime_id").primaryKey(),
-	movie_id: text("movie_id")
+	id: serial('id').primaryKey(),
+	movie_id: integer("movie_id")
 		.notNull()
-		.references(() => movies.movie_id),
-	theater_id: text("theater_id")
+		.references(() => movies.id),
+	theater_id: integer("theater_id")
 		.notNull()
-		.references(() => theaters.theater_id),
+		.references(() => theaters.id),
 	start_time: timestamp("start_time").notNull(),
 	end_time: timestamp("end_time").notNull(),
 	created_at: timestamp('created_at', {
@@ -55,10 +54,10 @@ export const showtimes = pgTable("showtimes", {
 });
 
 export const seats = pgTable("seats", {
-	seat_id: text("seat_id").primaryKey(),
-	theater_id: text("theater_id")
+	id: serial('id').primaryKey(),
+	theater_id: integer("theater_id")
 		.notNull()
-		.references(() => theaters.theater_id),
+		.references(() => theaters.id),
 	seat_number: text("seat_number").notNull(),
 	row_number: text("row_number").notNull(),
 	is_booked: boolean("is_booked").notNull(),
@@ -73,7 +72,7 @@ export const seats = pgTable("seats", {
 });
 
 export const customers = pgTable("customers", {
-	customer_id: text("customer_id").primaryKey(),
+	id: serial('id').primaryKey(),
 	name: text("name").notNull(),
 	email: text("email").notNull(),
 	phone: text("phone").notNull(),
@@ -88,13 +87,13 @@ export const customers = pgTable("customers", {
 });
 
 export const bookings = pgTable("bookings", {
-	booking_id: text("booking_id").primaryKey(),
-	customer_id: text("customer_id")
+	id: serial('id').primaryKey(),
+	customer_id: integer("customer_id")
 		.notNull()
-		.references(() => customers.customer_id),
-	showtime_id: text("showtime_id")
+		.references(() => customers.id),
+	showtime_id: integer("showtime_id")
 		.notNull()
-		.references(() => showtimes.showtime_id),
+		.references(() => showtimes.id),
 	number_of_tickets: integer("number_of_tickets").notNull(),
 	total_price: real("total_price").notNull(),
 	booking_time: timestamp("booking_time").notNull(),
@@ -109,7 +108,7 @@ export const bookings = pgTable("bookings", {
 });
 
 export const cities = pgTable("cities", {
-	city_id: text("city_id").primaryKey(),
+	id: serial('id').primaryKey(),
 	name: text("name").notNull(),
 	created_at: timestamp('created_at', {
 		precision: 6,
@@ -122,13 +121,13 @@ export const cities = pgTable("cities", {
 });
 
 export const city_cinemas = pgTable("city_cinemas", {
-	city_cinema_id: text("city_cinema_id").primaryKey(),
-	city_id: text("city_id")
+	id: serial('id').primaryKey(),
+	city_id: integer("city_id")
 		.notNull()
-		.references(() => cities.city_id),
-	theater_id: text("theater_id")
+		.references(() => cities.id),
+	theater_id: integer("theater_id")
 		.notNull()
-		.references(() => theaters.theater_id),
+		.references(() => theaters.id),
 	created_at: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
@@ -140,10 +139,10 @@ export const city_cinemas = pgTable("city_cinemas", {
 });
 
 export const auditoriums = pgTable("auditoriums", {
-	auditorium_id: text("auditorium_id").primaryKey(),
-	theater_id: text("theater_id")
+	id: serial('id').primaryKey(),
+	theater_id: integer("theater_id")
 		.notNull()
-		.references(() => theaters.theater_id),
+		.references(() => theaters.id),
 	name: text("name").notNull(),
 	capacity: integer("capacity").notNull(),
 	created_at: timestamp('created_at', {
@@ -157,14 +156,14 @@ export const auditoriums = pgTable("auditoriums", {
 });
 
 export const payments = pgTable("payments", {
-	payment_id: text("payment_id").primaryKey(),
-	booking_id: text("booking_id")
+	id: serial('id').primaryKey(),
+	booking_id: integer("booking_id")
 		.notNull()
-		.references(() => bookings.booking_id),
+		.references(() => bookings.id),
 	amount: real("amount").notNull(),
-	payment_method_id: text("payment_method_id")
+	payment_method_id: integer("payment_method_id")
 		.notNull()
-		.references(() => payment_methods.method_id),
+		.references(() => payment_methods.id),
 	payment_time: timestamp("payment_time").notNull(),
 	created_at: timestamp('created_at', {
 		precision: 6,
@@ -177,7 +176,7 @@ export const payments = pgTable("payments", {
 });
 
 export const payment_methods = pgTable("payment_methods", {
-	method_id: text("method_id").primaryKey(),
+	id: serial('id').primaryKey(),
 	name: text("name").notNull(),
 	created_at: timestamp('created_at', {
 		precision: 6,

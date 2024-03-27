@@ -6,8 +6,6 @@
 	import { compressImage } from '$lib/utils'
 	import { onMount } from 'svelte'
 	import { browser } from '$app/environment'
-  import fs from 'fs'
-	import path from 'path'
 
 	let capturedImageURI: string
 	let data: any = {}
@@ -27,35 +25,29 @@
 		goto('/collect3/step2')
 	}
 
-	async function handleChangeImageSaved(e: any) {
-    const file = e.target.files[0];
-    if (!file) {
-        console.error('No file selected');
-        return;
-    }
-    const formData = new FormData();
-    formData.append('file', file);
-		formData.append('type', 'sangatface')
+	const handleChangeImageSaved = async (e: any) => {
+		const file = e.target.files[0] || {}
 
-    try {
-        const response = await fetch('/auth/savefile', {
-            method: 'POST',
-            body: formData,
-        });
+		// Check if the file size is already below 100kb
+		if (file.size <= 100 * 1024) {
+			capturedImageURI = URL.createObjectURL(file)
+			updateStore({ CollectSangatFaceImage: capturedImageURI })
+			return
+		}
 
-        if (!response.ok) {
-            throw new Error(`Server responded with ${response.status}`);
-        }
+		const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
 
-        const result = await response.json();
-        console.log('File uploaded successfully:', result);
+		// Set the source of the compressed image
+		capturedImageURI = compressedDataURL
 
-        // capturedImageURI = URL.createObjectURL(file);
-        updateStore({ CollectSangatFaceImage: result.filePath }); // Assuming the server returns the path
-    } catch (error) {
-        console.error('Error uploading file:', error);
-    }
-}
+		// console.log('compressed capturedImageURI', capturedImageURI);
+
+		const updatedState = {
+			CollectSangatFaceImage: capturedImageURI
+		}
+
+		updateStore(updatedState)
+	}
 </script>
 
 <div>
@@ -96,6 +88,7 @@
 							</p>
 						</div>
 					{/if}
+
 					<input
 						id="image-2"
 						type="file"

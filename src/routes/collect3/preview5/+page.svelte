@@ -148,7 +148,9 @@
 							{value || '-'}
 						{/if}
 					</div>
+					{#if key != 'CollectSangatFaceImage' && key != 'ItemsImageBack' && key != 'ItemsImageFront'}
 						<input type="hidden" name={key} {value} />
+					{/if}
 				</li>
 			{/each}
 		</ul>

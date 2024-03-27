@@ -12,6 +12,7 @@ export const actions: Actions = {
 
 		try {
 			const newData = await db.insert(SangatData).values({
+				// @ts-ignore
 				TokenNo: items?.TokenNo,
 				Collect_SewadarID: items?.Collect_SewadarID,
 				Collect_SewadarName: items?.Collect_SewadarName,

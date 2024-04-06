@@ -1,3 +1,13 @@
+# Steps
+D:/seva
+Right click and open with VSCODE
+
+Press Ctrl+` and Run the following commands
+```
+pnpm i
+pnpm dev
+```
+
 # features
 
 display store data if data available, can move to any step if data available, display face then item image then code at preview with show all details button, preview should not be disabled

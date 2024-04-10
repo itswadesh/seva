@@ -2,13 +2,13 @@ import { ClientProfile } from '$lib/db/schema'
 import { db } from '$lib/db/server'
 import { eq, and } from 'drizzle-orm'
 import { fail, type Actions, redirect } from '@sveltejs/kit'
-import { formSchema } from './loginSchema'
+import { formSchema } from '../loginSchema'
 import { superValidate } from 'sveltekit-superforms/server'
 
 let isLogged = false
 
 export const load = async () => {
-	redirect(307, '/collect3/step1')
+	// redirect(307, '/collect3/step1')
 	return {
 		form: await superValidate(formSchema),
 		islogged: isLogged
@@ -46,7 +46,7 @@ export const actions = {
 
 		if (checkLoggedin.length > 0) {
 			isLogged = true
-			redirect(307, '/collect3/step1')
+			// redirect(307, '/collect3/step1')
 		} else {
 			return fail(400, {
 				form

@@ -4,25 +4,29 @@
 	import { toast } from 'svelte-sonner'
 	import Button from '$lib/components/misiki/button/button.svelte'
 	import Input from '$lib/components/misiki/input/input.svelte'
+	import { signing } from 'hono/utils/jwt/jws'
 
 	export let data
-	let { supabase } = data
-	$: ({ supabase } = data)
 
-	let email = ''
-	let password = ''
+	let phone = '+918895092508'
+	let password = '20/06/1991'
 	let isLoading = false
 	const handleSignIn = async () => {
 		isLoading = true
-		const x = await supabase.auth.signInWithPassword({
-			email,
-			password
-		})
-		isLoading = false
-		if (x.error?.message) {
-			toast.error(x.error?.message)
-		} else {
-			goto('/')
+		try {
+			const userData = await fetch('/api/auth/login', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ phone, password })
+			})
+		} catch (x) {
+			if (x.error?.message) {
+				toast.error(x.error?.message)
+			} else {
+				goto('/')
+			}
+		} finally {
+			isLoading = false
 		}
 	}
 </script>
@@ -33,14 +37,14 @@
 
 		<form on:submit={handleSignIn} class="w-full space-y-4">
 			<div>
-				<label for="email" class="block text-sm font-medium text-gray-700">
+				<label for="phone" class="block text-sm font-medium text-gray-700">
 					User Name (Mobile):
 				</label>
 				<Input
-					id="email"
-					name="email"
-					bind:value={email}
-					placeholder="Enter your username/mobile no"
+					id="phone"
+					name="phone"
+					bind:value={phone}
+					placeholder="Enter your mobile no"
 					required
 					class="mt-1 block w-full rounded-md px-3  py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>
@@ -69,14 +73,15 @@
 					Please wait
 				{:else}
 					Sign in
-				{/if}</Button
-			>
+				{/if}
+			</Button>
 		</form>
-		<!-- <Button
+		<Button
 			variant="link"
 			on:click={() => goto('/auth/signup')}
 			class="mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2"
-			>Join as author. Signup Now</Button
-		> -->
+		>
+			Join as Sewadar. Signup Now</Button
+		>
 	</div>
 </div>

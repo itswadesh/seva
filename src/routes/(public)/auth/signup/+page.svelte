@@ -7,46 +7,18 @@
 	import { toast } from 'svelte-sonner'
 
 	export let data
-	let { supabase } = data
-	$: ({ supabase } = data)
 
-	let email = ''
-	let password = ''
-	let confirmPassword = ''
-	let name = ''
-	let phone = ''
-	let bio = ''
-	let address = ''
-	let city = ''
-	let state = ''
-	let country = ''
-	let zip = ''
-	let googleMeetLink = ''
+	let name = 'Swadesh Behera'
+	let phone = '+918895092508'
+	let dob = '20/06/1991'
 	let isLoading = false
 	const handleSignUp = async () => {
 		isLoading = true
-		await supabase.auth.signUp({
-			email,
-			password
-		})
-		const userData = await fetch('/api/authentication', {
+
+		const userData = await fetch('/api/auth/signup', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				email,
-				name,
-				phone,
-				password,
-				bio,
-				address,
-				city,
-				state,
-				country,
-				zip,
-				googleMeetLink
-			})
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ name, phone, dob })
 		})
 
 		isLoading = false
@@ -67,7 +39,7 @@
 		<h1 class="mb-6 text-center text-2xl font-bold">Sign Up</h1>
 
 		<form on:submit={handleSignUp} class="w-full space-y-4">
-			<div>
+			<!-- <div>
 				<label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
 				<Input
 					id="email"
@@ -77,20 +49,20 @@
 					required
 					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>
-			</div>
+			</div> -->
 			<div>
 				<label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
 				<Input
 					id="name"
 					name="name"
 					bind:value={name}
-					placeholder="Enter your Name"
+					placeholder="Enter your name"
 					required
 					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>
 			</div>
 
-			<div>
+			<!-- <div>
 				<label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
 				<Input
 					id="password"
@@ -116,7 +88,7 @@
 					required
 					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>
-			</div>
+			</div> -->
 			<div>
 				<label for="phone" class="block text-sm font-medium text-gray-700">Phone:</label>
 				<Input
@@ -129,17 +101,17 @@
 				/>
 			</div>
 			<div>
-				<label for="bio" class="block text-sm font-medium text-gray-700">Bio:</label>
+				<label for="dob" class="block text-sm font-medium text-gray-700">DOB:</label>
 				<Input
-					id="bio"
-					name="bio"
-					bind:value={bio}
-					placeholder="Enter your bio"
+					id="dob"
+					name="dob"
+					bind:value={dob}
+					placeholder="Enter your DOB"
 					required
 					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>
 			</div>
-			<div>
+			<!-- <div>
 				<label for="address" class="block text-sm font-medium text-gray-700">Address:</label>
 				<Input
 					id="address"
@@ -206,7 +178,7 @@
 					required
 					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>
-			</div>
+			</div> -->
 
 			<br />
 			<Button
@@ -226,7 +198,8 @@
 			variant="link"
 			on:click={() => goto('/auth/login')}
 			class="mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2"
-			>Already have an acoount? Login Now</Button
 		>
+			Already have an account? Login Now
+		</Button>
 	</div>
 </div>

@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation'
 	import Button from '$lib/components/ui/button/button.svelte'
 	import Input from '$lib/components/ui/input/input.svelte'
+	import axios from 'axios'
 
 	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
@@ -10,27 +11,26 @@
 
 	let name = 'Swadesh Behera'
 	let phone = '+918895092508'
-	let dob = '20/06/1991'
+	let dob = '1985-06-22'
 	let isLoading = false
 	const handleSignUp = async () => {
 		isLoading = true
-
-		const userData = await fetch('/api/auth/signup', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ name, phone, dob })
-		})
-
-		isLoading = false
-		if (x.error?.message) {
-			toast.error(x.error?.message)
-		} else {
-			goto('/')
+		try {
+			const userDataRes = await axios.post('/api/auth/signup', {
+				name,
+				phone,
+				dob
+			})
+			if (userDataRes.data.status == 400) {
+				return toast.error(userDataRes.data.message)
+			}
+			goto('/auth/signup/success')
+		} catch (e) {
+			toast.error(e?.toString())
+			return
+		} finally {
+			isLoading = false
 		}
-	}
-
-	const handleSignOut = async () => {
-		await supabase.auth.signOut()
 	}
 </script>
 
@@ -105,6 +105,7 @@
 				<Input
 					id="dob"
 					name="dob"
+					type="date"
 					bind:value={dob}
 					placeholder="Enter your DOB"
 					required

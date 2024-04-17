@@ -1,23 +1,26 @@
-import { pgTable, serial, text, boolean, integer, timestamp, real, varchar } from 'drizzle-orm/pg-core'
+import { pgTable, serial, date, text, boolean, integer, timestamp, real, varchar, pgEnum } from 'drizzle-orm/pg-core'
+
+// export const RoleEnum = pgEnum('Role', ['WINDOW', 'BACKUP'])
 
 export const ClientProfile = pgTable('ClientProfile', {
 	ID: serial('ID').primaryKey(),
-	Sewadar_ID: text('Sewadar_ID'),
-	password: text('password'),
-	ProfileLevel: text('ProfileLevel'),
+	Sewadar_ID: varchar('Sewadar_ID'),
+	password: varchar('password'),
+	ProfileLevel: varchar('ProfileLevel'),
 	Module: text('Module'),
-	Role: text('Role'),
+	Role: varchar('Role'),
 	Location: real('Location'),
-	Name: text('Name'),
+	Name: varchar('Name'),
 	Gender: text('Gender'),
-	DOB: timestamp('DOB'),
-	ClientImage: text('ClientImage'),
-	Centre: text('Centre'),
-	MobileNo: real('MobileNo'),
-	Approved: boolean('Approved'),
-	ApprovedBy: text('ApprovedBy'),
+	DOB: date('DOB'),
+	ClientImage: varchar('ClientImage'),
+	Centre: varchar('Centre'),
+	MobileNo: varchar('MobileNo'),
+	Approved: boolean('Approved').default(false),
+	ApprovedBy: varchar('ApprovedBy'),
 	ApprovalDT: timestamp('ApprovalDT'),
-	Active: boolean('Active'),
+	Active: boolean('Active').default(true),
+	sid: varchar('sid'),
 	createdAt: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
@@ -77,14 +80,14 @@ export const SangatData = pgTable('SangatData', {
 
 export const ProgramInfo = pgTable('ProgramInfo', {
 	ProgramID: serial('ProgramID').primaryKey(),
-	ProgramCategory: text('ProgramCategory'),
-	ProgramLocation: text('ProgramLocation'),
+	ProgramCategory: varchar('ProgramCategory'),
+	ProgramLocation: varchar('ProgramLocation'),
 	ProgramStartDate: timestamp('ProgramStartDate'),
 	ProgramCompDate: timestamp('ProgramCompDate'),
-	ProgramBy: text('ProgramBy'),
+	ProgramBy: varchar('ProgramBy'),
 	Active: boolean('Active'),
 	ProgramValidity: timestamp('ProgramValidity'),
-	ProgramAdmin: text('ProgramAdmin'),
+	ProgramAdmin: varchar('ProgramAdmin'),
 	createdAt: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,
@@ -99,12 +102,12 @@ export const TokenMaster = pgTable('TokenMaster', {
 	ID: serial('ID').primaryKey(),
 	RefID: integer('RefID'),
 	ToKenNo: integer('ToKenNo'),
-	Module: text('Module'),
+	Module: varchar('Module'),
 	Panel: integer('Panel'),
-	ColourCode: text('ColourCode'),
-	PositionCode: text('PositionCode'),
-	PositionCodeOld: text('PositionCodeOld'),
-	Color: text('Color'),
+	ColourCode: varchar('ColourCode'),
+	PositionCode: varchar('PositionCode'),
+	PositionCodeOld: varchar('PositionCodeOld'),
+	Color: varchar('Color'),
 	Print: boolean('Print'),
 	Bag: boolean('Bag'),
 	createdAt: timestamp('created_at', {
@@ -119,8 +122,8 @@ export const TokenMaster = pgTable('TokenMaster', {
 
 export const Complaints = pgTable('complaints', {
 	id: serial('id').primaryKey(),
-	pbno: text('pbno').notNull(),
-	comment: text('comment'),
+	pbno: varchar('pbno').notNull(),
+	comment: varchar('comment'),
 	createdAt: timestamp('created_at', {
 		precision: 6,
 		withTimezone: true,

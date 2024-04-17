@@ -3,6 +3,66 @@ import { twMerge } from 'tailwind-merge'
 import { cubicOut } from 'svelte/easing'
 import type { TransitionConfig } from 'svelte/transition'
 
+export function date(value: string) {
+	const date = new Date(value)
+	return date.toLocaleString(['en-US'], {
+		month: 'short',
+		day: '2-digit',
+		year: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit'
+	})
+}
+
+export function dateOnly(value: string) {
+	const date = new Date(value)
+	return date.toLocaleString(['en-US'], {
+		month: 'short',
+		day: '2-digit',
+		year: 'numeric'
+	})
+}
+
+export function time(value: string) {
+	const date = new Date(value)
+	return date.toLocaleString(['en-US'], {
+		hour: '2-digit',
+		minute: '2-digit'
+	})
+}
+
+export function truncate(text: string, stop: number, clamp: string) {
+	if (text) return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+	else return ''
+}
+
+export function currency(value: any, currency = '₹', decimals?: number) {
+	const digitsRE = /(\d{3})(?=\d)/g
+	value = parseFloat(value)
+	if (!isFinite(value) || (!value && value !== 0)) return ''
+	currency = currency != null ? currency : '₹'
+	decimals = decimals != null ? decimals : 0
+	const stringified = Math.abs(value).toFixed(decimals)
+	const _int = decimals ? stringified.slice(0, -1 - decimals) : stringified
+	const i = _int.length % 3
+	const head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? ',' : '') : ''
+	const _float = decimals ? stringified.slice(-1 - decimals) : ''
+	const sign = value < 0 ? '-' : ''
+	return sign + currency + ' ' + head + _int.slice(i).replace(digitsRE, '$1,') + _float
+}
+
+export const serialize = (obj: any) => {
+	var str = []
+	for (var p in obj)
+		if (obj.hasOwnProperty(p)) {
+			str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+		}
+	return str.join('&')
+}
+
+export const removeNullish = (obj: any) =>
+	Object.entries(obj).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }

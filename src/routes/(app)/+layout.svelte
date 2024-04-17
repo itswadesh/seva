@@ -5,7 +5,9 @@
 	import { page } from '$app/stores'
 	import Footer from '$lib/components/seva/Footer.svelte'
 	import Nav from '$lib/components/seva/Nav.svelte'
+	import { fade, fly } from 'svelte/transition'
 
+	export let data
 	$: currentStepUrl = $page?.url?.pathname
 	$: currentStep = currentStepUrl.split('/')[2]?.match(/\d+/) || 0
 
@@ -27,7 +29,6 @@
 >
 	<div class="h-full">
 		<!-- Nav -->
-
 		<Nav />
 
 		{#if $page.url.pathname !== '/' && $page.url.pathname !== '/auth/login'}
@@ -94,7 +95,11 @@
 		{/if}
 
 		<div class="flex-1 px-3 py-1">
-			<slot />
+			{#key data.url}
+				<div in:fly={{ y: -50, duration: 100 }} out:fade={{ duration: 100 }} class="">
+					<slot />
+				</div>
+			{/key}
 		</div>
 	</div>
 </main>

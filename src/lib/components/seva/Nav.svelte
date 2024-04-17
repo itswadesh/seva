@@ -1,8 +1,27 @@
 <script>
+	import axios from 'axios'
 	import { Home } from 'radix-icons-svelte'
+	import { toast } from 'svelte-sonner'
+	import { getContext } from 'svelte'
+	import { goto } from '$app/navigation'
+	const userStore = getContext('user')
 
 	// import logoBlack from '$lib/assets/logo-black.png';
 	// import logoWhite from '$lib/assets/logo-white.png';
+
+	let isLoading = false
+	async function logout() {
+		isLoading = true
+		try {
+			await axios.post('/api/auth/logout')
+			userStore.updateMe({})
+			goto('/auth/login')
+		} catch (e) {
+			toast.error(e.response.data)
+		} finally {
+			isLoading = false
+		}
+	}
 </script>
 
 <nav class="sticky inset-x-0 top-0 z-40 border-b bg-white p-3">
@@ -20,7 +39,7 @@
 	<div class="flex items-center">
 		<div class="w-24 px-1 pt-2 text-xl font-bold text-blue-500">A-W-1</div>
 		<div class="w-full truncate px-1 pt-2 text-right text-xl font-bold text-gray-600">
-			[25] Swadesh Kumar Behera
+			[{$userStore.me?.id}] {$userStore.me?.name}
 		</div>
 	</div>
 </nav>

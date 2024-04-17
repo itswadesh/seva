@@ -4,27 +4,30 @@
 	import { toast } from 'svelte-sonner'
 	import Button from '$lib/components/misiki/button/button.svelte'
 	import Input from '$lib/components/misiki/input/input.svelte'
-	import { signing } from 'hono/utils/jwt/jws'
-
+	import axios from 'axios'
 	export let data
 
 	let phone = '+918895092508'
-	let password = '20/06/1991'
+	let password = '22-06-1985'
 	let isLoading = false
+
+	import { getContext } from 'svelte'
+	const userStore = getContext('user')
+
 	const handleSignIn = async () => {
 		isLoading = true
 		try {
-			const userData = await fetch('/api/auth/login', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ phone, password })
-			})
-		} catch (x) {
-			if (x.error?.message) {
-				toast.error(x.error?.message)
-			} else {
-				goto('/')
+			const me = await axios.post('/api/auth/login', { phone, password })
+			if (!me.data.sid) {
+				userStore.updateMe({})
+				toast.error(me.data.message)
+				return
 			}
+			userStore.updateMe(me.data)
+			goto('/')
+		} catch (e) {
+			userStore.updateMe({})
+			toast.error(e.response.data)
 		} finally {
 			isLoading = false
 		}

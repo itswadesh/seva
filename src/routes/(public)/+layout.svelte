@@ -4,6 +4,8 @@
 	import { page } from '$app/stores'
 	import Nav from '$lib/components/seva/Nav.svelte'
 	import NavPublic from '$lib/components/seva/NavPublic.svelte'
+	import { fade, fly } from 'svelte/transition'
+	export let data
 </script>
 
 <main
@@ -18,7 +20,11 @@
 		{/if}
 
 		<div class="flex-1 px-3 py-1">
-			<slot />
+			{#key data.url}
+				<div in:fly={{ y: -50, duration: 100 }} out:fade={{ duration: 100 }} class="">
+					<slot />
+				</div>
+			{/key}
 		</div>
 	</div>
 </main>

@@ -52,7 +52,7 @@
 					clearStore()
 					goto('/collect3/step1')
 				} else {
-					toast('Something went wrong', {
+					toast.error('Something went wrong', {
 						description: result?.result?.error?.message,
 						action: {
 							label: 'Ok',

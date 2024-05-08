@@ -1,13 +1,13 @@
 import { Hono } from 'hono'
 import { db } from '../db/server'
 import 'dotenv/config'
-import { ProgramInfo } from '$lib/db/schema'
+import { ProgramInfo, ClientProfile } from '$lib/db/schema'
 import { setCookie, deleteCookie, getCookie } from 'hono/cookie'
 import { prettyJSON } from 'hono/pretty-json'
-import { basicAuth } from 'hono/basic-auth'
+// import { basicAuth } from 'hono/basic-auth'
 import { and, eq } from 'drizzle-orm'
 import { HTTPException } from 'hono/http-exception'
-import { jwt } from 'hono/jwt'
+// import { jwt } from 'hono/jwt'
 import { logger } from 'hono/logger'
 import { timing } from 'hono/timing'
 
@@ -35,7 +35,8 @@ router.post('/admin/programs', async (c) => {
 	if (me.role !== 'ADMIN') {
 		throw new HTTPException(401, { message: 'Unauthorized' })
 	}
-	let q: any = { Active: active }
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const q: any = { Active: active }
 	category ? q.ProgramCategory = category : null
 	location ? q.ProgramLocation = location : null
 	startDate ? q.ProgramStartDate = startDate : null
@@ -124,10 +125,10 @@ router.post('/auth/signup', async (c) => {
 		Name: name,
 		Role: 'WINDOW',
 		MobileNo: phone,
-		DOB: new Date(dob),
+		DOB: new Date(dob).toISOString(),
 		password: formattedDOB,
 	}
-
+	console.log(postData)
 	const res = await db
 		.insert(ClientProfile).values(postData).returning({ id: ClientProfile.ID, name: ClientProfile.Name, phone: ClientProfile.MobileNo, dob: ClientProfile.DOB, role: ClientProfile.Role })
 	console.log(res)

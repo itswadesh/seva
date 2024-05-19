@@ -3,23 +3,43 @@
 	import Button from '$lib/components/ui/button/button.svelte'
 	import Input from '$lib/components/ui/input/input.svelte'
 	import axios from 'axios'
-
 	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
-
+	import { Label } from '$lib/components/ui/label'
+	import * as RadioGroup from '$lib/components/ui/radio-group'
 	export let data
 
 	let name = 'Swadesh Behera'
 	let phone = '+918895092508'
 	let dob = '1985-06-22'
+	let gender = 'M'
+	let fatherName = 'Bipin Behera'
+	let center = 'Bangalore'
+	let aadharNo = '111111111111'
+	let qualification = 'B-Tech'
 	let isLoading = false
 	const handleSignUp = async () => {
 		isLoading = true
 		try {
+			console.log({
+				name,
+				phone,
+				dob,
+				gender,
+				fatherName,
+				center,
+				aadharNo,
+				qualification
+			})
 			const userDataRes = await axios.post('/api/auth/signup', {
 				name,
 				phone,
-				dob
+				dob,
+				gender,
+				fatherName,
+				center,
+				aadharNo,
+				qualification
 			})
 			if (userDataRes.data.status == 400) {
 				return toast.error(userDataRes.data.message)
@@ -105,9 +125,78 @@
 				<Input
 					id="dob"
 					name="dob"
-					type="date"
+					type="text"
 					bind:value={dob}
 					placeholder="Enter your DOB"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
+			<div>
+				<label for="gender" class="block text-sm font-medium text-gray-700">Gender:</label>
+				<RadioGroup.Root bind:value={gender} class="flex">
+					<div class="flex items-center space-x-2">
+						<RadioGroup.Item value="M" id="male" />
+						<Label for="male">Male</Label>
+					</div>
+					<div class="flex items-center space-x-2">
+						<RadioGroup.Item value="F" id="female" />
+						<Label for="female">Female</Label>
+					</div>
+					<div class="flex items-center space-x-2">
+						<RadioGroup.Item value="T" id="trans" />
+						<Label for="trans">Trans</Label>
+					</div>
+				</RadioGroup.Root>
+			</div>
+			<div>
+				<label for="fatherName" class="block text-sm font-medium text-gray-700">
+					Father's Name:
+				</label>
+				<Input
+					id="fatherName"
+					name="fatherName"
+					type="text"
+					bind:value={fatherName}
+					placeholder="Enter your father name"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
+			<div>
+				<label for="center" class="block text-sm font-medium text-gray-700">Center:</label>
+				<Input
+					id="center"
+					name="center"
+					type="text"
+					bind:value={center}
+					placeholder="Enter Center"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
+			<div>
+				<label for="aadharNo" class="block text-sm font-medium text-gray-700">AADHAR No:</label>
+				<Input
+					id="aadharNo"
+					name="aadharNo"
+					type="text"
+					bind:value={aadharNo}
+					placeholder="Enter your aadhar no"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
+			<div>
+				<label for="qualification" class="block text-sm font-medium text-gray-700">
+					Qualification:
+				</label>
+				<Input
+					id="qualification"
+					name="qualification"
+					type="text"
+					bind:value={qualification}
+					placeholder="Enter your qualification"
 					required
 					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>

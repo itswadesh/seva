@@ -6,6 +6,9 @@
 	import Footer from '$lib/components/seva/Footer.svelte'
 	import Nav from '$lib/components/seva/Nav.svelte'
 	import { fade, fly } from 'svelte/transition'
+	import { onMount } from 'svelte'
+	import { getContext } from 'svelte'
+	const userStore = getContext('user')
 
 	export let data
 	$: currentStepUrl = $page?.url?.pathname
@@ -21,6 +24,12 @@
 	$: isDisabled = (step: number) => {
 		return currentStep < step
 	}
+
+	onMount(() => {
+		if (!$userStore.me?.sid) {
+			goto('/auth/login')
+		}
+	})
 </script>
 
 <main

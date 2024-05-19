@@ -99,7 +99,7 @@ router.post('/auth/login', async (c) => {
 	const sid = crypto.randomUUID()
 	// generate new auth token just in case
 	const authenticatedUser = await db.update(ClientProfile)
-		.set({ sid })
+		.set({ sid, LastSigninDT: new Date() })
 		.where(eq(ClientProfile.MobileNo, phone))
 		.returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, role: ClientProfile.Role, approved: ClientProfile.Approved })
 	setCookie(c, 'me', JSON.stringify(authenticatedUser[0]), { path: '/' })
@@ -108,7 +108,7 @@ router.post('/auth/login', async (c) => {
 
 router.post('/auth/signup', async (c) => {
 	const args = await c.req.json()
-	const { phone, name, dob, gender, fatherName, center, aadharNo, qualification } = args
+	const { phone, name, dob, gender, fatherName, center, aadharNo, qualification, sevaPreference, mobileAvailability } = args
 
 	const formattedDOB = new Date(dob).toLocaleDateString('en-GB').replace(/\//g, '-')
 
@@ -131,7 +131,9 @@ router.post('/auth/signup', async (c) => {
 		Centre: center,
 		FatherName: fatherName,
 		AadharNo: aadharNo,
-		Qualification: qualification
+		Qualification: qualification,
+		SevaPreference: sevaPreference,
+		MobileAvailability: mobileAvailability,
 	}
 	console.log(postData)
 	const res = await db

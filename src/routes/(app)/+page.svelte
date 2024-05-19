@@ -1,10 +1,10 @@
-<div class="hero flex">
-	<a class="section banner food blue-card" href="/collect3/step1">
+<div class="hero mt-2 grid text-center text-5xl font-bold">
+	<a class="section banner food blue-card block" href="/collect3/step1">
 		<!-- <img src="/food-tray.svg" class="w-32" alt="" /> -->
 		<h1>Collect</h1>
 		<!-- <div>Misiki Food Delivery</div> -->
 	</a>
-	<a class="section banner travel red-card" href="/give-back">
+	<a class="section banner travel red-card block" href="/give-back">
 		<!-- <img src="/cab.svg" class="w-32" alt="" /> -->
 		<h1>Give Back</h1>
 		<!-- <div>Misiki Taxi</div> -->
@@ -13,9 +13,8 @@
 
 <style>
 	.banner {
-		flex: 1;
 		margin: 10px;
-		padding: 1rem;
+		padding: 3rem;
 		border-radius: 3px;
 		color: #fff;
 	}

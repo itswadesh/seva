@@ -7,7 +7,7 @@
 	import axios from 'axios'
 	export let data
 
-	let phone = '+918895092508'
+	let phone = '+918895092508' // Separate +91
 	let password = '22-06-1985'
 	let isLoading = false
 
@@ -36,12 +36,12 @@
 
 <div class="flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
 	<div class="w-full">
-		<h1 class="mb-6 text-center text-2xl font-bold">Sign In</h1>
+		<h1 class="mb-6 text-center text-2xl font-bold">Sevadar Login</h1>
 
 		<form on:submit={handleSignIn} class="w-full space-y-4">
 			<div>
-				<label for="phone" class="block text-sm font-medium text-gray-700">
-					User Name (Mobile):
+				<label for="phone" class="block text-lg font-medium text-gray-700">
+					User Name <span class="text-sm text-gray-500">(Mobile Number): </span>
 				</label>
 				<Input
 					id="phone"
@@ -49,12 +49,14 @@
 					bind:value={phone}
 					placeholder="Enter your mobile no"
 					required
-					class="mt-1 block w-full rounded-md px-3  py-2 shadow-sm focus:outline-none  sm:text-sm"
+					class="mt-1 block w-full rounded-md px-3  py-2 shadow-sm focus:outline-none  sm:text-lg"
 				/>
 			</div>
 
 			<div>
-				<label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
+				<label for="password" class="block text-lg font-medium text-gray-700">
+					Password <span class="text-sm text-gray-500">(DOB in dd-mm-yyyy format):</span>
+				</label>
 				<Input
 					id="password"
 					type="password"
@@ -62,29 +64,29 @@
 					bind:value={password}
 					placeholder="Enter your password"
 					required
-					class="mt-1 block w-full rounded-md border px-3  py-2 shadow-sm focus:outline-none  sm:text-sm"
+					class="mt-1 block w-full rounded-md border px-3  py-2 shadow-sm focus:outline-none  sm:text-lg"
 				/>
 			</div>
 			<br />
 			<Button
 				disabled={isLoading}
 				type="submit"
-				class="flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2 "
+				class="flex w-full justify-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
 			>
 				{#if isLoading}
 					<Reload class="mr-2 h-4 w-4 animate-spin" />
 					Please wait
 				{:else}
-					Sign in
+					Login
 				{/if}
 			</Button>
 		</form>
 		<Button
 			variant="link"
 			on:click={() => goto('/auth/signup')}
-			class="mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2"
+			class="mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-lg font-medium text-blue-500 shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2"
 		>
-			Join as Sewadar. Signup Now</Button
-		>
+			New Sevadar Registration
+		</Button>
 	</div>
 </div>

@@ -28,7 +28,7 @@
 	}
 </script>
 
-<div class="mx-1 my-2">
+<div class="mx-1 my-2 w-96">
 	<Popover.Root bind:open let:ids>
 		<Popover.Trigger asChild let:builder>
 			<Button
@@ -44,7 +44,7 @@
 		</Popover.Trigger>
 		<Popover.Content class="bg-white p-0">
 			<Command.Root>
-				<Command.Input placeholder="Search class" class="h-9" />
+				<Command.Input placeholder="Search " class="h-9" />
 				<Command.Empty>No class found.</Command.Empty>
 				<Command.Group>
 					{#each data as classs}

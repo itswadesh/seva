@@ -33,8 +33,8 @@
 			Welcome {$userStore.me.name || ''}
 			<Button variant="link" on:click={logout} class="ml-3">Logout</Button>
 		{:else}
-			<a href="/auth/signup" class=" px-1">SignUp</a>
-			<a href="/auth/login" class=" truncate px-1 text-right text-gray-600">Login</a>
+			<!-- <a href="/auth/signup" class=" px-1">SignUp</a>
+			<a href="/auth/login" class=" truncate px-1 text-right text-gray-600">Login</a> -->
 		{/if}
 	</div>
 </nav>

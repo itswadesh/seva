@@ -9,6 +9,7 @@
 	export let placeholder = 'Enter your name'
 	export let type = 'text'
 	export let maxlength = null
+	export let autofocus = false
 	export let errors
 </script>
 
@@ -23,6 +24,7 @@
 		{type}
 		{placeholder}
 		{maxlength}
+		{autofocus}
 		class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-lg {errors[
 			id
 		]

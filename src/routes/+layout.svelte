@@ -23,7 +23,7 @@
 	/>
 </svelte:head>
 <main
-	class="mx-auto flex min-h-screen w-full flex-col justify-between border-l border-r
+	class="mx-auto flex min-h-screen w-full flex-col justify-between
 	{$page.url?.pathname.startsWith('/admin') ? 'max-w-full' : ' max-w-md'}"
 >
 	<div class="h-full">

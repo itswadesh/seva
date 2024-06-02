@@ -25,7 +25,7 @@ export const ClientProfile = pgTable('ClientProfile', {
 	MobileAvailability: varchar('MobileAvailability'),
 	Skills: varchar('Skills'),
 	ApprovalDT: timestamp('ApprovalDT'),
-	LastSigninDT: timestamp('ApprovalDT'),
+	LastSigninDT: timestamp('LastSigninDT'),
 	Active: boolean('Active').default(false),
 	sid: varchar('sid'),
 	createdAt: timestamp('created_at', {

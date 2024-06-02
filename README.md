@@ -1,18 +1,15 @@
-Meeting - 19-05-2024
------------------------
-Add validation to signup and login form
-remove +91 (10 digit, numberm start with > 5)
+## Meeting - 19-05-2024
 
 Approved is 1 time process, Before each program, all will be inactive
 Finalize ProgramInfo table
 
-
-
 # Steps
+
 D:/seva
 Right click and open with VSCODE
 
 Press Ctrl+` and Run the following commands
+
 ```
 pnpm i
 pnpm dev

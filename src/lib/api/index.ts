@@ -60,9 +60,9 @@ router.post('/admin/users', async (c) => {
 		me = JSON.parse(cookieMe)
 	}
 	// console.log({ id, approved })
-	if (me.role !== 'ADMIN') {
-		throw new HTTPException(401, { message: 'Unauthorized' })
-	}
+	// if (me.role !== 'ADMIN') {
+	// 	throw new HTTPException(401, { message: 'Unauthorized' })
+	// }
 	let resA = []
 	if (approved === undefined) { // When only role is changed
 		resA = await db
@@ -73,6 +73,24 @@ router.post('/admin/users', async (c) => {
 	}
 	const res = resA[0]
 	return c.json(res)
+})
+
+router.post('/admin/users/all', async (c) => {
+	const args = await c.req.json()
+	const { approved } = args
+	const cookieMe = getCookie(c, 'me')
+	let me
+	if (cookieMe) {
+		me = JSON.parse(cookieMe)
+	}
+	// console.log({ id, approved })
+	// if (me.role !== 'ADMIN') {
+	// 	throw new HTTPException(401, { message: 'Unauthorized' })
+	// }
+	let resA = []
+	resA = await db
+		.update(ClientProfile).set({ Approved: approved, ApprovedBy: approved ? me.id : null, ApprovalDT: approved ? new Date() : null }).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+	return c.json(resA)
 })
 
 router.post('/auth/login', async (c) => {

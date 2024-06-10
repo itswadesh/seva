@@ -3,12 +3,13 @@
 	import { Checkbox } from '$lib/components/ui/checkbox/index'
 	// import * as Select from '$lib/components/ui/select/index'
 	import Select from '$lib/components/Select.svelte'
-
+	import Button from '$lib/components/misiki/button/button.svelte'
 	import axios from 'axios'
 	import { toast } from 'svelte-sonner'
 	import { Value } from 'radix-icons-svelte'
 	let checked = false
 	export let data
+	let isLoading = false
 	const roles = [
 		{ name: 'ADMIN', value: 'ADMIN' },
 		{ name: 'WINDOW', value: 'WINDOW' },
@@ -19,8 +20,50 @@
 </script>
 
 <div class="flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-	<div class="w-full text-center">
+	<div class="w-full text-center text-black">
 		<h1 class="mb-6 text-center text-2xl font-bold">Users</h1>
+		<div>
+			<div class="mb-4 flex items-center justify-between">
+				<div class="flex items-center space-x-2">
+					<div class="flex items-center justify-between space-x-2">
+						<Button
+							type="submit"
+							class="flex w-full justify-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
+							on:click={async () => {
+								try {
+									const res = await axios.post('/api/admin/users/all', {
+										approved: true
+									})
+									toast.success(`All User Accepted successfully`)
+									window.location.reload()
+								} catch (e) {
+									toast.error(e.response.data)
+								}
+							}}
+						>
+							Approve all</Button
+						>
+						<Button
+							type="submit"
+							class="flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
+							on:click={async () => {
+								try {
+									const res = await axios.post('/api/admin/users/all', {
+										approved: false
+									})
+									toast.error(`All User Rejected Successfully`)
+									window.location.reload()
+								} catch (e) {
+									toast.error(e.response.data)
+								}
+							}}
+						>
+							Reject all</Button
+						>
+					</div>
+				</div>
+			</div>
+		</div>
 		{#if users.length === 0}
 			No user registered yet
 		{:else}
@@ -61,7 +104,7 @@
 											{:else if key === 'approved_at'}
 												{date(value)}
 											{:else if key === 'role'}
-												<div class="flex items-center space-x-2">
+												<div class="flex items-center space-x-2 text-white">
 													<Select
 														title="Select role"
 														{value}
@@ -83,6 +126,7 @@
 											{:else if key === 'approved'}
 												<div class="flex items-center space-x-2">
 													<Checkbox
+														class="rounded border border-gray-300"
 														id="terms"
 														checked={value}
 														onCheckedChange={async (v) => {

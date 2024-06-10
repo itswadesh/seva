@@ -53,23 +53,30 @@ router.post('/admin/programs', async (c) => {
 
 router.post('/admin/users', async (c) => {
 	const args = await c.req.json()
-	const { id, approved, role } = args
+	const { id, approved, role, pending_approved } = args
+	console.log({ id, approved, role, pending_approved })
+	const userId = id
 	const cookieMe = getCookie(c, 'me')
 	let me
 	if (cookieMe) {
 		me = JSON.parse(cookieMe)
 	}
 	// console.log({ id, approved })
-	// if (me.role !== 'ADMIN') {
-	// 	throw new HTTPException(401, { message: 'Unauthorized' })
-	// }
+	if (me.role !== 'ADMIN') {
+		throw new HTTPException(401, { message: 'Unauthorized' })
+	}
 	let resA = []
 	if (approved === undefined) { // When only role is changed
+		console.log('role changed')
 		resA = await db
 			.update(ClientProfile).set({ Role: role }).where(eq(ClientProfile.ID, id)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+	} else if (!pending_approved) { // to approve users in login-requests
+		console.log('pending_approved changed')
+		resA = await db
+			.update(ClientProfile).set({ Approved: approved, ApprovedBy: approved ? me?.id : null, ApprovalDT: approved ? new Date() : null, Pending_Approval: pending_approved }).where(eq(ClientProfile.ID, userId)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
 	} else {
 		resA = await db
-			.update(ClientProfile).set({ Approved: approved, ApprovedBy: approved ? me.id : null, ApprovalDT: approved ? new Date() : null }).where(eq(ClientProfile.ID, id)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+			.update(ClientProfile).set({ Approved: approved, ApprovedBy: approved ? me?.id : null, ApprovalDT: approved ? new Date() : null }).where(eq(ClientProfile.ID, userId)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
 	}
 	const res = resA[0]
 	return c.json(res)
@@ -77,19 +84,24 @@ router.post('/admin/users', async (c) => {
 
 router.post('/admin/users/all', async (c) => {
 	const args = await c.req.json()
-	const { approved } = args
+	const { approved, pending_approved } = args
 	const cookieMe = getCookie(c, 'me')
 	let me
 	if (cookieMe) {
 		me = JSON.parse(cookieMe)
 	}
 	// console.log({ id, approved })
-	// if (me.role !== 'ADMIN') {
-	// 	throw new HTTPException(401, { message: 'Unauthorized' })
-	// }
+	if (me.role !== 'ADMIN') {
+		throw new HTTPException(401, { message: 'Unauthorized' })
+	}
 	let resA = []
-	resA = await db
-		.update(ClientProfile).set({ Approved: approved, ApprovedBy: approved ? me.id : null, ApprovalDT: approved ? new Date() : null }).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+	if (!pending_approved) { // to approve users in login-requests
+		resA = await db
+			.update(ClientProfile).set({ Approved: approved, ApprovedBy: approved ? me.id : null, ApprovalDT: approved ? new Date() : null, Pending_Approval: pending_approved }).where(eq(ClientProfile.Pending_Approval, true)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+	} else {
+		resA = await db
+			.update(ClientProfile).set({ Approved: approved, ApprovedBy: approved ? me.id : null, ApprovalDT: approved ? new Date() : null }).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+	}
 	return c.json(resA)
 })
 
@@ -109,6 +121,8 @@ router.post('/auth/login', async (c) => {
 		return c.json({ sid: null, message: 'Invalid phone or password' })
 	}
 	if (res.approved == false) {
+		await db
+			.update(ClientProfile).set({ Pending_Approval: true }).where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.password, password)))
 		return c.json({ sid: null, message: 'Please ask admin to activate your account' })
 	}
 	// setCookie(c, 'connect.sid', 'res.id', {

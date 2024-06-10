@@ -86,7 +86,7 @@
 				.string({ required_error: 'Please enter your center' })
 				.min(1, { message: 'Please enter satsang center' }),
 			aadharNo: z
-				.number({ required_error: 'Please enter your aadhar number' })
+				.string({ required_error: 'Please enter your aadhar number' })
 				.min(12, { message: 'AADHAR number must be 12 characters' }),
 			qualification: z
 				.string({ required_error: 'Please enter your qualification' })

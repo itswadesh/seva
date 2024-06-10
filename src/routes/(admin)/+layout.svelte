@@ -36,6 +36,13 @@
 			>
 				Sangat Data
 			</a>
+
+			<a
+				href="/admin/login-requests"
+				class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+			>
+				Login Requests
+			</a>
 		</nav>
 
 		<div class="flex-1 px-3 py-1">

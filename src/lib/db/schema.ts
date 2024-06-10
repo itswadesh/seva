@@ -4,6 +4,7 @@ import { pgTable, serial, date, text, boolean, integer, timestamp, real, varchar
 
 export const ClientProfile = pgTable('ClientProfile', {
 	ID: serial('ID').primaryKey(),
+	Pending_Approval: boolean('Pending_Approval').default(true),
 	Sewadar_ID: varchar('Sewadar_ID'),
 	Client_Image: varchar('Client_Image'),
 	FatherName: varchar('FatherName'),
@@ -15,9 +16,6 @@ export const ClientProfile = pgTable('ClientProfile', {
 	Role: varchar('Role'),
 	Location: real('Location'),
 	Name: varchar('Name'),
-	FatherName: varchar('FatherName'),
-	AadharNo: varchar('AadharNo').unique(),
-	Qualification: varchar('Qualification'),
 	Gender: text('Gender'),
 	DOB: date('DOB'),
 	ClientImage: varchar('ClientImage'),

@@ -12,6 +12,13 @@ const config = {
 		csrf: {
 			checkOrigin: false
 		}
+	},
+	vitePlugin: {
+		inspector: {
+			toggleKeyCombo: 'meta-shift',
+			showToggleButton: 'always',
+			toggleButtonPos: 'bottom-right'
+		}
 	}
 }
 

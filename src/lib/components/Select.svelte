@@ -10,10 +10,12 @@
 	let dispatch = createEventDispatcher() // Optional type definition for events
 
 	export let data = []
+	export let id
 	export let title = ''
-
+	export let errors = {}
 	let open = false
 	export let value = ''
+	export let label = ''
 
 	$: selectedValue = data.find((f) => f.value === value)?.name ?? title
 
@@ -28,7 +30,10 @@
 	}
 </script>
 
-<div class="mx-1 my-2">
+<label for="sevaPreference" class=" block text-lg text-gray-700">
+	{label}
+</label>
+<div class="mx-1 my-2 w-96">
 	<Popover.Root bind:open let:ids>
 		<Popover.Trigger asChild let:builder>
 			<Button
@@ -44,7 +49,7 @@
 		</Popover.Trigger>
 		<Popover.Content class="bg-white p-0">
 			<Command.Root>
-				<Command.Input placeholder="Search class" class="h-9" />
+				<Command.Input placeholder="Search " class="h-9" />
 				<Command.Empty>No class found.</Command.Empty>
 				<Command.Group>
 					{#each data as classs}
@@ -65,3 +70,6 @@
 		</Popover.Content>
 	</Popover.Root>
 </div>
+{#if errors[id]}
+	<span class="text-red-500">{errors[id]}</span>
+{/if}

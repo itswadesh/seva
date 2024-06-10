@@ -2,6 +2,7 @@
 	import axios from 'axios'
 	import { Home } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
+	import Button from '$lib/components/misiki/button/button.svelte'
 	import { getContext } from 'svelte'
 	import { goto } from '$app/navigation'
 	const userStore = getContext('user')
@@ -41,5 +42,6 @@
 		<div class="w-full truncate px-1 pt-2 text-right text-xl font-bold text-gray-600">
 			[{$userStore.me?.id}] {$userStore.me?.name}
 		</div>
+		<Button variant="link" on:click={logout} class="ml-3 pt-4">Logout</Button>
 	</div>
 </nav>

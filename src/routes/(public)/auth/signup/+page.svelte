@@ -1,38 +1,119 @@
 <script lang="ts">
+	import { z } from 'zod'
 	import { goto } from '$app/navigation'
 	import Button from '$lib/components/ui/button/button.svelte'
 	import Input from '$lib/components/ui/input/input.svelte'
 	import axios from 'axios'
-
 	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
+	import { Label } from '$lib/components/ui/label'
+	import * as RadioGroup from '$lib/components/ui/radio-group'
+	import Select from '$lib/components/Select.svelte'
+	import { Textbox } from '$lib/components/misiki'
 
 	export let data
 
+	let avatar = null
 	let name = 'Swadesh Behera'
-	let phone = '+918895092508'
+	let phone = '8895092508'
+	let whatsappNo = '8895092508'
 	let dob = '1985-06-22'
-	let profilePhoto = ''
-	let gender = ''
-	let fatherName = ''
-	let centerName = ''
-	let adhaarNumber = ''
-	let qualification = ''
+	let gender = 'M'
+	let fatherName = 'Bipin Behera'
+	let center = 'Bangalore'
+	let aadharNo = '111111111111'
+	let qualification = 'B-Tech'
+	let sevaPreference = ''
+	let mobileAvailability = ''
 	let isLoading = false
+
+	const sevaPreferenceDD = [
+		{ name: 'Mobile Window Seva-Front', value: 'Mobile Window Seva-Front' },
+		{ name: 'Mobile Backup Seva-Rear', value: 'Mobile Backup Seva-Rear' },
+		{ name: 'Queue Management', value: 'Queue Management' },
+		{ name: 'Mobile Security', value: 'Mobile Security' },
+		{ name: 'Planning & Administration', value: 'Planning & Administration' }
+	]
+	const mobileAvailabilityDD = [
+		{ name: 'Yes - Android Mobile', value: 'Yes - Android Mobile' },
+		{ name: 'Yes - iPhone Mobile', value: 'Yes - iPhone Mobile' },
+		{ name: 'No', value: 'No' }
+	]
+	let skills = ''
+	const skillsPills = [
+		{ name: 'None', value: 'None' },
+		{ name: 'MS Office Basic', value: 'MS Office Basic' },
+		{ name: 'MS Office Expert', value: 'MS Office Expert' },
+		{ name: 'Web Development', value: 'Web Development' },
+		{ name: 'Android App Development', value: 'Android App Development' },
+		{ name: 'Networking', value: 'Networking' }
+	]
+	let errors = {}
+
 	const handleSignUp = async () => {
+		const user = {
+			name,
+			phone,
+			whatsappNo,
+			dob,
+			gender,
+			fatherName,
+			center,
+			aadharNo,
+			qualification,
+			sevaPreference,
+			mobileAvailability,
+			skills
+		}
+		const registerSchema = z.object({
+			name: z
+				.string({ required_error: 'Please enter your name' })
+				.min(1, { message: 'Name can not be less than 1 character(s)' }),
+			phone: z
+				.string({ invalid_type_error: 'Incorrect phone number' })
+				.regex(/^\d{10}$/, { message: 'Phone number must be exactly 10 digits' }),
+			whatsappNo: z
+				.string({ invalid_type_error: 'Incorrect whatsapp number' })
+				.regex(/^\d{10}$/, { message: 'Whatsapp number must be exactly 10 digits' }),
+			dob: z
+				.string({ required_error: 'Please enter your date of birth' })
+				.min(1, { message: 'Please enter your date of birth' }),
+			gender: z.string({ required_error: 'Please select your gender' }),
+			fatherName: z
+				.string({ required_error: 'Please enter your father name' })
+				.min(1, { message: 'Please enter your father name' }),
+			center: z
+				.string({ required_error: 'Please enter your center' })
+				.min(1, { message: 'Please enter satsang center' }),
+			aadharNo: z
+				.number({ required_error: 'Please enter your aadhar number' })
+				.min(12, { message: 'AADHAR number must be 12 characters' }),
+			qualification: z
+				.string({ required_error: 'Please enter your qualification' })
+				.min(1, { message: 'Please enter your qualification' }),
+			mobileAvailability: z
+				.string({ required_error: 'Please select your mobile availability' })
+				.min(1, { message: 'Please select your mobile availability' }),
+			sevaPreference: z
+				.string({ required_error: 'Please select your seva preference' })
+				.min(1, { message: 'Please select your seva preference' }),
+			skills: z
+				.string({ required_error: 'Please select your skills' })
+				.min(1, { message: 'Please select your skills' })
+		})
+
+		try {
+			const result = registerSchema.parse(user)
+			console.log('SUCCESS')
+			console.log(result)
+		} catch (e) {
+			const { fieldErrors: err } = e.flatten()
+			errors = err
+			return toast.error(errors[Object.keys(errors)[0]][0])
+		}
 		isLoading = true
 		try {
-			const userDataRes = await axios.post('/api/auth/signup', {
-				name,
-				phone,
-				dob,
-				profilePhoto,
-				gender,
-				fatherName,
-				centerName,
-				adhaarNumber,
-				qualification
-			})
+			const userDataRes = await axios.post('/api/auth/signup', user)
 			if (userDataRes.data.status == 400) {
 				return toast.error(userDataRes.data.message)
 			}
@@ -44,227 +125,147 @@
 			isLoading = false
 		}
 	}
+	const phoneChanged = () => {
+		if (phone.length == 10 && !whatsappNo) {
+			whatsappNo = phone
+		}
+	}
 </script>
 
-<div class="flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+<div class=" flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
 	<div class="w-full">
-		<h1 class="mb-6 text-center text-2xl font-bold">Sign Up</h1>
+		<h1 class="mb-6 text-center text-2xl font-bold">New Sewadar Registration</h1>
 
 		<form on:submit={handleSignUp} class="w-full space-y-4">
-			<!-- <div>
-				<label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
-				<Input
-					id="email"
-					name="email"
-					bind:value={email}
-					placeholder="Enter your email"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div> -->
+			<div>avatar with mobile camera</div>
+			<Textbox
+				id="name"
+				name="name"
+				label="Full Name:"
+				bind:value={name}
+				placeholder="Enter your name"
+				{errors}
+			/>
+
+			<Textbox
+				id="phone"
+				name="phone"
+				type="tel"
+				label="Phone (Use this as UserName):"
+				bind:value={phone}
+				placeholder="Enter your phone"
+				{errors}
+				on:change={phoneChanged}
+			/>
+
+			<Textbox
+				id="whatsappNo"
+				name="whatsappNo"
+				type="tel"
+				label="Whatsapp mobile number:"
+				bind:value={whatsappNo}
+				placeholder="Enter your whatsapp number"
+				{errors}
+			/>
+
+			<Textbox
+				id="dob"
+				name="dob"
+				type="date"
+				label="Date of Birth:"
+				bind:value={dob}
+				placeholder="Enter your date of birth"
+				{errors}
+			/>
 			<div>
-				<label for="name" class="block text-sm font-medium text-gray-700">Profile Photo:</label>
-				<Input
-					type="url"
-					id="profilePhoto"
-					name="profilePhoto"
-					bind:value={profilePhoto}
-					placeholder="Image Url"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<div>
-				<label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
-				<Input
-					id="name"
-					name="name"
-					bind:value={name}
-					placeholder="Enter your name"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<div>
-				<label for="name" class="block text-sm font-medium text-gray-700">Gender:</label>
-				<Input
-					id="gender"
-					name="gender"
-					bind:value={gender}
-					placeholder="Male or Female"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<div>
-				<label for="name" class="block text-sm font-medium text-gray-700">Father's Name:</label>
-				<Input
-					id="fatherName"
-					name="fatherName"
-					bind:value={fatherName}
-					placeholder="Enter your Father's name"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<!-- <div>
-				<label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
-				<Input
-					id="password"
-					type="password"
-					name="password"
-					bind:value={password}
-					placeholder="Enter your password"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
+				<label for="gender" class=" block text-lg text-gray-700">Gender:</label>
+				<RadioGroup.Root bind:value={gender} class="flex">
+					<div class="flex items-center space-x-2">
+						<RadioGroup.Item value="M" id="male" />
+						<Label for="male">Male</Label>
+					</div>
+					<div class="flex items-center space-x-2">
+						<RadioGroup.Item value="F" id="female" />
+						<Label for="female">Female</Label>
+					</div>
+				</RadioGroup.Root>
 			</div>
 
-			<div>
-				<label for="confirmPassword" class="block text-sm font-medium text-gray-700"
-					>Confirm Password:</label
-				>
-				<Input
-					id="confirmPassword"
-					type="password"
-					name="confirmPassword"
-					bind:value={confirmPassword}
-					placeholder="Enter your confirmPassword"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div> -->
-			<div>
-				<label for="phone" class="block text-sm font-medium text-gray-700">Phone:</label>
-				<Input
-					id="phone"
-					name="phone"
-					bind:value={phone}
-					placeholder="Enter your phone"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<div>
-				<label for="dob" class="block text-sm font-medium text-gray-700">DOB:</label>
-				<Input
-					id="dob"
-					name="dob"
-					type="date"
-					bind:value={dob}
-					placeholder="Enter your DOB"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
+			<Textbox
+				id="fatherName"
+				name="fatherName"
+				label="Father's Name:"
+				bind:value={fatherName}
+				placeholder="Enter your father name"
+				}
+				{errors}
+			/>
+
+			<Textbox
+				id="center"
+				name="center"
+				label="Satsang Center Name:"
+				bind:value={center}
+				placeholder="Enter satsang center"
+				{errors}
+			/>
+
+			<Textbox
+				id="aadharNo"
+				name="aadharNo"
+				type="tel"
+				maxlength="12"
+				label="AADHAR Number:"
+				bind:value={aadharNo}
+				placeholder="Enter your aadhar number"
+				{errors}
+			/>
+
+			<Textbox
+				id="qualification"
+				name="qualification"
+				label="Qualification:"
+				bind:value={qualification}
+				placeholder="Enter your qualification"
+				{errors}
+			/>
 
 			<div>
-				<label for="name" class="block text-sm font-medium text-gray-700">Center:</label>
-				<Input
-					id="centerName"
-					name="centerName"
-					bind:value={centerName}
-					placeholder="Enter Center name"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				<Select
+					title="Select"
+					id="mobileAvailability"
+					label="Do you have Mobile?:"
+					bind:value={mobileAvailability}
+					data={mobileAvailabilityDD || []}
+					{errors}
 				/>
 			</div>
 			<div>
-				<label for="name" class="block text-sm font-medium text-gray-700">Aadhar No:</label>
-				<Input
-					id="adhaarNumber"
-					name="adhaarNumber"
-					bind:value={adhaarNumber}
-					placeholder="Enter your AdhaarNumber No"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				<Select
+					title="Select"
+					label="Seva Preference:"
+					id="sevaPreference"
+					bind:value={sevaPreference}
+					data={sevaPreferenceDD || []}
+					{errors}
 				/>
 			</div>
 			<div>
-				<label for="name" class="block text-sm font-medium text-gray-700">Qualification:</label>
-				<Input
-					id="qualification"
-					name="qualification"
-					bind:value={qualification}
-					placeholder="Enter your qualifications"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				<Select
+					title="Select"
+					label="Please mention your computer skills:"
+					id="skills"
+					bind:value={skills}
+					data={skillsPills || []}
+					{errors}
 				/>
 			</div>
-			<!-- <div>
-				<label for="address" class="block text-sm font-medium text-gray-700">Address:</label>
-				<Input
-					id="address"
-					name="address"
-					bind:value={address}
-					placeholder="Enter your address"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<div>
-				<label for="city" class="block text-sm font-medium text-gray-700">City:</label>
-				<Input
-					id="city"
-					name="city"
-					bind:value={city}
-					placeholder="Enter your city"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<div>
-				<label for="state" class="block text-sm font-medium text-gray-700">State:</label>
-				<Input
-					id="state"
-					name="state"
-					bind:value={state}
-					placeholder="Enter your state"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<div>
-				<label for="country" class="block text-sm font-medium text-gray-700">Country:</label>
-				<Input
-					id="country"
-					name="country"
-					bind:value={country}
-					placeholder="Enter your country"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<div>
-				<label for="zip" class="block text-sm font-medium text-gray-700">Zip:</label>
-				<Input
-					id="zip"
-					name="zip"
-					bind:value={zip}
-					placeholder="Enter your zip"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div>
-			<div>
-				<label for="googleMeetLink" class="block text-sm font-medium text-gray-700"
-					>Google Meet Link:</label
-				>
-				<Input
-					id="googleMeetLink"
-					name="googleMeetLink"
-					bind:value={googleMeetLink}
-					placeholder="Enter your googleMeetLink"
-					required
-					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
-				/>
-			</div> -->
 
 			<br />
 			<Button
 				disabled={isLoading}
 				type="submit"
-				class="flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm "
+				class=" flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-lg shadow-sm "
 			>
 				{#if isLoading}
 					<Reload class="mr-2 h-4 w-4 animate-spin" />
@@ -277,7 +278,7 @@
 		<Button
 			variant="link"
 			on:click={() => goto('/auth/login')}
-			class="mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2"
+			class=" mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2"
 		>
 			Already have an account? Login Now
 		</Button>

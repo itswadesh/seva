@@ -13,7 +13,7 @@
 </script>
 
 <main
-	class="mx-auto flex min-h-screen w-full flex-col justify-between border-l border-r
+	class="mx-auto flex min-h-screen w-full flex-col justify-between
 "
 >
 	<div class="h-full">

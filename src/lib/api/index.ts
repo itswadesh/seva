@@ -99,7 +99,7 @@ router.post('/auth/login', async (c) => {
 	const sid = crypto.randomUUID()
 	// generate new auth token just in case
 	const authenticatedUser = await db.update(ClientProfile)
-		.set({ sid })
+		.set({ sid, LastSigninDT: new Date() })
 		.where(eq(ClientProfile.MobileNo, phone))
 		.returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, role: ClientProfile.Role, approved: ClientProfile.Approved })
 	setCookie(c, 'me', JSON.stringify(authenticatedUser[0]), { path: '/' })
@@ -108,16 +108,7 @@ router.post('/auth/login', async (c) => {
 
 router.post('/auth/signup', async (c) => {
 	const args = await c.req.json()
-	const {
-		phone,
-		name,
-		dob,
-		profilePhoto,
-		gender,
-		fatherName,
-		centerName,
-		adhaarNumber,
-		qualification } = args
+	const { phone, name, dob, gender, fatherName, center, aadharNo, qualification, sevaPreference, mobileAvailability } = args
 
 	const formattedDOB = new Date(dob).toLocaleDateString('en-GB').replace(/\//g, '-')
 
@@ -136,16 +127,17 @@ router.post('/auth/signup', async (c) => {
 		MobileNo: phone,
 		DOB: new Date(dob).toISOString(),
 		password: formattedDOB,
-		Client_Image: profilePhoto,
 		Gender: gender,
-		fatherName: fatherName,
-		Centre: centerName,
-		AadharNo: adhaarNumber,
-		Qualification: qualification
+		Centre: center,
+		FatherName: fatherName,
+		AadharNo: aadharNo,
+		Qualification: qualification,
+		SevaPreference: sevaPreference,
+		MobileAvailability: mobileAvailability,
 	}
 	console.log(postData)
 	const res = await db
-		.insert(ClientProfile).values(postData).returning({ id: ClientProfile.ID, name: ClientProfile.Name, phone: ClientProfile.MobileNo, dob: ClientProfile.DOB, role: ClientProfile.Role })
+		.insert(ClientProfile).values(postData).returning({ id: ClientProfile.ID, name: ClientProfile.Name, phone: ClientProfile.MobileNo, dob: ClientProfile.DOB, role: ClientProfile.Role, gender: ClientProfile.Gender, approved: ClientProfile.Approved, approved_at: ClientProfile.ApprovalDT, fatherName: ClientProfile.FatherName, aadharNo: ClientProfile.AadharNo, qualification: ClientProfile.Qualification, center: ClientProfile.Centre })
 	console.log(res)
 	return c.json(true)
 })

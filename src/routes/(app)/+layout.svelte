@@ -6,6 +6,9 @@
 	import Footer from '$lib/components/seva/Footer.svelte'
 	import Nav from '$lib/components/seva/Nav.svelte'
 	import { fade, fly } from 'svelte/transition'
+	import { onMount } from 'svelte'
+	import { getContext } from 'svelte'
+	const userStore = getContext('user')
 
 	export let data
 	$: currentStepUrl = $page?.url?.pathname
@@ -21,10 +24,16 @@
 	$: isDisabled = (step: number) => {
 		return currentStep < step
 	}
+
+	onMount(() => {
+		if (!$userStore.me?.sid) {
+			goto('/auth/login')
+		}
+	})
 </script>
 
 <main
-	class="mx-auto flex min-h-screen w-full flex-col justify-between border-l border-r
+	class="mx-auto flex min-h-screen w-full flex-col justify-between
 	{$page.url?.pathname === '/admin' ? 'max-w-full' : ' max-w-md'}"
 >
 	<div class="h-full">

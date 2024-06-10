@@ -12,6 +12,12 @@
 	let name = 'Swadesh Behera'
 	let phone = '+918895092508'
 	let dob = '1985-06-22'
+	let profilePhoto = ''
+	let gender = ''
+	let fatherName = ''
+	let centerName = ''
+	let adhaarNumber = ''
+	let qualification = ''
 	let isLoading = false
 	const handleSignUp = async () => {
 		isLoading = true
@@ -19,7 +25,13 @@
 			const userDataRes = await axios.post('/api/auth/signup', {
 				name,
 				phone,
-				dob
+				dob,
+				profilePhoto,
+				gender,
+				fatherName,
+				centerName,
+				adhaarNumber,
+				qualification
 			})
 			if (userDataRes.data.status == 400) {
 				return toast.error(userDataRes.data.message)
@@ -51,6 +63,18 @@
 				/>
 			</div> -->
 			<div>
+				<label for="name" class="block text-sm font-medium text-gray-700">Profile Photo:</label>
+				<Input
+					type="url"
+					id="profilePhoto"
+					name="profilePhoto"
+					bind:value={profilePhoto}
+					placeholder="Image Url"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
+			<div>
 				<label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
 				<Input
 					id="name"
@@ -61,7 +85,28 @@
 					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>
 			</div>
-
+			<div>
+				<label for="name" class="block text-sm font-medium text-gray-700">Gender:</label>
+				<Input
+					id="gender"
+					name="gender"
+					bind:value={gender}
+					placeholder="Male or Female"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
+			<div>
+				<label for="name" class="block text-sm font-medium text-gray-700">Father's Name:</label>
+				<Input
+					id="fatherName"
+					name="fatherName"
+					bind:value={fatherName}
+					placeholder="Enter your Father's name"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
 			<!-- <div>
 				<label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
 				<Input
@@ -108,6 +153,40 @@
 					type="date"
 					bind:value={dob}
 					placeholder="Enter your DOB"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
+
+			<div>
+				<label for="name" class="block text-sm font-medium text-gray-700">Center:</label>
+				<Input
+					id="centerName"
+					name="centerName"
+					bind:value={centerName}
+					placeholder="Enter Center name"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
+			<div>
+				<label for="name" class="block text-sm font-medium text-gray-700">Aadhar No:</label>
+				<Input
+					id="adhaarNumber"
+					name="adhaarNumber"
+					bind:value={adhaarNumber}
+					placeholder="Enter your AdhaarNumber No"
+					required
+					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
+				/>
+			</div>
+			<div>
+				<label for="name" class="block text-sm font-medium text-gray-700">Qualification:</label>
+				<Input
+					id="qualification"
+					name="qualification"
+					bind:value={qualification}
+					placeholder="Enter your qualifications"
 					required
 					class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:outline-none  sm:text-sm"
 				/>

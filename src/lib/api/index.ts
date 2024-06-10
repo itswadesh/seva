@@ -108,7 +108,16 @@ router.post('/auth/login', async (c) => {
 
 router.post('/auth/signup', async (c) => {
 	const args = await c.req.json()
-	const { phone, name, dob } = args
+	const {
+		phone,
+		name,
+		dob,
+		profilePhoto,
+		gender,
+		fatherName,
+		centerName,
+		adhaarNumber,
+		qualification } = args
 
 	const formattedDOB = new Date(dob).toLocaleDateString('en-GB').replace(/\//g, '-')
 
@@ -127,6 +136,12 @@ router.post('/auth/signup', async (c) => {
 		MobileNo: phone,
 		DOB: new Date(dob).toISOString(),
 		password: formattedDOB,
+		Client_Image: profilePhoto,
+		Gender: gender,
+		fatherName: fatherName,
+		Centre: centerName,
+		AadharNo: adhaarNumber,
+		Qualification: qualification
 	}
 	console.log(postData)
 	const res = await db

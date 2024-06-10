@@ -5,6 +5,10 @@ import { pgTable, serial, date, text, boolean, integer, timestamp, real, varchar
 export const ClientProfile = pgTable('ClientProfile', {
 	ID: serial('ID').primaryKey(),
 	Sewadar_ID: varchar('Sewadar_ID'),
+	Client_Image: varchar('Client_Image'),
+	FatherName: varchar('FatherName'),
+	AadharNo: varchar('AadharNo'),
+	Qualification: varchar('Qualification'),
 	password: varchar('password'),
 	ProfileLevel: varchar('ProfileLevel'),
 	Module: text('Module'),

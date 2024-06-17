@@ -27,7 +27,17 @@
 
 	const handleChangeImageSaved = async (e: any) => {
 		const file = e.target.files[0] || {}
-
+		const formData = new FormData()
+		formData.append('image', file)
+		formData.append('type', 'A_')
+		fetch('/api/save/images', {
+			method: 'POST',
+			body: formData
+		})
+			.then((response) => response.json())
+			.catch((error) => {
+				console.error('Error saving image:', error)
+			})
 		// Check if the file size is already below 100kb
 		if (file.size <= 100 * 1024) {
 			capturedImageURI = URL.createObjectURL(file)

@@ -10,6 +10,8 @@ import { HTTPException } from 'hono/http-exception'
 // import { jwt } from 'hono/jwt'
 import { logger } from 'hono/logger'
 import { timing } from 'hono/timing'
+import fs from 'fs'
+import path from 'path'
 
 export const router = new Hono()
 // router.use('/auth/*', jwt({ secret: 'it-is-very-secret' }))
@@ -52,6 +54,39 @@ router.post('/admin/programs', async (c) => {
 	return c.json(res)
 })
 
+router.post('/save/images', async (c) => {
+	const args = await c.req.formData()
+	const file = args.get('image')
+	const type = args.get('type')
+	console.log({ file, type })
+	const cookieMe = getCookie(c, 'me')
+	let me
+	if (cookieMe) {
+		me = JSON.parse(cookieMe)
+	}
+	const sewadarId = me.id
+	// ProgramID: id, ProgramCategory: category, ProgramLocation: location, ProgramStartDate: startDate, ProgramCompDate: compDate, ProgramBy: by, ProgramAdmin: admin
+	const programData = await db.select().from(ProgramInfo).where(eq(ProgramInfo.Active, true)).limit(1)
+	const programId = programData[0].ProgramID
+	if (file) {
+		const filePath = path.join(`/${programId}/${sewadarId}/${type}+${file.name}`);
+		const reader = fs.createReadStream(file.);
+		const writer = fs.createWriteStream(filePath);
+
+		reader.pipe(writer);
+
+		writer.on('finish', () => {
+			console.log('File saved:', filePath);
+		});
+
+		writer.on('error', (err) => {
+			console.error('Error saving file:', err);
+		});
+	} else {
+		console.log('No file uploaded')
+	}
+	return c.json(true)
+})
 router.post('/admin/users', async (c) => {
 	const args = await c.req.json()
 	const { id, approved, role, pending_approved } = args

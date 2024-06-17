@@ -6,7 +6,7 @@
 	import { getContext } from 'svelte'
 	import { goto } from '$app/navigation'
 	const userStore = getContext('user')
-
+	export let programData
 	// import logoBlack from '$lib/assets/logo-black.png';
 	// import logoWhite from '$lib/assets/logo-white.png';
 
@@ -27,7 +27,9 @@
 
 <nav class="sticky inset-x-0 top-0 z-40 border-b bg-white p-3">
 	<div class="flex h-12 items-center justify-between">
-		<div class="h-full items-center bg-red-500 p-1 px-3 text-3xl font-bold text-white">Demo</div>
+		<div class="h-full items-center bg-red-500 p-1 px-3 text-3xl font-bold text-white">
+			{programData[0].ProgramCategory}
+		</div>
 		<div
 			class="h-full w-full items-center bg-green-200 p-1 text-center text-3xl font-bold text-green-500"
 		>

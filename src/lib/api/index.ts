@@ -5,7 +5,7 @@ import { ProgramInfo, ClientProfile } from '$lib/db/schema'
 import { setCookie, deleteCookie, getCookie } from 'hono/cookie'
 import { prettyJSON } from 'hono/pretty-json'
 // import { basicAuth } from 'hono/basic-auth'
-import { and, eq } from 'drizzle-orm'
+import { and, eq, ne } from 'drizzle-orm'
 import { HTTPException } from 'hono/http-exception'
 // import { jwt } from 'hono/jwt'
 import { logger } from 'hono/logger'
@@ -47,6 +47,7 @@ router.post('/admin/programs', async (c) => {
 	// ProgramID: id, ProgramCategory: category, ProgramLocation: location, ProgramStartDate: startDate, ProgramCompDate: compDate, ProgramBy: by, ProgramAdmin: admin
 	const resA = await db
 		.update(ProgramInfo).set(q).where(eq(ProgramInfo.ProgramID, id)).returning({ id: ProgramInfo.ProgramID })
+	await db.update(ProgramInfo).set({ Active: false, }).where(ne(ProgramInfo.ProgramID, id))
 	const res = resA[0]
 	return c.json(res)
 })

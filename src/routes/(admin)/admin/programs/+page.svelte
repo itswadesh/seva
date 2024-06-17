@@ -16,7 +16,7 @@
 </script>
 
 <div class="flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-	<div class="w-full text-center">
+	<div class="w-full text-center text-black">
 		<h1 class="mb-6 text-center text-2xl font-bold">Programs</h1>
 		{#if programs.length === 0}
 			No program found
@@ -58,7 +58,7 @@
 											{:else if key === 'approved_at'}
 												{date(value)}
 											{:else if key === 'category'}
-												<div class="flex items-center space-x-2">
+												<div class="flex items-center space-x-2 text-white">
 													<Select
 														title="Select category"
 														{value}
@@ -88,6 +88,7 @@
 																	id: item.id,
 																	active: v
 																})
+																window.location.reload()
 															} catch (e) {
 																toast.error(e.response.data)
 															}

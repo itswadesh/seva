@@ -38,7 +38,7 @@
 >
 	<div class="h-full">
 		<!-- Nav -->
-		<Nav />
+		<Nav programData={data.programData} />
 
 		{#if $page.url.pathname !== '/' && $page.url.pathname !== '/auth/login'}
 			<div class="grid grid-cols-5 gap-2 overflow-x-auto px-3 pb-1 pt-3">

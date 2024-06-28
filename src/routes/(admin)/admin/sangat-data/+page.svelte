@@ -9,7 +9,7 @@
 		{#if sangatData.length === 0}
 			No Sangat data collected yet
 		{:else}
-			<div class="relative h-[75vh] overflow-x-auto border shadow-md sm:rounded-lg">
+			<div class="relative h-[75vh] overflow-x-auto border text-black shadow-md sm:rounded-lg">
 				<table class="w-full text-left text-xs rtl:text-right">
 					<thead class="whitespace-nowrap uppercase">
 						<tr>
@@ -27,7 +27,7 @@
 
 					<tbody>
 						{#each sangatData as item, ix}
-							<tr class="border-b border-gray-200">
+							<tr class="border-b border-gray-200 text-black">
 								{#each Object.entries(item) as [key, value], vx}
 									<th scope="row" class={vx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
 										<div class="max-w-60 truncate whitespace-pre-wrap px-6 py-4 font-normal">

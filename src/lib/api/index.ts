@@ -27,7 +27,7 @@ router.post('/auth/logout', async (c) => {
 
 router.post('/admin/programs', async (c) => {
 	const args = await c.req.json()
-	const { id, category, location, startDate, compDate, by, active, admin } = args
+	const { id, category, location, startDate, compDate, by, active, admin, deleted } = args
 	console.log(id, active)
 	const cookieMe = getCookie(c, 'me')
 	let me
@@ -36,6 +36,10 @@ router.post('/admin/programs', async (c) => {
 	}
 	if (me.role !== 'ADMIN') {
 		throw new HTTPException(401, { message: 'Unauthorized' })
+	}
+	if (deleted) {
+		await db.delete(ProgramInfo).where(eq(ProgramInfo.ProgramID, id))
+		return c.json(true)
 	}
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const q: any = { Active: active }
@@ -54,6 +58,39 @@ router.post('/admin/programs', async (c) => {
 	return c.json(res)
 })
 
+router.post('/admin/programs/new', async (c) => {
+	const args = await c.req.json()
+	const { ProgramCategory,
+		ProgramStartDate,
+		ProgramCompDate,
+		active,
+		ProgramBy,
+		ProgramValidity,
+		ProgramLocation } = args
+	const cookieMe = getCookie(c, 'me')
+	let me
+	if (cookieMe) {
+		me = JSON.parse(cookieMe)
+	}
+	if (me.role !== 'ADMIN') {
+		throw new HTTPException(401, { message: 'Unauthorized' })
+	}
+	console.log({ ProgramCategory, ProgramStartDate, ProgramCompDate, active, ProgramBy, ProgramValidity, ProgramLocation })
+	// ProgramID: id, ProgramCategory: category, ProgramLocation: location, ProgramStartDate: startDate, ProgramCompDate: compDate, ProgramBy: by, ProgramAdmin: admin
+	await db
+		.insert(ProgramInfo).values({
+			ProgramCategory,
+			ProgramStartDate,
+			ProgramCompDate,
+			Active: active,
+			ProgramBy,
+			ProgramAdmin: me.id,
+			ProgramLocation,
+			ProgramValidity
+		})
+	return c.json(true)
+})
+
 router.post('/save/images', async (c) => {
 	const args = await c.req.formData()
 	const file = args.get('image')
@@ -68,25 +105,27 @@ router.post('/save/images', async (c) => {
 	// ProgramID: id, ProgramCategory: category, ProgramLocation: location, ProgramStartDate: startDate, ProgramCompDate: compDate, ProgramBy: by, ProgramAdmin: admin
 	const programData = await db.select().from(ProgramInfo).where(eq(ProgramInfo.Active, true)).limit(1)
 	const programId = programData[0].ProgramID
-	if (file) {
-		const filePath = path.join(`/${programId}/${sewadarId}/${type}+${file.name}`);
-		const reader = fs.createReadStream(file.);
-		const writer = fs.createWriteStream(filePath);
+	console.log({ programId, sewadarId, type })
+	// if (file) {
+	// 	const filePath = path.join(`/${programId}/${sewadarId}/${type}+${file.name}`);
+	// 	const reader = fs.createReadStream(file.);
+	// 	const writer = fs.createWriteStream(filePath);
 
-		reader.pipe(writer);
+	// 	reader.pipe(writer);
 
-		writer.on('finish', () => {
-			console.log('File saved:', filePath);
-		});
+	// 	writer.on('finish', () => {
+	// 		console.log('File saved:', filePath);
+	// 	});
 
-		writer.on('error', (err) => {
-			console.error('Error saving file:', err);
-		});
-	} else {
-		console.log('No file uploaded')
-	}
+	// 	writer.on('error', (err) => {
+	// 		console.error('Error saving file:', err);
+	// 	});
+	// } else {
+	// 	console.log('No file uploaded')
+	// }
 	return c.json(true)
 })
+
 router.post('/admin/users', async (c) => {
 	const args = await c.req.json()
 	const { id, approved, role, pending_approved } = args

@@ -65,7 +65,7 @@
 				id="phone"
 				name="phone"
 				type="tel"
-				label="Phone (UserName):"
+				label="UserName (10 digit Mobile Number):"
 				autofocus
 				bind:value={phone}
 				placeholder="Enter your phone"
@@ -73,9 +73,9 @@
 			/>
 			<Textbox
 				id="password"
-				type="password"
+				type="tel"
 				name="password"
-				label="Password:"
+				label="Password (DOB: ddmmyyyy):"
 				bind:value={password}
 				placeholder="Enter your password"
 				{errors}

@@ -8,7 +8,7 @@
 		Mobiles: 0,
 		Charger: 0,
 		EarPhone: 0,
-		EarPod: 0,
+		// EarPod: 0,
 		SmartWatch: 0,
 		Laptop: 0,
 		Bag: 0,

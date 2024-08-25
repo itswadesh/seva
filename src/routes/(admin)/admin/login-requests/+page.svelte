@@ -49,7 +49,7 @@
 			</div>
 		</div>
 		{#if users.length === 0}
-			No user registered yet
+			No login request registered yet
 		{:else}
 			<div class="relative h-[75vh] overflow-x-auto border shadow-md sm:rounded-lg">
 				<table class="w-full text-left text-xs rtl:text-right">

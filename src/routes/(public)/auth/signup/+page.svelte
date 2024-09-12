@@ -145,7 +145,7 @@
 			body: formData
 		})
 
-		avatar = `/static/avatar/${type}.png`
+		avatar = `/avatar/${type}.png`
 		avatartoShow = avatar
 	}
 
@@ -159,7 +159,7 @@
 			method: 'POST',
 			body: formData
 		})
-		avatar = `/static/avatar/${type}.png`
+		avatar = `/avatar/${type}.png`
 		avatartoShow = avatar
 	}
 </script>

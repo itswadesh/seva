@@ -9,5 +9,13 @@ export default defineConfig({
 	server: {
 		host: true,
 		port: 4173,
+		fs: {
+			allow: [
+				'E:/Litekart/seva/static',  // Allow static directory
+				'E:/Litekart/seva/src/lib',
+				'E:/Litekart/seva/src/routes',
+				'E:/Litekart/seva/src',
+			]
+		}
 	}
 })

@@ -6,7 +6,8 @@ export const ClientProfile = pgTable('ClientProfile', {
 	ID: serial('ID').primaryKey(),
 	Pending_Approval: boolean('Pending_Approval').default(true),
 	Sewadar_ID: varchar('Sewadar_ID'),
-	Client_Image: varchar('Client_Image'),
+	Avatar: varchar('avatar'),
+
 	FatherName: varchar('FatherName'),
 	AadharNo: varchar('AadharNo'),
 	Qualification: varchar('Qualification'),
@@ -43,6 +44,8 @@ export const ClientProfile = pgTable('ClientProfile', {
 export const SangatData = pgTable('SangatData', {
 	ID: serial('ID').primaryKey(),
 	DuplicateToken: varchar('DuplicateToken'),
+	Active: boolean('Active'),
+	ProgramId: integer('ProgramId'),
 	TokenNo: varchar('TokenNo'),
 	Module: varchar('Module'),
 	Collect_SewadarID: varchar('Collect_SewadarID'),

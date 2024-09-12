@@ -13,7 +13,8 @@
 
 	export let data
 
-	let avatar = null
+	let avatar: any = null
+	let avatartoShow = ''
 	let name = 'Swadesh Behera'
 	let phone = '8895092508'
 	let whatsappNo = '8895092508'
@@ -52,6 +53,7 @@
 
 	const handleSignUp = async () => {
 		const user = {
+			avatar,
 			name,
 			phone,
 			whatsappNo,
@@ -66,6 +68,7 @@
 			skills
 		}
 		const registerSchema = z.object({
+			avatar: z.string({ required_error: 'Please upload your image' }),
 			name: z
 				.string({ required_error: 'Please enter your name' })
 				.min(1, { message: 'Name can not be less than 1 character(s)' }),
@@ -112,6 +115,7 @@
 			return toast.error(errors[Object.keys(errors)[0]][0])
 		}
 		isLoading = true
+		await updateChangeImageSaved({ phone })
 		try {
 			const userDataRes = await axios.post('/api/auth/signup', user)
 			if (userDataRes.data.status == 400) {
@@ -130,6 +134,34 @@
 			whatsappNo = phone
 		}
 	}
+
+	const updateChangeImageSaved = async ({ phone }) => {
+		const formData = new FormData()
+		formData.append('image', avatar)
+		const type = phone
+		formData.append('type', type)
+		await fetch('/api/images/update-avatar', {
+			method: 'POST',
+			body: formData
+		})
+
+		avatar = `/static/avatar/${type}.png`
+		avatartoShow = avatar
+	}
+
+	const handleChangeImageSaved = async (e) => {
+		const file = e.target.files[0] || {}
+		const formData = new FormData()
+		formData.append('image', file)
+		const type = `avatar-${Math.random()}`
+		formData.append('type', type)
+		await fetch('/api/images/save-avatar', {
+			method: 'POST',
+			body: formData
+		})
+		avatar = `/static/avatar/${type}.png`
+		avatartoShow = avatar
+	}
 </script>
 
 <div class=" flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
@@ -137,7 +169,38 @@
 		<h1 class="mb-6 text-center text-2xl font-bold">New Sewadar Registration</h1>
 
 		<form on:submit={handleSignUp} class="w-full space-y-4">
-			<div>avatar with mobile camera</div>
+			<div>
+				{#if avatartoShow}
+					<img src={avatartoShow} alt="" class="h-full w-full object-contain object-center" />
+				{:else}
+					<div class="flex flex-col items-center justify-center pb-6 pt-5">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							class="mb-2 h-8 w-8 text-gray-500 dark:text-gray-400"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+							/>
+						</svg>
+						<input
+							id="image-2"
+							type="file"
+							name="image"
+							accept="image/*"
+							capture="environment"
+							placeholder="Upload your image"
+							class="w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-center text-lg text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+							on:change={handleChangeImageSaved}
+						/>
+					</div>
+				{/if}
+			</div>
 			<Textbox
 				id="name"
 				name="name"

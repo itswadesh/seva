@@ -11,7 +11,9 @@ import { HTTPException } from 'hono/http-exception'
 import { logger } from 'hono/logger'
 import { timing } from 'hono/timing'
 import fs from 'fs'
-import path from 'path'
+import { Buffer } from 'buffer';
+
+
 
 export const router = new Hono()
 // router.use('/auth/*', jwt({ secret: 'it-is-very-secret' }))
@@ -126,6 +128,34 @@ router.post('/save/images', async (c) => {
 	return c.json(true)
 })
 
+router.post('/images/save-avatar', async (c) => {
+	const args = await c.req.formData();
+	const file = args.get('image');
+	const type = args.get('type');
+
+	if (!file) {
+		return c.json({ error: 'No file provided' }, 400);
+	}
+
+	const buffer = await file.arrayBuffer()
+	const fileContent = Buffer.from(buffer);       // 
+
+	fs.mkdirSync('./static/avatar', { recursive: true });
+	fs.writeFileSync(`./static/avatar/${type}.png`, fileContent);
+
+	return c.json({ filePath: `./static/avatar/${type}.png` });
+})
+
+router.post('/images/update-avatar', async (c) => {
+	const args = await c.req.formData()
+	const avatarLocation = args.get('image')
+	const type = args.get('type')
+	const data = fs.readFileSync(avatarLocation)
+	fs.writeFileSync(`./static/avatar/${type}.png`, data)
+	fs.unlinkSync(avatarLocation)
+	return c.json('./static/avatar/${type}.png')
+})
+
 router.post('/admin/users', async (c) => {
 	const args = await c.req.json()
 	const { id, approved, role, pending_approved } = args
@@ -215,7 +245,7 @@ router.post('/auth/login', async (c) => {
 
 router.post('/auth/signup', async (c) => {
 	const args = await c.req.json()
-	const { phone, name, dob, gender, fatherName, center, aadharNo, qualification, sevaPreference, mobileAvailability } = args
+	const { phone, name, dob, gender, fatherName, center, aadharNo, qualification, sevaPreference, mobileAvailability, avatar } = args
 
 	const formattedDOB = new Date(dob).toLocaleDateString('en-GB').replace(/\//g, '-')
 
@@ -241,10 +271,11 @@ router.post('/auth/signup', async (c) => {
 		Qualification: qualification,
 		SevaPreference: sevaPreference,
 		MobileAvailability: mobileAvailability,
+		Avatar: avatar
 	}
 	console.log(postData)
 	const res = await db
-		.insert(ClientProfile).values(postData).returning({ id: ClientProfile.ID, name: ClientProfile.Name, phone: ClientProfile.MobileNo, dob: ClientProfile.DOB, role: ClientProfile.Role, gender: ClientProfile.Gender, approved: ClientProfile.Approved, approved_at: ClientProfile.ApprovalDT, fatherName: ClientProfile.FatherName, aadharNo: ClientProfile.AadharNo, qualification: ClientProfile.Qualification, center: ClientProfile.Centre })
+		.insert(ClientProfile).values(postData).returning({ id: ClientProfile.ID, name: ClientProfile.Name, phone: ClientProfile.MobileNo, dob: ClientProfile.DOB, role: ClientProfile.Role, gender: ClientProfile.Gender, approved: ClientProfile.Approved, approved_at: ClientProfile.ApprovalDT, fatherName: ClientProfile.FatherName, aadharNo: ClientProfile.AadharNo, qualification: ClientProfile.Qualification, center: ClientProfile.Centre, avatar: ClientProfile.Avatar })
 	console.log(res)
 	return c.json(true)
 })

@@ -32,6 +32,45 @@
 							on:click={async () => {
 								try {
 									const res = await axios.post('/api/admin/users/all', {
+										active: true
+									})
+									toast.success(`All User Activated successfully`)
+									window.location.reload()
+								} catch (e) {
+									toast.error(e.response.data)
+								}
+							}}
+						>
+							Activate all</Button
+						>
+						<Button
+							type="submit"
+							class="flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
+							on:click={async () => {
+								try {
+									const res = await axios.post('/api/admin/users/all', {
+										active: false
+									})
+									toast.error(`All User Deactivate Successfully`)
+									window.location.reload()
+								} catch (e) {
+									toast.error(e.response.data)
+								}
+							}}
+						>
+							Deactivate all</Button
+						>
+					</div>
+				</div>
+
+				<div class="flex items-center space-x-2">
+					<div class="flex items-center justify-between space-x-2">
+						<Button
+							type="submit"
+							class="flex w-full justify-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
+							on:click={async () => {
+								try {
+									const res = await axios.post('/api/admin/users/all', {
 										approved: true
 									})
 									toast.success(`All User Accepted successfully`)
@@ -139,6 +178,29 @@
 																	v === true
 																		? toast.success(`${item.name} approved successfully`)
 																		: toast.error(`${item.name} rejected successfully`)
+																}
+															} catch (e) {
+																toast.error(e.response.data)
+															}
+														}}
+													/>
+												</div>
+											{:else if key === 'active'}
+												<div class="flex items-center space-x-2">
+													<Checkbox
+														class="rounded border border-gray-300"
+														id="terms"
+														checked={value}
+														onCheckedChange={async (v) => {
+															try {
+																const res = await axios.post('/api/admin/users', {
+																	id: item.id,
+																	active: v
+																})
+																if (res.status == 200) {
+																	v === true
+																		? toast.success(`${item.name} Activated successfully`)
+																		: toast.error(`${item.name} Deactivated successfully`)
 																}
 															} catch (e) {
 																toast.error(e.response.data)

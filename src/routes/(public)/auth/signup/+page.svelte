@@ -25,6 +25,7 @@
 	let aadharNo = '111111111111'
 	let qualification = 'B-Tech'
 	let sevaPreference = ''
+	let sevaPreference1 = ''
 	let mobileAvailability = ''
 	let isLoading = false
 
@@ -64,6 +65,7 @@
 			aadharNo,
 			qualification,
 			sevaPreference,
+			sevaPreference1,
 			mobileAvailability,
 			skills
 		}
@@ -100,6 +102,9 @@
 			sevaPreference: z
 				.string({ required_error: 'Please select your seva preference' })
 				.min(1, { message: 'Please select your seva preference' }),
+			sevaPreference1: z
+				.string({ required_error: 'Please select your seva preference' })
+				.min(1, { message: 'Please select your seva preference' }),
 			skills: z
 				.string({ required_error: 'Please select your skills' })
 				.min(1, { message: 'Please select your skills' })
@@ -121,7 +126,8 @@
 			if (userDataRes.data.status == 400) {
 				return toast.error(userDataRes.data.message)
 			}
-			goto('/auth/signup/success')
+			console.log('userDataRes', userDataRes)
+			goto(`/auth/signup/success?id=${userDataRes.data[0]?.id}`)
 		} catch (e) {
 			toast.error(e?.toString())
 			return
@@ -164,7 +170,9 @@
 	}
 </script>
 
-<div class=" flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+<div
+	class=" flex items-center justify-center overflow-x-hidden bg-gray-50 px-4 py-12 sm:px-6 lg:px-8"
+>
 	<div class="w-full">
 		<h1 class="mb-6 text-center text-2xl font-bold">New Sewadar Registration</h1>
 
@@ -306,9 +314,19 @@
 			<div>
 				<Select
 					title="Select"
-					label="Seva Preference:"
+					label="Seva Preference1:"
 					id="sevaPreference"
 					bind:value={sevaPreference}
+					data={sevaPreferenceDD || []}
+					{errors}
+				/>
+			</div>
+			<div>
+				<Select
+					title="Select"
+					label="Seva Preference2:"
+					id="sevaPreference1"
+					bind:value={sevaPreference1}
 					data={sevaPreferenceDD || []}
 					{errors}
 				/>

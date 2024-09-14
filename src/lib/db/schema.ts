@@ -1,4 +1,4 @@
-import { pgTable, serial, date, text, boolean, integer, timestamp, real, varchar } from 'drizzle-orm/pg-core'
+import { pgTable, serial, date, text, boolean, integer, timestamp, real, varchar, primaryKey } from 'drizzle-orm/pg-core'
 
 // export const RoleEnum = pgEnum('Role', ['WINDOW', 'BACKUP'])
 
@@ -7,9 +7,8 @@ export const ClientProfile = pgTable('ClientProfile', {
 	Pending_Approval: boolean('Pending_Approval').default(true),
 	Sewadar_ID: varchar('Sewadar_ID'),
 	Avatar: varchar('avatar'),
-
 	FatherName: varchar('FatherName'),
-	AadharNo: varchar('AadharNo'),
+	AadharNo: varchar('AadharNo').unique(),
 	Qualification: varchar('Qualification'),
 	password: varchar('password'),
 	ProfileLevel: varchar('ProfileLevel'),
@@ -25,11 +24,16 @@ export const ClientProfile = pgTable('ClientProfile', {
 	Approved: boolean('Approved').default(false),
 	ApprovedBy: varchar('ApprovedBy'),
 	SevaPreference: varchar('SevaPreference'),
+	SevaPreference1: varchar('SevaPreference1'),
 	MobileAvailability: varchar('MobileAvailability'),
 	Skills: varchar('Skills'),
 	ApprovalDT: timestamp('ApprovalDT'),
 	LastSigninDT: timestamp('LastSigninDT'),
 	Active: boolean('Active').default(false),
+	ActivatedAt: timestamp('ActivatedAt', {
+		precision: 6,
+		withTimezone: true,
+	}),
 	sid: varchar('sid'),
 	createdAt: timestamp('created_at', {
 		precision: 6,
@@ -42,7 +46,7 @@ export const ClientProfile = pgTable('ClientProfile', {
 })
 
 export const SangatData = pgTable('SangatData', {
-	ID: serial('ID').primaryKey(),
+	ID: serial('ID'),
 	DuplicateToken: varchar('DuplicateToken'),
 	Active: boolean('Active'),
 	ProgramId: integer('ProgramId'),
@@ -88,7 +92,9 @@ export const SangatData = pgTable('SangatData', {
 		precision: 6,
 		withTimezone: true,
 	}).defaultNow(),
-})
+}, (table) => ({
+	pk: primaryKey(table.ProgramID, table.TokenNo)
+}));
 
 export const ProgramInfo = pgTable('ProgramInfo', {
 	ProgramID: serial('ProgramID').primaryKey(),

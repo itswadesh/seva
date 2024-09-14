@@ -13,8 +13,6 @@ import { timing } from 'hono/timing'
 import fs from 'fs'
 import { Buffer } from 'buffer';
 
-
-
 export const router = new Hono()
 // router.use('/auth/*', jwt({ secret: 'it-is-very-secret' }))
 router.use(prettyJSON())
@@ -158,8 +156,8 @@ router.post('/images/update-avatar', async (c) => {
 
 router.post('/admin/users', async (c) => {
 	const args = await c.req.json()
-	const { id, approved, role, pending_approved } = args
-	console.log({ id, approved, role, pending_approved })
+	const { id, approved, role, pending_approved, active } = args
+	console.log({ id, approved, role, pending_approved, active })
 	const userId = id
 	const cookieMe = getCookie(c, 'me')
 	let me
@@ -171,7 +169,12 @@ router.post('/admin/users', async (c) => {
 		throw new HTTPException(401, { message: 'Unauthorized' })
 	}
 	let resA = []
-	if (approved === undefined) { // When only role is changed
+	if (active != undefined) {
+		if (active) resA = await db
+			.update(ClientProfile).set({ Active: active, ActivatedAt: new Date() }).where(eq(ClientProfile.ID, id)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+		else resA = await db
+			.update(ClientProfile).set({ Active: active }).where(eq(ClientProfile.ID, id)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+	} else if (approved === undefined) { // When only role is changed
 		console.log('role changed')
 		resA = await db
 			.update(ClientProfile).set({ Role: role }).where(eq(ClientProfile.ID, id)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
@@ -189,7 +192,7 @@ router.post('/admin/users', async (c) => {
 
 router.post('/admin/users/all', async (c) => {
 	const args = await c.req.json()
-	const { approved, pending_approved } = args
+	const { approved, pending_approved, active } = args
 	const cookieMe = getCookie(c, 'me')
 	let me
 	if (cookieMe) {
@@ -200,7 +203,10 @@ router.post('/admin/users/all', async (c) => {
 		throw new HTTPException(401, { message: 'Unauthorized' })
 	}
 	let resA = []
-	if (!pending_approved) { // to approve users in login-requests
+	if (active != undefined) {
+		resA = await db
+			.update(ClientProfile).set({ Active: active, ActivatedAt: new Date() }).where(eq(ClientProfile.Active, !active)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+	} else if (!pending_approved) { // to approve users in login-requests
 		resA = await db
 			.update(ClientProfile).set({ Approved: approved, ApprovedBy: approved ? me.id : null, ApprovalDT: approved ? new Date() : null, Pending_Approval: pending_approved }).where(eq(ClientProfile.Pending_Approval, true)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
 	} else {
@@ -225,7 +231,9 @@ router.post('/auth/login', async (c) => {
 		// throw new HTTPException(401, { message: 'Invalid phone or password' }) // Can not throw exception because HTTPException will not set cookie at Client side Application
 		return c.json({ sid: null, message: 'Invalid phone or password' })
 	}
-	if (res.approved == false) {
+	if (res.active == false) {
+		return c.json({ sid: null, message: 'Please wait you are being activated' })
+	} else if (res.approved == false) {
 		await db
 			.update(ClientProfile).set({ Pending_Approval: true }).where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.password, password)))
 		return c.json({ sid: null, message: 'Please ask admin to activate your account' })
@@ -245,11 +253,11 @@ router.post('/auth/login', async (c) => {
 
 router.post('/auth/signup', async (c) => {
 	const args = await c.req.json()
-	const { phone, name, dob, gender, fatherName, center, aadharNo, qualification, sevaPreference, mobileAvailability, avatar } = args
+	const { phone, name, dob, gender, fatherName, center, aadharNo, qualification, sevaPreference, sevaPreference1, mobileAvailability, avatar } = args
 
-	const formattedDOB = new Date(dob).toLocaleDateString('en-GB').replace(/\//g, '-')
+	const formattedDOB = new Date(dob).toLocaleDateString('en-GB').replace(/\//g, '')
 
-	// console.log(formattedDOB)
+	console.log(formattedDOB)
 	const resA = await db
 		.select({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active }).from(ClientProfile).where(eq(ClientProfile.MobileNo, phone))
 	const userExist = resA[0]
@@ -257,6 +265,13 @@ router.post('/auth/signup', async (c) => {
 	// console.log(!userExist, phone, name, dob)
 	if (userExist) {
 		return c.json({ status: 400, message: 'Phone number already registered' })
+	}
+	if (phone.length !== 10) {
+		return c.json({ status: 400, message: 'Invalid Phone Number' })
+	}
+	console.log('aadharNo.length', aadharNo.length)
+	if (aadharNo.length !== 12) {
+		return c.json({ status: 400, message: 'Invalid Aadhar Number' })
 	}
 	const postData = {
 		Name: name,
@@ -267,17 +282,18 @@ router.post('/auth/signup', async (c) => {
 		Gender: gender,
 		Centre: center,
 		FatherName: fatherName,
-		AadharNo: aadharNo,
+		AadharNo: aadharNo.replace(/(.{4})/g, '$1-').slice(0, -1),
 		Qualification: qualification,
 		SevaPreference: sevaPreference,
 		MobileAvailability: mobileAvailability,
-		Avatar: avatar
+		Avatar: avatar,
+		SevaPreference1: sevaPreference1
 	}
 	console.log(postData)
 	const res = await db
 		.insert(ClientProfile).values(postData).returning({ id: ClientProfile.ID, name: ClientProfile.Name, phone: ClientProfile.MobileNo, dob: ClientProfile.DOB, role: ClientProfile.Role, gender: ClientProfile.Gender, approved: ClientProfile.Approved, approved_at: ClientProfile.ApprovalDT, fatherName: ClientProfile.FatherName, aadharNo: ClientProfile.AadharNo, qualification: ClientProfile.Qualification, center: ClientProfile.Centre, avatar: ClientProfile.Avatar })
 	console.log(res)
-	return c.json(true)
+	return c.json(res)
 })
 
 export const api = new Hono().route('/api', router)

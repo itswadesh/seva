@@ -146,7 +146,7 @@ router.post('/images/save-avatar', async (c) => {
 
 router.post('/images/update-avatar', async (c) => {
 	const args = await c.req.formData()
-	const avatarLocation = args.get('image')
+	const avatarLocation = "./static" + args.get('image')
 	const type = args.get('type')
 	const data = fs.readFileSync(avatarLocation)
 	fs.writeFileSync(`./static/avatar/${type}.png`, data)

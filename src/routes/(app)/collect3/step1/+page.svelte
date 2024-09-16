@@ -29,32 +29,30 @@
 		const file = e.target.files[0] || {}
 		const formData = new FormData()
 		formData.append('image', file)
-		formData.append('type', 'A_')
-		fetch('/api/save/images', {
+		const type = `Face-${Math.random()}`
+		formData.append('type', type)
+		const filePath1: any = await fetch('/api/save/images', {
 			method: 'POST',
 			body: formData
 		})
-			.then((response) => response.json())
-			.catch((error) => {
-				console.error('Error saving image:', error)
-			})
+		const apiData = await filePath1.json()
+		console.log('apiData', apiData)
 		// Check if the file size is already below 100kb
-		if (file.size <= 100 * 1024) {
-			capturedImageURI = URL.createObjectURL(file)
-			updateStore({ CollectSangatFaceImage: capturedImageURI })
-			return
-		}
+		// if (file.size <= 100 * 1024) {
+		// 	capturedImageURI = URL.createObjectURL(file)
+		// 	updateStore({ CollectSangatFaceImage: capturedImageURI })
+		// 	return
+		// }
 
-		const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
+		// const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
 
 		// Set the source of the compressed image
-		capturedImageURI = compressedDataURL
-
-		// console.log('compressed capturedImageURI', capturedImageURI);
+		capturedImageURI = apiData?.filepath
 
 		const updatedState = {
-			CollectSangatFaceImage: capturedImageURI
+			CollectSangatFaceImage: apiData?.filepath
 		}
+		console.log('compressed capturedImageURI', capturedImageURI, updatedState)
 
 		updateStore(updatedState)
 	}

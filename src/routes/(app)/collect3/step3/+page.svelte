@@ -31,31 +31,29 @@
 		const file = e.target.files[0] || {}
 		const formData = new FormData()
 		formData.append('image', file)
-		formData.append('type', 'F_')
-		fetch('/api/save/images', {
+		const type = `Front-${Math.random()}`
+		formData.append('type', type)
+		const filepath1: any = await fetch('/api/save/images', {
 			method: 'POST',
 			body: formData
 		})
-			.then((response) => response.json())
-			.catch((error) => {
-				console.error('Error saving image:', error)
-			})
+		const apiData = await filepath1.json()
 		// Check if the file size is already below 100kb
-		if (file.size <= 100 * 1024) {
-			capturedItemImageUrl1 = URL.createObjectURL(file)
-			updateStore({ ItemsImageFront: capturedItemImageUrl1 })
-			return
-		}
+		// if (file.size <= 100 * 1024) {
+		// 	capturedItemImageUrl1 = URL.createObjectURL(file)
+		// 	updateStore({ ItemsImageFront: capturedItemImageUrl1 })
+		// 	return
+		// }
 
-		const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
+		// const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
 
 		// Set the source of the compressed image
-		capturedItemImageUrl1 = compressedDataURL
+		capturedItemImageUrl1 = apiData?.filepath
 
 		// console.log('compressed capturedItemImageUrl1', capturedItemImageUrl1);
 
 		const updatedState = {
-			ItemsImageFront: capturedItemImageUrl1
+			ItemsImageFront: apiData?.filepath
 		}
 
 		updateStore(updatedState)
@@ -65,31 +63,29 @@
 		const file = e.target.files[0] || {}
 		const formData = new FormData()
 		formData.append('image', file)
-		formData.append('type', 'B_')
-		fetch('/api/save/images', {
+		const type = `Back-${Math.random()}`
+		formData.append('type', type)
+		const filepath1: any = await fetch('/api/save/images', {
 			method: 'POST',
 			body: formData
 		})
-			.then((response) => response.json())
-			.catch((error) => {
-				console.error('Error saving image:', error)
-			})
+		const apiData = await filepath1.json()
 		// Check if the file size is already below 100kb
-		if (file.size <= 100 * 1024) {
-			capturedItemImageUrl2 = URL.createObjectURL(file)
-			updateStore({ ItemsImageBack: capturedItemImageUrl2 })
-			return
-		}
+		// if (file.size <= 100 * 1024) {
+		// 	capturedItemImageUrl2 = URL.createObjectURL(file)
+		// 	updateStore({ ItemsImageBack: capturedItemImageUrl2 })
+		// 	return
+		// }
 
-		const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
+		// const compressedDataURL = await compressImage(file, 0.5) // Adjust quality as needed
 
 		// Set the source of the compressed image
-		capturedItemImageUrl2 = compressedDataURL
+		capturedItemImageUrl2 = apiData?.filepath
 
 		// console.log('compressed capturedItemImageUrl2', capturedItemImageUrl2);
 
 		const updatedState = {
-			ItemsImageBack: capturedItemImageUrl2
+			ItemsImageBack: apiData?.filepath
 		}
 
 		updateStore(updatedState)

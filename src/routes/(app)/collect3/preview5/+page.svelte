@@ -35,6 +35,7 @@
 			})
 		}
 	})
+	console.log('formData', formData)
 </script>
 
 <div>

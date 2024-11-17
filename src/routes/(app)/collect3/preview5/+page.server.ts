@@ -12,7 +12,7 @@ const updateChangeImageSaved = async ({ tokenNo, image, programId }) => {
 	const type = tokenNo
 	formData.append('type', type)
 	formData.append('programId', programId?.toString())
-	const res = await fetch('/api/update/images', {
+	const res = await fetch('http://localhost:4173/api/update/images', {
 		method: 'POST',
 		body: formData
 	})
@@ -20,17 +20,36 @@ const updateChangeImageSaved = async ({ tokenNo, image, programId }) => {
 	return apiData
 }
 
+function formDataToJson(formData) {
+	const jsonObject: any = {};
+	formData.forEach((value, key) => {
+		// Check if the key already exists in the JSON object (handles multiple values)
+		if (jsonObject[key]) {
+			// If it's not an array, convert it into an array
+			if (!Array.isArray(jsonObject[key])) {
+				jsonObject[key] = [jsonObject[key]];
+			}
+			// Add the new value to the array
+			jsonObject[key].push(value);
+		} else {
+			jsonObject[key] = value;
+		}
+	});
+	return jsonObject
+}
 
 export const actions: Actions = {
 	async default(event) {
-		const items = Object.fromEntries(await event.request.formData())
+		const formData = await event.request.formData()
 
-		console.log('items', items)
+		const items = formDataToJson(formData)
+
 		const programData = await db.select().from(ProgramInfo).where(eq(ProgramInfo.Active, true)).limit(1)
 		const programId = programData[0].ProgramID
 		// update immae based on the form data and the token no
 		let { CollectSangatFaceImage, ItemsImageBack, ItemsImageFront } = items
 		const tokenNo = items.TokenNo
+		console.log('tokenNo', tokenNo, programId)
 		CollectSangatFaceImage = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Face`, image: CollectSangatFaceImage, programId })
 		ItemsImageBack = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Back`, image: ItemsImageBack, programId })
 		ItemsImageFront = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Front`, image: ItemsImageFront, programId })

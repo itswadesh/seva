@@ -92,7 +92,8 @@
 				.min(1, { message: 'Please enter satsang center' }),
 			aadharNo: z
 				.string({ required_error: 'Please enter your aadhar number' })
-				.min(12, { message: 'AADHAR number must be 12 characters' }),
+				.min(12, { message: 'AADHAR number must be 12 or 16 digits' })
+				.max(16, { message: 'AADHAR number must be 12 or 16 digits' }),
 			qualification: z
 				.string({ required_error: 'Please enter your qualification' })
 				.min(1, { message: 'Please enter your qualification' }),
@@ -151,7 +152,7 @@
 			body: formData
 		})
 
-		avatar = `/avatar/${type}.png`
+		avatar = `/uploads/avatar/${type}.png`
 		avatartoShow = avatar
 	}
 
@@ -165,7 +166,7 @@
 			method: 'POST',
 			body: formData
 		})
-		avatar = `/avatar/${type}.png`
+		avatar = `/uploads/avatar/${type}.png`
 		avatartoShow = avatar
 	}
 </script>
@@ -285,7 +286,6 @@
 				id="aadharNo"
 				name="aadharNo"
 				type="tel"
-				maxlength="12"
 				label="AADHAR Number:"
 				bind:value={aadharNo}
 				placeholder="Enter your aadhar number"

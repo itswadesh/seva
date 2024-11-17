@@ -113,17 +113,18 @@ router.post('/save/images', async (c) => {
 	const buffer = await file.arrayBuffer()
 	const fileContent = Buffer.from(buffer);       // 
 
-	fs.mkdirSync(`./static/${programId}/${sewadarId}`, { recursive: true });
-	fs.writeFileSync(`./static/${programId}/${sewadarId}/${type}.png`, fileContent);
+	fs.mkdirSync(`./static/uploads/${programId}/${sewadarId}`, { recursive: true });
+	fs.writeFileSync(`./static/uploads/${programId}/${sewadarId}/${type}.png`, fileContent);
 	return c.json({ filepath: `/${programId}/${sewadarId}/${type}.png` });
 })
 
 router.post('/update/images', async (c) => {
 	const args = await c.req.formData()
-	const avatarLocation = "./static" + args.get('image')
+	const avatarLocation = "./static/uploads" // + args.get('image')
 	const type = args.get('type')
 	const programId = Number(args.get('programId'))
-	const data = fs.readFileSync(avatarLocation)
+	console.log('programId....................', type, programId, avatarLocation)
+	// const data = fs.readFileSync(avatarLocation)
 	const cookieMe = getCookie(c, 'me')
 	let me
 	if (cookieMe) {
@@ -133,9 +134,9 @@ router.post('/update/images', async (c) => {
 	// ProgramID: id, ProgramCategory: category, ProgramLocation: location, ProgramStartDate: startDate, ProgramCompDate: compDate, ProgramBy: by, ProgramAdmin: admin
 
 
-	fs.writeFileSync(`./static/${programId}/${sewadarId}/${type}.png`, data)
-	fs.unlinkSync(avatarLocation)
-	return c.json(`./static/${programId}/${sewadarId}/${type}.png`)
+	// fs.writeFileSync(`./static/uploads/${programId}/${sewadarId}/${type}.png`, data)
+	// fs.unlinkSync(avatarLocation)
+	return c.json(`./static/uploads/${programId}/${sewadarId}/${type}.png`)
 })
 
 router.post('/images/save-avatar', async (c) => {
@@ -150,10 +151,10 @@ router.post('/images/save-avatar', async (c) => {
 	const buffer = await file.arrayBuffer()
 	const fileContent = Buffer.from(buffer);       // 
 
-	fs.mkdirSync('./static/avatar', { recursive: true });
-	fs.writeFileSync(`./static/avatar/${type}.png`, fileContent);
+	fs.mkdirSync('./static/uploads/avatar', { recursive: true });
+	fs.writeFileSync(`./static/uploads/avatar/${type}.png`, fileContent);
 
-	return c.json({ filePath: `./static/avatar/${type}.png` });
+	return c.json({ filePath: `./static/uploads/avatar/${type}.png` });
 })
 
 router.post('/images/update-avatar', async (c) => {
@@ -161,9 +162,9 @@ router.post('/images/update-avatar', async (c) => {
 	const avatarLocation = "./static" + args.get('image')
 	const type = args.get('type')
 	const data = fs.readFileSync(avatarLocation)
-	fs.writeFileSync(`./static/avatar/${type}.png`, data)
+	fs.writeFileSync(`./static/uploads/avatar/${type}.png`, data)
 	fs.unlinkSync(avatarLocation)
-	return c.json('./static/avatar/${type}.png')
+	return c.json('./static/uploads/avatar/${type}.png')
 })
 
 router.post('/admin/users', async (c) => {

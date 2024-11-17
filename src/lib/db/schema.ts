@@ -35,14 +35,9 @@ export const ClientProfile = pgTable('ClientProfile', {
 		withTimezone: true,
 	}),
 	sid: varchar('sid'),
-	createdAt: timestamp('created_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
+	createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull()
+
 })
 
 export const SangatData = pgTable('SangatData', {
@@ -84,17 +79,10 @@ export const SangatData = pgTable('SangatData', {
 	Validation: varchar('Validation'),
 	ValidationDT: timestamp('ValidationDT'),
 	ErrorReason: varchar('ErrorReason'),
-	createdAt: timestamp('created_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
-}, (table) => ({
-	pk: primaryKey(table.ProgramID, table.TokenNo)
-}));
+	createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull()
+
+});
 
 export const ProgramInfo = pgTable('ProgramInfo', {
 	ProgramID: serial('ProgramID').primaryKey(),
@@ -106,14 +94,9 @@ export const ProgramInfo = pgTable('ProgramInfo', {
 	Active: boolean('Active'),
 	ProgramValidity: date('ProgramValidity'),
 	ProgramAdmin: varchar('ProgramAdmin'),
-	createdAt: timestamp('created_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
+	createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull()
+
 })
 
 export const TokenMaster = pgTable('TokenMaster', {
@@ -128,26 +111,16 @@ export const TokenMaster = pgTable('TokenMaster', {
 	Color: varchar('Color'),
 	Print: boolean('Print'),
 	Bag: boolean('Bag'),
-	createdAt: timestamp('created_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
+	createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull()
+
 })
 
 export const Complaints = pgTable('complaints', {
 	id: serial('id').primaryKey(),
 	pbno: varchar('pbno').notNull(),
 	comment: varchar('comment'),
-	createdAt: timestamp('created_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
-	updatedAt: timestamp('updated_at', {
-		precision: 6,
-		withTimezone: true,
-	}).defaultNow(),
+	createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull()
+
 })

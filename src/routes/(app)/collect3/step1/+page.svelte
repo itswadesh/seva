@@ -70,7 +70,7 @@
 				>
 					{#if capturedImageURI || data.CollectSangatFaceImage}
 						<img
-							src={capturedImageURI || data.CollectSangatFaceImage}
+							src={'/uploads' + capturedImageURI || '/uploads' + data.CollectSangatFaceImage}
 							alt=""
 							class="h-full w-full object-contain object-center"
 						/>

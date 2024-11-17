@@ -1,13 +1,16 @@
+======================== Logic ========================
+files in `programID/SewadarID, Back-.png, Front-.png, Face-.png`
 ==================================== Start Pending Tasks ==========================================
 
 - `admin/users` -> A button to inactive all records
-                -> Each line will have checkbox to approve a user
+  -> Each line will have checkbox to approve a user
 - `admin/program-list -> This status will be available in the collection screen (Indicates if the collection is for DEMO or LIVE)
-1  DEMO Active
+  1 DEMO Active
+
 2. LIVE Active
 
 - `/auth/signup` -> After registration is complete, the success page should show the following message
-``` Please wait for activation ```
+  `Please wait for activation`
 - `/auth/login` -> If the user is not active, the make pending_approval=true
 - `admin/login-requests` -> List of users trying to login and bulk approve all them by selecting checkboxes. This receives data where pending_approval=true
 
@@ -18,7 +21,6 @@ compress image to 100kb befoe saving
 save image inside folder `ProgramId/SewadarId/A_random_number.jpg`
 save image inside folder `ProgramId/SewadarId/F_random_number.jpg`
 save image inside folder `ProgramId/SewadarId/B_random_number.jpg`
-
 
 ==================================== End Pending Tasks ==========================================
 
@@ -41,6 +43,7 @@ Step-2: Disable Next button when item count = 0
 Step-3: Without uploading front pic Next button will not be highlighted
 
 ## Features
+
 display store data if data available, can move to any step if data available, display face then item image then code at preview with show all details button, preview should not be disabled
 Add Laptop, Bag in items form
 User label for textbox with cart like + - buttons in Step-2

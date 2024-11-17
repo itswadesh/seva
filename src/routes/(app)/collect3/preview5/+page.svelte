@@ -66,7 +66,7 @@
 	>
 		<div class="grid grid-cols-2">
 			<img
-				src={formData.CollectSangatFaceImage}
+				src={'/uploads' + formData.CollectSangatFaceImage}
 				alt="Sangat Face Missing"
 				class="h-40 w-auto object-contain object-left"
 			/>
@@ -88,7 +88,7 @@
 					</svg>
 				{:else}
 					<img
-						src={formData.ItemsImageFront}
+						src={'/uploads' + formData.ItemsImageFront}
 						alt="Front Image Missing"
 						class="h-20 w-auto object-contain object-left"
 					/>
@@ -110,7 +110,7 @@
 					</svg>
 				{:else}
 					<img
-						src={formData.ItemsImageBack}
+						src={'/uploads' + formData.ItemsImageBack}
 						alt="Back Image Missing"
 						class="h-20 w-auto object-contain object-left"
 					/>
@@ -144,7 +144,11 @@
 
 					<div class="col-span-1 p-2 font-semibold">
 						{#if key === 'CollectSangatFaceImage' || key === 'ItemsImageBack' || key === 'ItemsImageFront'}
-							<img src={value} alt={key} class="h-20 w-auto object-contain object-left" />
+							<img
+								src={'/uploads' + value}
+								alt={key}
+								class="h-20 w-auto object-contain object-left"
+							/>
 						{:else}
 							{value || '-'}
 						{/if}

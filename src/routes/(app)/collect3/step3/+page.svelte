@@ -104,7 +104,7 @@
 				>
 					{#if capturedItemImageUrl1 || data.ItemsImageFront}
 						<img
-							src={capturedItemImageUrl1 || data.ItemsImageFront}
+							src={'/uploads' + capturedItemImageUrl1 || '/uploads' + data.ItemsImageFront}
 							alt=""
 							class="h-full w-full object-contain object-center"
 						/>
@@ -150,7 +150,7 @@
 				>
 					{#if capturedItemImageUrl2 || data.ItemsImageBack}
 						<img
-							src={capturedItemImageUrl2 || data.ItemsImageBack}
+							src={'/uploads' + capturedItemImageUrl2 || '/uploads' + data.ItemsImageBack}
 							alt=""
 							class="h-full w-full object-contain object-center"
 						/>

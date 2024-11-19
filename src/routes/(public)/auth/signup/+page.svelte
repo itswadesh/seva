@@ -23,6 +23,7 @@
 	let fatherName = 'Bipin Behera'
 	let center = 'Bangalore'
 	let aadharNo = '111111111111'
+	let maskedAadhar = ''
 	let qualification = 'B-Tech'
 	let sevaPreference = ''
 	let sevaPreference1 = ''
@@ -168,6 +169,18 @@
 		})
 		avatar = `/uploads/avatar/${type}.png`
 		avatartoShow = avatar
+	}
+
+	function handleAadharInput(event) {
+		const rawValue = event.detail.target?.value || '' // Get the raw value
+		aadharNo = rawValue.replace(/\D/g, '') // Strip non-digit characters
+		maskedAadhar = maskAndFormatAadhar(aadharNo) // Mask and format
+	}
+
+	function maskAndFormatAadhar(number) {
+		let masked = number.slice(0, -4).replace(/\d/g, 'X') // Replace all but the last 4 digits
+		let lastFour = number.slice(-4)
+		return (masked + lastFour).replace(/(.{4})/g, '$1-').slice(0, -1) // Format
 	}
 </script>
 

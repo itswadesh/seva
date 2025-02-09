@@ -31,7 +31,7 @@
 			</Form.Item>
 		</Form.Field>
 
-		<Form.Field {config} name="earpods">
+		<!-- <Form.Field {config} name="earpods">
 			<Form.Item>
 				<Form.Label>Earpods</Form.Label>
 
@@ -39,7 +39,7 @@
 
 				<Form.Validation />
 			</Form.Item>
-		</Form.Field>
+		</Form.Field> -->
 
 		<Form.Field {config} name="charger">
 			<Form.Item>

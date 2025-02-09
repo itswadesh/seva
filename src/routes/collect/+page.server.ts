@@ -9,7 +9,7 @@ const initialState = {
 	Collect_SewadarName: '',
 	CollectSangatFaceImage: '',
 	EarPhone: 0,
-	EarPod: 0,
+	// EarPod: 0,
 	ID: '',
 	ItemsImageBack: '',
 	ItemsImageFront: '',
@@ -33,7 +33,7 @@ export const actions: Actions = {
 
 		const charger = formData.get('charger')
 		const earphones = formData.get('earphones')
-		const earpods = formData.get('earpods')
+		// const earpods = formData.get('earpods')
 		const mobile = formData.get('mobile')
 		const others = formData.get('others')
 		const smartwatch = formData.get('smartwatch')
@@ -58,14 +58,14 @@ export const actions: Actions = {
 		const updatedState = {
 			Charger: Number(charger),
 			EarPhone: Number(earphones),
-			EarPod: Number(earpods),
+			// EarPod: Number(earpods),
 			Mobiles: Number(mobile),
 			Others: Number(others),
 			SmartWatch: Number(smartwatch),
 			TotalItems:
 				Number(charger) +
 				Number(earphones) +
-				Number(earpods) +
+				// Number(earpods) +
 				Number(mobile) +
 				Number(others) +
 				Number(smartwatch)

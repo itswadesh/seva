@@ -14,7 +14,7 @@
 </script>
 
 <div>
-	<label for="name" class="block text-lg text-gray-700">
+	<label for="name" class="block text-xl text-gray-700">
 		{label}
 	</label>
 	<Input
@@ -25,7 +25,7 @@
 		{placeholder}
 		{maxlength}
 		{autofocus}
-		class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-2xl shadow-sm focus:outline-none  sm:text-lg {errors[
+		class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-3xl shadow-sm focus:outline-none  sm:text-lg {errors[
 			id
 		]
 			? 'border-red-500'

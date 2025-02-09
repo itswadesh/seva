@@ -52,43 +52,43 @@
 				>
 					Step1
 				</button>
+				{#if $page.url.pathname != '/collect3/preview5' && $page.url.pathname != '/give-back'}
+					<button
+						class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(2)
+							? 'border border-green-500 bg-green-200 font-bold text-black'
+							: ''} {currentStepUrl.includes('/step2')
+							? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+							: ''}"
+						on:click={() => gotoo(2)}
+						disabled={isDisabled(2)}
+					>
+						Step2
+					</button>
 
-				<button
-					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(2)
-						? 'border border-green-500 bg-green-200 font-bold text-black'
-						: ''} {currentStepUrl.includes('/step2')
-						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
-						: ''}"
-					on:click={() => gotoo(2)}
-					disabled={isDisabled(2)}
-				>
-					Step2
-				</button>
+					<button
+						class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(3)
+							? 'border border-green-500 bg-green-200 font-bold text-black'
+							: ''} {currentStepUrl.includes('/step3')
+							? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+							: ''}"
+						on:click={() => gotoo(3)}
+						disabled={isDisabled(3)}
+					>
+						Step3
+					</button>
 
-				<button
-					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(3)
-						? 'border border-green-500 bg-green-200 font-bold text-black'
-						: ''} {currentStepUrl.includes('/step3')
-						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
-						: ''}"
-					on:click={() => gotoo(3)}
-					disabled={isDisabled(3)}
-				>
-					Step3
-				</button>
-
-				<button
-					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(4)
-						? 'border border-green-500 bg-green-200 font-bold text-black'
-						: ''} {currentStepUrl.includes('/step4')
-						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
-						: ''}"
-					on:click={() => gotoo(4)}
-					disabled={isDisabled(4)}
-				>
-					Step4
-				</button>
-
+					<button
+						class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(4)
+							? 'border border-green-500 bg-green-200 font-bold text-black'
+							: ''} {currentStepUrl.includes('/step4')
+							? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+							: ''}"
+						on:click={() => gotoo(4)}
+						disabled={isDisabled(4)}
+					>
+						Step4
+					</button>
+				{/if}
 				<button
 					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(5)
 						? 'border border-green-500 bg-green-200 font-bold text-black'

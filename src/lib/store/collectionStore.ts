@@ -7,7 +7,7 @@ const initialState = {
 	Collect_SewadarName: '',
 	CollectSangatFaceImage: '',
 	EarPhone: 0,
-	EarPod: 0,
+	// EarPod: 0,
 	ID: '',
 	ItemsImageBack: '',
 	ItemsImageFront: '',

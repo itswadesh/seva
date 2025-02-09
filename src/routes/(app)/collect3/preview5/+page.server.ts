@@ -69,7 +69,7 @@ export const actions: Actions = {
 				Collect_SewadarName: items?.Collect_SewadarName,
 				Mobiles: +items?.Mobiles,
 				EarPhone: +items?.EarPhone,
-				EarPod: +items?.EarPod,
+				// EarPod: +items?.EarPod,
 				PowerBank: +items?.PowerBank,
 				Charger: +items?.Charger,
 				SmartWatch: +items?.SmartWatch,

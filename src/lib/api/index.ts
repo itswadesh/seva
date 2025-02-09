@@ -130,7 +130,7 @@ router.post('/update/images', async (c) => {
 	if (cookieMe) {
 		me = JSON.parse(cookieMe)
 	}
-	const sewadarId = me.id
+	const sewadarId = me?.id
 	// ProgramID: id, ProgramCategory: category, ProgramLocation: location, ProgramStartDate: startDate, ProgramCompDate: compDate, ProgramBy: by, ProgramAdmin: admin
 
 

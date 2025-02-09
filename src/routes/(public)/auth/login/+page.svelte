@@ -10,7 +10,7 @@
 	export let data
 
 	let phone = '8895092508'
-	let password = '22-06-1985'
+	let password = '22061985'
 	let isLoading = false
 	let errors = {}
 

@@ -14,9 +14,9 @@
     "format": "prettier --write .",
     "test:integration": "playwright test",
     "test:unit": "vitest",
-    "studio": "drizzle-kit studio --config drizzle.config.ts",
+    "studio": "drizzle-kit studio --config ./src/drizzle.config.ts",
     "generate": "drizzle-kit generate:pg --config drizzle.config.ts",
-    "migrate": "drizzle-kit push:pg --config ./src/drizzle.config.ts"
+    "db:migrate": "drizzle-kit push:pg --config ./src/drizzle.config.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.42.1",

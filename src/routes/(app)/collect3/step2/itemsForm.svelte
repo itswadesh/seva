@@ -15,7 +15,7 @@
 		Mobiles: 0,
 		Charger: 0,
 		EarPhone: 0,
-		EarPod: 0,
+		// EarPod: 0,
 		SmartWatch: 0,
 		Laptop: 0,
 		Bag: 0,
@@ -27,7 +27,7 @@
 			+(data.Bag || 0) +
 			+(data.Charger || 0) +
 			+(data.EarPhone || 0) +
-			+(data.EarPod || 0) +
+			// +(data.EarPod || 0) +
 			+(data.Laptop || 0) +
 			+(data.Mobiles || 0) +
 			+(data.Others || 0) +
@@ -40,7 +40,7 @@
 				data.Mobiles = value.Mobiles
 				data.Charger = value.Charger
 				data.EarPhone = value.EarPhone
-				data.EarPod = value.EarPod
+				// data.EarPod = value.EarPod
 				data.SmartWatch = value.SmartWatch
 				data.Laptop = value.Laptop
 				data.Bag = value.Bag

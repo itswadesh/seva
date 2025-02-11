@@ -1,6 +1,10 @@
 <script lang="ts">
 	import Button from '$lib/components/misiki/button/button.svelte'
-	export let data = {}
+	interface Props {
+		data?: any;
+	}
+
+	let { data = {} }: Props = $props();
 </script>
 
 <div class="flex items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">

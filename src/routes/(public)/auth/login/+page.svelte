@@ -7,14 +7,15 @@
 	import Input from '$lib/components/misiki/input/input.svelte'
 	import { Textbox } from '$lib/components/misiki'
 	import axios from 'axios'
-	export let data
 
-	let phone = '8895092508'
-	let password = '22061985'
-	let isLoading = false
-	let errors = {}
+	let phone = $state('8895092508')
+	let password = $state('22061985')
+	let isLoading = $state(false)
+	let errors = $state({})
 
 	import { getContext } from 'svelte'
+	/** @type {{data: any}} */
+	let { data } = $props();
 	const userStore = getContext('user')
 
 	const handleSignIn = async () => {
@@ -60,7 +61,7 @@
 	<div class="w-full">
 		<h1 class="mb-6 text-center text-2xl font-bold">Sevadar Login</h1>
 
-		<form on:submit={handleSignIn} class="w-full space-y-4">
+		<form onsubmit={handleSignIn} class="w-full space-y-4">
 			<Textbox
 				id="phone"
 				name="phone"

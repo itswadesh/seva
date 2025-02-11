@@ -3,7 +3,8 @@
 	import { goto } from '$app/navigation'
 	import Button from '$lib/components/ui/button/button.svelte'
 	import ItemsForm from './itemsForm.svelte'
-
+	import { getStepState } from '$lib/steps.svelte'
+	const stepState = getStepState()
 	let data = {
 		Mobiles: 0,
 		Charger: 0,
@@ -17,10 +18,15 @@
 
 	function nextStep() {
 		// Update dataStore with the collected data
-		updateStore(data)
+		// updateStore(data)
+		// stepState.update(data)
 		goto('/collect3/step3')
 	}
 </script>
+
+<svelte:head>
+	<title>Collect Sangat Items</title>
+</svelte:head>
 
 <div>
 	<h1 class="mb-2 text-xl font-bold text-blue-500">Enter Item Details :</h1>

@@ -2,15 +2,18 @@
 	import { createEventDispatcher } from 'svelte'
 	const dispatch = createEventDispatcher()
 	import Input from '$lib/components/ui/input/input.svelte'
-	export let id = 'name'
-	export let name = 'name'
-	export let value = ''
-	export let label = 'Full Name:'
-	export let placeholder = 'Enter your name'
-	export let type = 'text'
-	export let maxlength = null
-	export let autofocus = false
-	export let errors
+	/** @type {{id?: string, name?: string, value?: string, label?: string, placeholder?: string, type?: string, maxlength?: any, autofocus?: boolean, errors: any}} */
+	let {
+		id = 'name',
+		name = 'name',
+		value = $bindable(''),
+		label = 'Full Name:',
+		placeholder = 'Enter your name',
+		type = 'text',
+		maxlength = null,
+		autofocus = false,
+		errors
+	} = $props();
 </script>
 
 <div>

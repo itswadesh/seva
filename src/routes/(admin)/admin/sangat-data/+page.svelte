@@ -1,5 +1,9 @@
 <script lang="ts">
-	export let data
+	interface Props {
+		data: any;
+	}
+
+	let { data }: Props = $props();
 	const sangatData = JSON.parse(data.sangatData) || []
 </script>
 

@@ -9,21 +9,26 @@
 	import { onMount } from 'svelte'
 	import { getContext } from 'svelte'
 	const userStore = getContext('user')
+	
+	interface Props {
+		data: any;
+		children?: import('svelte').Snippet;
+	}
 
-	export let data
-	$: currentStepUrl = $page?.url?.pathname
-	$: currentStep = currentStepUrl.split('/')[2]?.match(/\d+/) || 0
+	let { data, children }: Props = $props();
+	let currentStepUrl = $derived($page?.url?.pathname)
+	let currentStep = $derived(currentStepUrl.split('/')[2]?.match(/\d+/) || 0)
 
 	const gotoo = (step: number) => {
 		goto(`/collect3/step${step}`)
 	}
 
-	$: isComplete = (step: number) => {
+	let isComplete = $derived((step: number) => {
 		return currentStep > step
-	}
-	$: isDisabled = (step: number) => {
+	})
+	let isDisabled = $derived((step: number) => {
 		return currentStep < step
-	}
+	})
 
 	onMount(() => {
 		if (!$userStore.me?.sid) {
@@ -48,7 +53,7 @@
 						: ''} {currentStepUrl.includes('/step1')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"
-					on:click={() => gotoo(1)}
+					onclick={() => gotoo(1)}
 				>
 					Step1
 				</button>
@@ -59,7 +64,7 @@
 							: ''} {currentStepUrl.includes('/step2')
 							? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 							: ''}"
-						on:click={() => gotoo(2)}
+						onclick={() => gotoo(2)}
 						disabled={isDisabled(2)}
 					>
 						Step2
@@ -71,7 +76,7 @@
 							: ''} {currentStepUrl.includes('/step3')
 							? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 							: ''}"
-						on:click={() => gotoo(3)}
+						onclick={() => gotoo(3)}
 						disabled={isDisabled(3)}
 					>
 						Step3
@@ -83,7 +88,7 @@
 							: ''} {currentStepUrl.includes('/step4')
 							? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 							: ''}"
-						on:click={() => gotoo(4)}
+						onclick={() => gotoo(4)}
 						disabled={isDisabled(4)}
 					>
 						Step4
@@ -95,7 +100,7 @@
 						: ''} {currentStepUrl.includes('/preview')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"
-					on:click={() => goto('/preview')}
+					onclick={() => goto('/preview')}
 					disabled={isDisabled(5)}
 				>
 					Preview
@@ -106,7 +111,7 @@
 		<div class="flex-1 px-3 py-1">
 			{#key data.url}
 				<div in:fly={{ y: -50, duration: 100 }} out:fade={{ duration: 100 }} class="">
-					<slot />
+					{@render children?.()}
 				</div>
 			{/key}
 		</div>

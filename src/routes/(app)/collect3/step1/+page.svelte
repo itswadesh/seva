@@ -1,27 +1,26 @@
 <script lang="ts">
-	import { collectionstore, updateStore } from '$lib/store/collectionStore'
+	import { preventDefault } from 'svelte/legacy'
+
+	// import { collectionstore, updateStore } from '$lib/store/collectionStore'
 	import { goto } from '$app/navigation'
 	import Button from '$lib/components/ui/button/button.svelte'
 	import Input from '$lib/components/ui/input/input.svelte'
 	import { compressImage } from '$lib/utils'
 	import { onMount } from 'svelte'
 	import { browser } from '$app/environment'
-
-	let capturedImageURI: string
-	let data: any = {}
-	let loading = false
-
-	onMount(() => {
-		if (browser) {
-			collectionstore.subscribe((value) => {
-				data.CollectSangatFaceImage = value.CollectSangatFaceImage
-			})
-		}
-	})
+	let capturedImageURI: string = $state()
+	// let data: any = $state({})
+	let loading = $state(false)
+	import { getStepState } from '$lib/steps.svelte'
+	const stepState = getStepState()
+	// onMount(() => {
+	// 	if (browser) {
+	// 		collectionstore.subscribe((value) => {
+	// 			data.CollectSangatFaceImage = value.CollectSangatFaceImage
+	// 		})
+	// 	}
+	// })
 	function nextStep() {
-		loading = true
-		updateStore(data)
-		loading = false
 		goto('/collect3/step2')
 	}
 
@@ -36,7 +35,7 @@
 			body: formData
 		})
 		const apiData = await filePath1.json()
-		console.log('apiData', apiData)
+		// console.log('apiData', apiData)
 		// Check if the file size is already below 100kb
 		// if (file.size <= 100 * 1024) {
 		// 	capturedImageURI = URL.createObjectURL(file)
@@ -49,28 +48,35 @@
 		// Set the source of the compressed image
 		capturedImageURI = apiData?.filepath
 
-		const updatedState = {
-			CollectSangatFaceImage: apiData?.filepath
-		}
-		console.log('compressed capturedImageURI', capturedImageURI, updatedState)
-
-		updateStore(updatedState)
+		// const updatedState = {
+		// 	CollectSangatFaceImage: apiData?.filepath
+		// }
+		// console.log('compressed capturedImageURI', capturedImageURI, updatedState)
+		stepState.updateSangatFaceImage(apiData?.filepath)
+		// updateStore(updatedState)
 	}
+	$effect(() => {
+		console.log($state.snapshot(stepState.CollectSangatFaceImage), $state.snapshot(stepState.items))
+	})
 </script>
+
+<svelte:head>
+	<title>Collect Sangat Face Image</title>
+</svelte:head>
 
 <div>
 	<h1 class="mb-2 text-xl font-bold text-blue-500">Take Sangat Face Image</h1>
 
-	<form on:submit|preventDefault={nextStep} class="flex flex-col gap-8">
+	<form onsubmit={preventDefault(nextStep)} class="flex flex-col gap-8">
 		<div class="flex flex-col gap-4">
 			<div class="flex w-full items-center justify-center">
 				<label
 					for="image-2"
 					class="dark:hover:bg-bray-800 flex h-80 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
 				>
-					{#if capturedImageURI || data.CollectSangatFaceImage}
+					{#if capturedImageURI || stepState?.CollectSangatFaceImage}
 						<img
-							src={'/uploads' + capturedImageURI || '/uploads' + data.CollectSangatFaceImage}
+							src={'/uploads' + (capturedImageURI || stepState.CollectSangatFaceImage)}
 							alt=""
 							class="h-full w-full object-contain object-center"
 						/>
@@ -104,7 +110,7 @@
 						accept="image/*"
 						capture="environment"
 						class="hidden"
-						on:change={handleChangeImageSaved}
+						onchange={handleChangeImageSaved}
 					/>
 				</label>
 			</div>
@@ -113,8 +119,8 @@
 		<Button
 			type="submit"
 			class="w-full"
-			{loading}
-			disabled={!capturedImageURI && !data.CollectSangatFaceImage}>Next Step</Button
+			loading={stepState?.loading}
+			disabled={!capturedImageURI && !stepState?.CollectSangatFaceImage}>Next Step</Button
 		>
 	</form>
 </div>

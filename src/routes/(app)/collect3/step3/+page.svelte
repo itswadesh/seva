@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: `<form>` is invalid inside `<form>` -->
 <script lang="ts">
 	import { goto } from '$app/navigation'
 	import { collectionstore, updateStore } from '$lib/store/collectionStore'
@@ -5,6 +6,8 @@
 	import { compressImage } from '$lib/utils'
 	import { onMount } from 'svelte'
 	import { browser } from '$app/environment'
+	import { getStepState } from '$lib/steps.svelte'
+	const stepState = getStepState()
 
 	let capturedItemImageUrl1
 	let capturedItemImageUrl2
@@ -22,7 +25,7 @@
 
 	function nextStep() {
 		loading = true
-		updateStore(data)
+		stepState.update(data)
 		loading = false
 		goto('/collect3/step4')
 	}
@@ -56,7 +59,8 @@
 			ItemsImageFront: apiData?.filepath
 		}
 
-		updateStore(updatedState)
+		stepState.update(updatedState)
+		// updateStore(updatedState)
 	}
 
 	const handleChangeItemImageSaved2 = async (e: any) => {
@@ -87,8 +91,9 @@
 		const updatedState = {
 			ItemsImageBack: apiData?.filepath
 		}
+		stepState.update(updatedState)
 
-		updateStore(updatedState)
+		// updateStore(updatedState)
 	}
 </script>
 

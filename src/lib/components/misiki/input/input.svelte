@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { createBubbler } from 'svelte/legacy';
+
+	const bubble = createBubbler();
 	import { Button } from '$lib/components/ui/button'
 	import { cn } from '$lib/utils'
 	import { InfoCircled } from 'radix-icons-svelte'
@@ -9,12 +12,23 @@
 	type $$Props = HTMLInputAttributes
 	type $$Events = InputEvents
 
-	let className: $$Props['class'] = undefined
-	export let value: $$Props['value'] = undefined
-	export { className as class }
+	
 
-	export let label = ''
-	export let tooltip = ''
+	interface Props {
+		class?: $$Props['class'];
+		value?: $$Props['value'];
+		label?: string;
+		tooltip?: string;
+		[key: string]: any
+	}
+
+	let {
+		class: className = undefined,
+		value = $bindable(undefined),
+		label = '',
+		tooltip = '',
+		...rest
+	}: Props = $props();
 </script>
 
 <label class="flex items-center">
@@ -45,20 +59,20 @@
 			className
 		)}
 		bind:value
-		on:blur
-		on:change
-		on:click
-		on:focus
-		on:focusin
-		on:focusout
-		on:keydown
-		on:keypress
-		on:keyup
-		on:mouseover
-		on:mouseenter
-		on:mouseleave
-		on:paste
-		on:input
-		{...$$restProps}
+		onblur={bubble('blur')}
+		onchange={bubble('change')}
+		onclick={bubble('click')}
+		onfocus={bubble('focus')}
+		onfocusin={bubble('focusin')}
+		onfocusout={bubble('focusout')}
+		onkeydown={bubble('keydown')}
+		onkeypress={bubble('keypress')}
+		onkeyup={bubble('keyup')}
+		onmouseover={bubble('mouseover')}
+		onmouseenter={bubble('mouseenter')}
+		onmouseleave={bubble('mouseleave')}
+		onpaste={bubble('paste')}
+		oninput={bubble('input')}
+		{...rest}
 	/>
 </label>

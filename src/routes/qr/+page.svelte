@@ -1,10 +1,10 @@
 <script>
 	import { onMount } from 'svelte'
-	let QR
+	let QR = $state()
 	onMount(async () => {
 		const QRModule = await import('./QrScan.svelte')
 		QR = QRModule.default
 	})
 </script>
 
-<svelte:component this={QR} />
+<QR />

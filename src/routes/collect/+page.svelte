@@ -4,12 +4,18 @@
 	import { collectionstore, updateStore } from '$lib/store/collectionStore'
 	import { onMount } from 'svelte'
 	import ItemForm from './itemsForm.svelte'
+	import { getStepState } from '$lib/steps.svelte'
+	const stepState = getStepState()
 
-	export let data
+	interface Props {
+		data: any;
+	}
 
-	let addItemImages = false
-	let additemsCheck = false
-	let capturedImageURI: string
+	let { data }: Props = $props();
+
+	let addItemImages = $state(false)
+	let additemsCheck = $state(false)
+	let capturedImageURI: string = $state()
 	let capturedItemImageUrl1: string
 	let capturedItemImageUrl2: string
 	let scanQr = false
@@ -32,7 +38,8 @@
 		TotalItems: 0
 	}
 
-	$: collectionstoreRes = {}
+	let collectionstoreRes = $state({});
+	
 
 	onMount(() => {
 		if (browser) {
@@ -52,14 +59,16 @@
 		const updatedState = {
 			CollectSangatFaceImage: capturedImageURI
 		}
-		updateStore(updatedState)
+		// updateStore(updatedState)
+		stepState.update(updatedState)
 		additemsCheck = !additemsCheck
 	}
 
 	const handleChangeImageSaved = (e: any) => {
 		capturedImageURI = URL.createObjectURL(e.target.files[0])
 		console.log(capturedImageURI)
-		updateStore({ CollectSangatFaceImage: capturedImageURI })
+		stepState.update({ CollectSangatFaceImage: capturedImageURI })
+		// updateStore({ CollectSangatFaceImage: capturedImageURI })
 	}
 
 	const handleChangeItemImageSaved1 = (e: any) => {
@@ -68,7 +77,8 @@
 		const updatedState = {
 			ItemsImageFront: capturedItemImageUrl1
 		}
-		updateStore(updatedState)
+		stepState.update(updatedState)
+		// updateStore(updatedState)
 	}
 
 	const handleChangeItemImageSaved2 = (e: any) => {
@@ -101,12 +111,12 @@
 					name="image"
 					accept="image/*"
 					capture="environment"
-					on:change={handleChangeImageSaved}
+					onchange={handleChangeImageSaved}
 				/>
 			</div>
 		{:else}
 			<div class="flex flex-col items-center justify-center gap-5">
-				<!-- svelte-ignore a11y-img-redundant-alt -->
+				<!-- svelte-ignore a11y_img_redundant_alt -->
 				<img src={capturedImageURI} alt="Captured Image" class="h-64 w-64" />
 
 				<Button variant="default" class="w-full" on:click={handleAddItems}>Add Items</Button>
@@ -127,7 +137,7 @@
 				name="image"
 				accept="image/*"
 				capture="environment"
-				on:change={handleChangeItemImageSaved1}
+				onchange={handleChangeItemImageSaved1}
 			/>
 
 			<input
@@ -135,7 +145,7 @@
 				name="image"
 				accept="image/*"
 				capture="environment"
-				on:change={handleChangeItemImageSaved2}
+				onchange={handleChangeItemImageSaved2}
 			/>
 		</div>
 

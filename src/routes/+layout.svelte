@@ -6,9 +6,12 @@
 	import { Toaster } from '$lib/components/ui/sonner'
 	import { ModeWatcher } from 'mode-watcher'
 
-	export let data
 	import { setContext } from 'svelte'
 	import createUserStore from '$lib/store/create-user-store'
+	import { setStepState } from '$lib/steps.svelte'
+	setStepState()
+
+	let { data, children }: Props = $props()
 
 	// In a real app, you would fetch the user data from an API
 	const userStore = createUserStore(JSON.parse(data?.me) || {})
@@ -33,7 +36,7 @@
 
 			{#key data.url}
 				<div in:fly={{ y: -50, duration: 100 }} out:fade={{ duration: 100 }} class="">
-					<slot />
+					{@render children?.()}
 				</div>
 			{/key}
 		</div>

@@ -6,7 +6,11 @@
 	import axios from 'axios'
 	import { toast } from 'svelte-sonner'
 	let checked = false
-	export let data
+	interface Props {
+		data: any;
+	}
+
+	let { data }: Props = $props();
 	const users = JSON.parse(data.users || '[]') || []
 </script>
 

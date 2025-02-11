@@ -1,7 +1,9 @@
 import { fail, type Actions } from '@sveltejs/kit'
 import { formSchema } from './schema'
 import { superValidate } from 'sveltekit-superforms/server'
-import { updateStore } from '$lib/store/collectionStore'
+// import { updateStore } from '$lib/store/collectionStore'
+import { getStepState } from '$lib/steps.svelte'
+const stepState = getStepState()
 
 const initialState = {
 	Charger: 0,
@@ -71,6 +73,8 @@ export const actions: Actions = {
 				Number(smartwatch)
 		}
 
-		updateStore(updatedState)
+		// updateStore(updatedState)
+		stepState.update(updatedState)
+
 	}
 }

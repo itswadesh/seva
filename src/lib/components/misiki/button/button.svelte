@@ -7,22 +7,37 @@
 	type $$Props = Props
 	type $$Events = Events
 
-	let className: $$Props['class'] = undefined
 
-	export let variant: $$Props['variant'] = 'default'
-	export let size: $$Props['size'] = 'default'
-	export let builders: $$Props['builders'] = []
-	export { className as class }
+	
 
-	export let loading = false
-	export let disabled = false
+	interface Props_1 {
+		class?: $$Props['class'];
+		variant?: $$Props['variant'];
+		size?: $$Props['size'];
+		builders?: $$Props['builders'];
+		loading?: boolean;
+		disabled?: boolean;
+		children?: import('svelte').Snippet;
+		[key: string]: any
+	}
+
+	let {
+		class: className = undefined,
+		variant = 'default',
+		size = 'default',
+		builders = [],
+		loading = false,
+		disabled = false,
+		children,
+		...rest
+	}: Props_1 = $props();
 </script>
 
 <ButtonPrimitive.Root
 	{builders}
 	class={cn(buttonVariants({ variant, size, className }))}
 	type="button"
-	{...$$restProps}
+	{...rest}
 	disabled={disabled || loading}
 	on:click
 	on:keydown
@@ -31,6 +46,6 @@
 		<Reload class="mr-2 h-4 w-4 animate-spin" />
 		Please wait
 	{:else}
-		<slot />
+		{@render children?.()}
 	{/if}
 </ButtonPrimitive.Root>

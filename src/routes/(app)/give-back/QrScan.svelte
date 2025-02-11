@@ -2,10 +2,12 @@
 	import { onMount } from 'svelte'
 	import jsQR from 'jsqr'
 	import { goto } from '$app/navigation'
-	import { updateStore } from '$lib/store/collectionStore'
+	// import { updateStore } from '$lib/store/collectionStore'
+		import { getStepState } from '$lib/steps.svelte'
+	const stepState = getStepState()
 
-	let videoElement: any
-	let canvasElement: any
+	let videoElement: any = $state()
+	let canvasElement: any = $state()
 	let scanning = false
 
 	onMount(async () => {
@@ -42,7 +44,9 @@
 		const code = jsQR(imageData.data, imageData.width, imageData.height)
 		if (code?.data) {
 			const data = { TokenNo: code.data }
-			updateStore(data)
+			// updateStore(data)
+		stepState.update(data)
+
 			stopScan()
 			goto('/collect3/preview5')
 			// Stop scanning once a QR code is detected

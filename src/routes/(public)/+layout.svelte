@@ -5,7 +5,12 @@
 	import Nav from '$lib/components/seva/Nav.svelte'
 	import NavPublic from '$lib/components/seva/NavPublic.svelte'
 	import { fade, fly } from 'svelte/transition'
-	export let data
+	interface Props {
+		data: any;
+		children?: import('svelte').Snippet;
+	}
+
+	let { data, children }: Props = $props();
 </script>
 
 <main
@@ -22,7 +27,7 @@
 		<div class="flex-1 px-3 py-1">
 			{#key data.url}
 				<div in:fly={{ y: -50, duration: 100 }} out:fade={{ duration: 100 }} class="">
-					<slot />
+					{@render children?.()}
 				</div>
 			{/key}
 		</div>

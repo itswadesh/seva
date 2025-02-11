@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
 	import Step1 from './step1/+page.svelte'
 
 	export async function load({ fetch }) {

@@ -8,7 +8,11 @@
 	import { toast } from 'svelte-sonner'
 	import { Value } from 'radix-icons-svelte'
 	let checked = false
-	export let data
+	interface Props {
+		data: any;
+	}
+
+	let { data }: Props = $props();
 	let isLoading = false
 	const roles = [
 		{ name: 'ADMIN', value: 'ADMIN' },

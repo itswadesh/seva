@@ -3,8 +3,8 @@
 	import jsQR from 'jsqr'
 	import { goto } from '$app/navigation'
 
-	let videoElement: any
-	let canvasElement: any
+	let videoElement: any = $state()
+	let canvasElement: any = $state()
 	let scanning = false
 
 	onMount(async () => {
@@ -52,7 +52,7 @@
 <div>
 	<video bind:this={videoElement}></video>
 	<canvas style="display: none;" bind:this={canvasElement}></canvas>
-	<button on:click={stopScan}>Stop Scanning</button>
+	<button onclick={stopScan}>Stop Scanning</button>
 </div>
 
 <style>

@@ -11,24 +11,28 @@
 	import Select from '$lib/components/Select.svelte'
 	import { Textbox } from '$lib/components/misiki'
 
-	export let data
+	interface Props {
+		data: any;
+	}
+
+	let { data }: Props = $props();
 
 	let avatar: any = null
-	let avatartoShow = ''
-	let name = 'Swadesh Behera'
-	let phone = '8895092508'
-	let whatsappNo = '8895092508'
-	let dob = '1985-06-22'
-	let gender = 'M'
-	let fatherName = 'Bipin Behera'
-	let center = 'Bangalore'
-	let aadharNo = '111111111111'
+	let avatartoShow = $state('')
+	let name = $state('Swadesh Behera')
+	let phone = $state('8895092508')
+	let whatsappNo = $state('8895092508')
+	let dob = $state('1985-06-22')
+	let gender = $state('M')
+	let fatherName = $state('Bipin Behera')
+	let center = $state('Bangalore')
+	let aadharNo = $state('111111111111')
 	let maskedAadhar = ''
-	let qualification = 'B-Tech'
-	let sevaPreference = ''
-	let sevaPreference1 = ''
-	let mobileAvailability = ''
-	let isLoading = false
+	let qualification = $state('B-Tech')
+	let sevaPreference = $state('')
+	let sevaPreference1 = $state('')
+	let mobileAvailability = $state('')
+	let isLoading = $state(false)
 
 	const sevaPreferenceDD = [
 		{ name: 'Mobile Window Seva-Front', value: 'Mobile Window Seva-Front' },
@@ -42,7 +46,7 @@
 		{ name: 'Yes - iPhone Mobile', value: 'Yes - iPhone Mobile' },
 		{ name: 'No', value: 'No' }
 	]
-	let skills = ''
+	let skills = $state('')
 	const skillsPills = [
 		{ name: 'None', value: 'None' },
 		{ name: 'MS Office Basic', value: 'MS Office Basic' },
@@ -51,7 +55,7 @@
 		{ name: 'Android App Development', value: 'Android App Development' },
 		{ name: 'Networking', value: 'Networking' }
 	]
-	let errors = {}
+	let errors = $state({})
 
 	const handleSignUp = async () => {
 		const user = {
@@ -190,7 +194,7 @@
 	<div class="w-full">
 		<h1 class="mb-6 text-center text-2xl font-bold">New Sewadar Registration</h1>
 
-		<form on:submit={handleSignUp} class="w-full space-y-4">
+		<form onsubmit={handleSignUp} class="w-full space-y-4">
 			<div>
 				{#if avatartoShow}
 					<img src={avatartoShow} alt="" class="h-full w-full object-contain object-center" />
@@ -218,7 +222,7 @@
 							capture="environment"
 							placeholder="Upload your image"
 							class="w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-center text-lg text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-							on:change={handleChangeImageSaved}
+							onchange={handleChangeImageSaved}
 						/>
 					</div>
 				{/if}

@@ -4,11 +4,16 @@
 	import { goto } from '$app/navigation'
 	import { Html5Qrcode } from 'html5-qrcode'
 	import { onMount } from 'svelte'
-	import { updateStore } from '$lib/store/collectionStore'
+	import { getStepState } from '$lib/steps.svelte'
+	const stepState = getStepState()
 
-	export let data
+	interface Props {
+		data: any;
+	}
 
-	let scanning = false
+	let { data = $bindable() }: Props = $props();
+
+	let scanning = $state(false)
 	let html5Qrcode: Html5Qrcode
 
 	onMount(() => {
@@ -46,7 +51,8 @@
 		const updatedState = {
 			TokenNo: decodedText
 		}
-		updateStore(updatedState)
+		stepState.update(updatedState)
+		// updateStore(updatedState)
 		// console.log(decodedResult)
 		stop()
 		// console.log('decodedText', decodedText)
@@ -65,7 +71,7 @@
 </script>
 
 <main>
-	<reader id="reader" />
+	<reader id="reader"></reader>
 	{#if scanning}
 		<Button variant="default" class="w-full" on:click={stop}>Stop</Button>
 	{:else}

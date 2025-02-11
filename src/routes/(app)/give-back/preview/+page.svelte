@@ -7,7 +7,11 @@
 	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
 	import Button from '$lib/components/misiki/button/button.svelte'
-	export let data: any = {}
+	interface Props {
+		data?: any;
+	}
+
+	let { data = {} }: Props = $props();
 	let formData: any = data
 	let loading = false
 	let total = 0

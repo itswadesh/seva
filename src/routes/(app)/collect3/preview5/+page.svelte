@@ -8,9 +8,9 @@
 	import { toast } from 'svelte-sonner'
 	import Button from '$lib/components/misiki/button/button.svelte'
 
-	let formData: any = {}
-	let loading = false
-	let total = 0
+	let formData: any = $state({})
+	let loading = $state(false)
+	let total = $state(0)
 	const getTotalitems = () => {
 		total =
 			+(formData.Bag || 0) +

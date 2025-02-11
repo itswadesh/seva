@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { date, dateOnly } from '$lib/utils'
 	import { Checkbox } from '$lib/components/ui/checkbox/index'
 	// import * as Select from '$lib/components/ui/select/index'
@@ -9,13 +11,17 @@
 	import Button from '$lib/components/misiki/button/button.svelte'
 	import Textbox from '$lib/components/misiki/Textbox.svelte'
 	import Label from '$lib/components/ui/label/label.svelte'
-	export let data
+	interface Props {
+		data: any;
+	}
+
+	let { data }: Props = $props();
 	const roles = [
 		{ name: 'DEMO', value: 'DEMO' },
 		{ name: 'LIVE', value: 'LIVE' }
 	]
-	let showModal = false
-	let program = {
+	let showModal = $state(false)
+	let program = $state({
 		ProgramCategory: '',
 		ProgramStartDate: '',
 		ProgramCompDate: '',
@@ -23,7 +29,7 @@
 		ProgramBy: '',
 		ProgramValidity: '',
 		ProgramLocation: ''
-	}
+	})
 	let errors = {}
 
 	const submit = async () => {
@@ -233,7 +239,7 @@
 					<button
 						type="button"
 						class="hover:text-primary-500 transition duration-300 focus:outline-none"
-						on:click={() => (showModal = false)}
+						onclick={() => (showModal = false)}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -248,7 +254,7 @@
 					</button>
 				</div>
 
-				<form on:submit|preventDefault={submit} class="flex flex-col gap-10 pb-10">
+				<form onsubmit={preventDefault(submit)} class="flex flex-col gap-10 pb-10">
 					<div>
 						<Label for="name">Program Category :</Label>
 						<select

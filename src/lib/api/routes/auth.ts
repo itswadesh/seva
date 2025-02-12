@@ -20,15 +20,13 @@ app.post('/login', async (c) => {
   const { phone, password } = args
 
   const resA = await db
-    .select({ id: ClientProfile.ID, name: ClientProfile.Name, id: lientProfile.sid, active: ClientProfile.Active, approved: lientProfile.Approved, role: ClientProfile.Role }).from(ClientProfile)
-    .where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.assword, password)))
-
+    .select({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved,role: ClientProfile.Role }).from(ClientProfile).where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.password, password)))
   const res = resA[0]
   if (!res) {
     deleteCookie(c, 'me', { path: '/' })
     return c.json({ sid: null, message: 'Invalid phone or password' })
   }
-
+  console.log(res.role)
   // Add role validation
   const validRoles = ['WINDOW', 'BACKUP', 'PLANNING', 'ADMIN']
   if (!validRoles.includes(res.role)) {

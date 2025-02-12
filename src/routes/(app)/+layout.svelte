@@ -9,7 +9,8 @@
 	import { onMount } from 'svelte'
 	// import { getContext } from 'svelte'
 	// const userStore = getContext('user')
-	// import { setUserState } from '$lib/user.svelte'
+	import { getUserState } from '$lib/user.svelte'
+	const userStore = getUserState()
 
 	interface Props {
 		data: any
@@ -31,11 +32,11 @@
 		return currentStep < step
 	})
 
-	// onMount(() => {
-	// 	if (!$userStore.me?.sid) {
-	// 		goto('/auth/login')
-	// 	}
-	// })
+	onMount(() => {
+		if (!userStore.me?.sid) {
+			goto('/auth/login')
+		}
+	})
 </script>
 
 <main

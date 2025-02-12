@@ -18,7 +18,7 @@
 
 	import { getContext } from 'svelte'
 	/** @type {{data: any}} */
-	let { data } = $props();
+	let { data } = $props()
 	// const userStore = getContext('user')
 
 	const handleSignIn = async () => {
@@ -33,16 +33,16 @@
 		const user = { phone, password }
 		try {
 			const result = loginSchema.parse(user)
-			// console.log('SUCCESS')
-			// console.log(result)
+			isLoading = true
+			userState.login(user)
 		} catch (e) {
 			console.log(e)
 			const { fieldErrors: err } = e.flatten()
 			errors = err
 			return toast.error(errors[Object.keys(errors)[0]][0])
+		} finally {
+			isLoading = false
 		}
-		isLoading = true
-		userState.login(user)
 	}
 </script>
 

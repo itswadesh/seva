@@ -30,17 +30,14 @@ export class StepState {
 		this.total_items = Object.values(this.items).reduce((sum, val) => sum + (+val || 0), 0)
 		console.log(this.CollectSangatFaceImage)
 	}
-	
+
 	async updateSangatFaceImage(CollectSangatFaceImage: string) {
 		this.CollectSangatFaceImage = CollectSangatFaceImage
 	}
 
-	async updateItemsImageBack(CollectItemsImageBack: string) {
-		this.CollectItemsImageBack = CollectItemsImageBack
-	}
-
-	async updateItemsImageFront(CollectItemsImageFront: string) {
+	async updateItemsImage({ CollectItemsImageFront, CollectItemsImageBack }) {
 		this.CollectItemsImageFront = CollectItemsImageFront
+		this.CollectItemsImageBack = CollectItemsImageBack
 	}
 
 	async updateTokenNo(TokenNo: string) {

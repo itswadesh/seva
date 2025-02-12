@@ -11,8 +11,6 @@
 	let { form }: Props = $props();
 </script>
 
-{JSON.stringify(form)}
-{JSON.stringify(formSchema)}
 <Form.Root method="POST" {form} schema={formSchema}  class="flex flex-col gap-5">
 	{#snippet children({ config })}
 		<div class="flex flex-col gap-2">

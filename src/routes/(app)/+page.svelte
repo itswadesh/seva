@@ -1,3 +1,18 @@
+<script lang="ts">
+	// import { goto } from '$app/navigation'
+	// import axios from 'axios'
+	// import { getContext } from 'svelte'
+	// import { toast } from 'svelte-sonner'
+	// const userStore = getContext('user')
+
+	// let isLoading = $state(false)
+	import { getUserState } from '$lib/user.svelte'
+	const userStore = getUserState()
+	async function logout() {
+		userStore.logout()
+	}
+</script>
+
 <div class="hero mt-2 grid text-center text-5xl font-bold">
 	<a class="section banner food blue-card block" href="/collect3/step1">
 		<!-- <img src="/food-tray.svg" class="w-32" alt="" /> -->
@@ -9,6 +24,11 @@
 		<h1>Give Back</h1>
 		<!-- <div>Misiki Taxi</div> -->
 	</a>
+</div>
+<br />
+<br />
+<div class="flex justify-center text-center">
+	<button class="text-xl hover:underline" onclick={logout}> Logout </button>
 </div>
 
 <style>

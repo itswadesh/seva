@@ -10,7 +10,8 @@
 	import * as RadioGroup from '$lib/components/ui/radio-group'
 	import Select from '$lib/components/Select.svelte'
 	import { Textbox } from '$lib/components/misiki'
-
+	import { getUserState } from '$lib/user.svelte'
+	const userStore = getUserState()
 	interface Props {
 		data: any;
 	}
@@ -127,19 +128,7 @@
 		}
 		isLoading = true
 		await updateChangeImageSaved({ phone })
-		try {
-			const userDataRes = await axios.post('/api/auth/signup', user)
-			if (userDataRes.data.status == 400) {
-				return toast.error(userDataRes.data.message)
-			}
-			console.log('userDataRes', userDataRes)
-			goto(`/auth/signup/success?id=${userDataRes.data[0]?.id}`)
-		} catch (e) {
-			toast.error(e?.toString())
-			return
-		} finally {
-			isLoading = false
-		}
+		userStore.signup(user)
 	}
 	const phoneChanged = () => {
 		if (phone.length == 10 && !whatsappNo) {

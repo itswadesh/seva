@@ -7,15 +7,16 @@
 	import Nav from '$lib/components/seva/Nav.svelte'
 	import { fade, fly } from 'svelte/transition'
 	import { onMount } from 'svelte'
-	import { getContext } from 'svelte'
-	const userStore = getContext('user')
-	
+	// import { getContext } from 'svelte'
+	// const userStore = getContext('user')
+	// import { setUserState } from '$lib/user.svelte'
+
 	interface Props {
-		data: any;
-		children?: import('svelte').Snippet;
+		data: any
+		children?: import('svelte').Snippet
 	}
 
-	let { data, children }: Props = $props();
+	let { data, children }: Props = $props()
 	let currentStepUrl = $derived($page?.url?.pathname)
 	let currentStep = $derived(currentStepUrl.split('/')[2]?.match(/\d+/) || 0)
 
@@ -30,11 +31,11 @@
 		return currentStep < step
 	})
 
-	onMount(() => {
-		if (!$userStore.me?.sid) {
-			goto('/auth/login')
-		}
-	})
+	// onMount(() => {
+	// 	if (!$userStore.me?.sid) {
+	// 		goto('/auth/login')
+	// 	}
+	// })
 </script>
 
 <main

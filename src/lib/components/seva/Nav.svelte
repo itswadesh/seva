@@ -1,29 +1,19 @@
 <script>
-	import axios from 'axios'
+	// import axios from 'axios'
 	import { Home } from 'radix-icons-svelte'
-	import { toast } from 'svelte-sonner'
-	import Button from '$lib/components/misiki/button/button.svelte'
-	import { getContext } from 'svelte'
-	import { goto } from '$app/navigation'
-	const userStore = getContext('user')
+	// import { toast } from 'svelte-sonner'
+	// import Button from '$lib/components/misiki/button/button.svelte'
+	// import { getContext } from 'svelte'
+	// import { goto } from '$app/navigation'
+	// const userStore = getContext('user')
 	/** @type {{programData: any}} */
-	let { programData } = $props();
+	let { programData } = $props()
 	// import logoBlack from '$lib/assets/logo-black.png';
 	// import logoWhite from '$lib/assets/logo-white.png';
 
-	let isLoading = false
-	async function logout() {
-		isLoading = true
-		try {
-			await axios.post('/api/auth/logout')
-			userStore.updateMe({})
-			goto('/auth/login')
-		} catch (e) {
-			toast.error(e.response.data)
-		} finally {
-			isLoading = false
-		}
-	}
+	// let isLoading = false
+	import { getUserState } from '$lib/user.svelte'
+	const userStore = getUserState()
 </script>
 
 <nav class="sticky inset-x-0 top-0 z-40 border-b bg-white p-3">
@@ -44,8 +34,8 @@
 	<div class="flex items-center">
 		<div class="w-24 px-1 pt-2 text-xl font-bold text-blue-500">A-W-1</div>
 		<div class="w-full truncate px-1 pt-2 text-right text-xl font-bold text-gray-600">
-			[{$userStore.me?.id}] {$userStore.me?.name}
+			[{userStore?.me?.id}] {userStore?.me?.name}
 		</div>
-		<Button variant="link" on:click={logout} class="ml-3 pt-4">Logout</Button>
+		<!-- <Button variant="link" on:click={logout} class="ml-3 pt-4">Logout</Button> -->
 	</div>
 </nav>

@@ -4,9 +4,12 @@
 	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
 	import Button from '$lib/components/misiki/button/button.svelte'
-	import Input from '$lib/components/misiki/input/input.svelte'
+	// import Input from '$lib/components/misiki/input/input.svelte'
 	import { Textbox } from '$lib/components/misiki'
-	import axios from 'axios'
+	// import axios from 'axios'
+
+	import { getUserState } from '$lib/user.svelte'
+	const userState = getUserState()
 
 	let phone = $state('8895092508')
 	let password = $state('22061985')
@@ -16,7 +19,7 @@
 	import { getContext } from 'svelte'
 	/** @type {{data: any}} */
 	let { data } = $props();
-	const userStore = getContext('user')
+	// const userStore = getContext('user')
 
 	const handleSignIn = async () => {
 		const loginSchema = z.object({
@@ -30,8 +33,8 @@
 		const user = { phone, password }
 		try {
 			const result = loginSchema.parse(user)
-			console.log('SUCCESS')
-			console.log(result)
+			// console.log('SUCCESS')
+			// console.log(result)
 		} catch (e) {
 			console.log(e)
 			const { fieldErrors: err } = e.flatten()
@@ -39,21 +42,7 @@
 			return toast.error(errors[Object.keys(errors)[0]][0])
 		}
 		isLoading = true
-		try {
-			const me = await axios.post('/api/auth/login', user)
-			if (!me.data.sid) {
-				userStore.updateMe({})
-				toast.error(me.data.message)
-				return
-			}
-			userStore.updateMe(me.data)
-			goto('/')
-		} catch (e) {
-			userStore.updateMe({})
-			toast.error(e.response.data)
-		} finally {
-			isLoading = false
-		}
+		userState.login(user)
 	}
 </script>
 

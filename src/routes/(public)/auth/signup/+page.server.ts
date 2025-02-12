@@ -1,9 +1,9 @@
 import { redirect } from '@sveltejs/kit'
 
 export const load = async ({ locals }) => {
-  if (locals.me) {
-    redirect(302, '/')
-  }
+  // if (locals.me) {
+  //   redirect(302, '/')
+  // }
 }
 
 // export const actions = {

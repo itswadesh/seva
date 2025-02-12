@@ -4,10 +4,10 @@
 	// import { collectionstore, updateStore } from '$lib/store/collectionStore'
 	import { goto } from '$app/navigation'
 	import Button from '$lib/components/ui/button/button.svelte'
-	import Input from '$lib/components/ui/input/input.svelte'
-	import { compressImage } from '$lib/utils'
-	import { onMount } from 'svelte'
-	import { browser } from '$app/environment'
+	// import Input from '$lib/components/ui/input/input.svelte'
+	// import { compressImage } from '$lib/utils'
+	// import { onMount } from 'svelte'
+	// import { browser } from '$app/environment'
 	let capturedImageURI: string = $state()
 	// let data: any = $state({})
 	let loading = $state(false)
@@ -30,7 +30,7 @@
 		formData.append('image', file)
 		const type = `Face-${Math.random()}`
 		formData.append('type', type)
-		const filePath1: any = await fetch('/api/save/images', {
+		const filePath1: any = await fetch('/api/images/save', {
 			method: 'POST',
 			body: formData
 		})

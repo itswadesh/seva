@@ -86,7 +86,8 @@
 		</form>
 		<Button
 			variant="link"
-			on:click={() => goto('/auth/signup')}
+			type="button"
+			href="/auth/signup"
 			class="mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-lg font-medium text-blue-500 shadow-sm  focus:outline-none focus:ring-2 focus:ring-offset-2"
 		>
 			New Sevadar Registration

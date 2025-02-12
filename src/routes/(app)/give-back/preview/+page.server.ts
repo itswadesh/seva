@@ -1,5 +1,5 @@
 import { ProgramInfo, SangatData } from '$lib/db/schema.js';
-import { db } from '$lib/db/server.js';
+import { db } from '$lib/db/index.js';
 import { and, eq } from 'drizzle-orm';
 
 export const load = async ({ request }) => {

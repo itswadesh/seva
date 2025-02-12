@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ProgramInfo, SangatData } from '$lib/db/schema'
-import { db } from '$lib/db/server'
+import { db } from '$lib/db'
 import { fail } from '@sveltejs/kit'
 import type { Actions } from './$types'
 import { eq, sql } from 'drizzle-orm'
@@ -12,7 +12,7 @@ const updateChangeImageSaved = async ({ tokenNo, image, programId }) => {
 	const type = tokenNo
 	formData.append('type', type)
 	formData.append('programId', programId?.toString())
-	const res = await fetch('http://localhost:4173/api/update/images', {
+	const res = await fetch('/api/images/update', {
 		method: 'POST',
 		body: formData
 	})

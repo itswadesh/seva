@@ -1,5 +1,5 @@
 import { SangatData } from '$lib/db/schema'
-import { db } from '$lib/db/server'
+import { db } from '$lib/db'
 import { collectionstore } from '$lib/store/collectionStore'
 import type { Actions, PageServerLoad } from './$types'
 

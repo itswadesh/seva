@@ -2,21 +2,24 @@
 	import { z } from 'zod'
 	import { goto } from '$app/navigation'
 	import Button from '$lib/components/ui/button/button.svelte'
-	import Input from '$lib/components/ui/input/input.svelte'
-	import axios from 'axios'
+	// import Input from '$lib/components/ui/input/input.svelte'
+	// import axios from 'axios'
 	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
 	import { Label } from '$lib/components/ui/label'
 	import * as RadioGroup from '$lib/components/ui/radio-group'
-	import Select from '$lib/components/Select.svelte'
+	// import Select from '$lib/components/Select.svelte'
+	import Select from '$lib/components/form/select.svelte'
 	import { Textbox } from '$lib/components/misiki'
 	import { getUserState } from '$lib/user.svelte'
 	const userStore = getUserState()
 	interface Props {
-		data: any;
+		data: any
 	}
+	let capturedImageURI: string = $state()
+	let selectedFile: File = $state(null)
 
-	let { data }: Props = $props();
+	// let { data }: Props = $props()
 
 	let avatar: any = null
 	let avatartoShow = $state('')
@@ -36,11 +39,11 @@
 	let isLoading = $state(false)
 
 	const sevaPreferenceDD = [
-		{ name: 'Mobile Window Seva-Front', value: 'Mobile Window Seva-Front' },
-		{ name: 'Mobile Backup Seva-Rear', value: 'Mobile Backup Seva-Rear' },
-		{ name: 'Queue Management', value: 'Queue Management' },
-		{ name: 'Mobile Security', value: 'Mobile Security' },
-		{ name: 'Planning & Administration', value: 'Planning & Administration' }
+		{ name: 'Mobile Window Seva-Front', value: 'WINDOW' },
+		{ name: 'Mobile Backup Seva-Rear', value: 'BACKUP' },
+		{ name: 'Queue Management', value: 'QUEUE' },
+		{ name: 'Mobile Security', value: 'SECURITY' },
+		{ name: 'Planning & Administration', value: 'PLANNING' }
 	]
 	const mobileAvailabilityDD = [
 		{ name: 'Yes - Android Mobile', value: 'Yes - Android Mobile' },
@@ -119,8 +122,22 @@
 
 		try {
 			const result = registerSchema.parse(user)
-			console.log('SUCCESS')
-			console.log(result)
+			isLoading = true
+
+			// Upload image first
+			if (selectedFile) {
+				const formData = new FormData()
+				formData.append('image', selectedFile)
+				formData.append('type', phone)
+				await fetch('/api/images/update-avatar', {
+					method: 'POST',
+					body: formData
+				})
+				avatar = `/uploads/avatar/${phone}.png`
+			}
+
+			// Continue with user signup
+			userStore.signup(user)
 		} catch (e) {
 			const { fieldErrors: err } = e.flatten()
 			errors = err
@@ -136,32 +153,12 @@
 		}
 	}
 
-	const updateChangeImageSaved = async ({ phone }) => {
-		const formData = new FormData()
-		formData.append('image', avatar)
-		const type = phone
-		formData.append('type', type)
-		await fetch('/api/images/update-avatar', {
-			method: 'POST',
-			body: formData
-		})
-
-		avatar = `/uploads/avatar/${type}.png`
-		avatartoShow = avatar
-	}
-
-	const handleChangeImageSaved = async (e) => {
-		const file = e.target.files[0] || {}
-		const formData = new FormData()
-		formData.append('image', file)
-		const type = `avatar-${Math.random()}`
-		formData.append('type', type)
-		await fetch('/api/images/save-avatar', {
-			method: 'POST',
-			body: formData
-		})
-		avatar = `/uploads/avatar/${type}.png`
-		avatartoShow = avatar
+	const handleChangeImageSaved = (e) => {
+		const file = e.target.files[0]
+		if (file) {
+			selectedFile = file
+			capturedImageURI = URL.createObjectURL(file)
+		}
 	}
 
 	function handleAadharInput(event) {
@@ -182,39 +179,53 @@
 >
 	<div class="w-full">
 		<h1 class="mb-6 text-center text-2xl font-bold">New Sewadar Registration</h1>
-
 		<form onsubmit={handleSignUp} class="w-full space-y-4">
-			<div>
-				{#if avatartoShow}
-					<img src={avatartoShow} alt="" class="h-full w-full object-contain object-center" />
-				{:else}
-					<div class="flex flex-col items-center justify-center pb-6 pt-5">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="mb-2 h-8 w-8 text-gray-500 dark:text-gray-400"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+			<div class="flex flex-col gap-4">
+				<div class="flex w-full items-center justify-center">
+					<label
+						for="image-2"
+						class="dark:hover:bg-bray-800 flex h-80 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+					>
+						{#if capturedImageURI}
+							<img
+								src={capturedImageURI}
+								alt=""
+								class="h-full w-full object-contain object-center"
 							/>
-						</svg>
+						{:else}
+							<div class="flex flex-col items-center justify-center pb-6 pt-5">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="mb-2 h-8 w-8 text-gray-500 dark:text-gray-400"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+									/>
+								</svg>
+
+								<p class="text-2xl font-bold text-gray-500 dark:text-gray-400">
+									Click to Take Picture
+								</p>
+							</div>
+						{/if}
+
 						<input
 							id="image-2"
 							type="file"
 							name="image"
 							accept="image/*"
 							capture="environment"
-							placeholder="Upload your image"
-							class="w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-center text-lg text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+							class="hidden"
 							onchange={handleChangeImageSaved}
 						/>
-					</div>
-				{/if}
+					</label>
+				</div>
 			</div>
 			<Textbox
 				id="name"
@@ -275,7 +286,6 @@
 				label="Father's Name:"
 				bind:value={fatherName}
 				placeholder="Enter your father name"
-				}
 				{errors}
 			/>
 
@@ -307,7 +317,7 @@
 				{errors}
 			/>
 
-			<div>
+			<div class="">
 				<Select
 					title="Select"
 					id="mobileAvailability"
@@ -315,6 +325,7 @@
 					bind:value={mobileAvailability}
 					data={mobileAvailabilityDD || []}
 					{errors}
+					class="text-xl"
 				/>
 			</div>
 			<div>
@@ -325,6 +336,7 @@
 					bind:value={sevaPreference}
 					data={sevaPreferenceDD || []}
 					{errors}
+					class="text-xl"
 				/>
 			</div>
 			<div>
@@ -335,6 +347,7 @@
 					bind:value={sevaPreference1}
 					data={sevaPreferenceDD || []}
 					{errors}
+					class="text-xl"
 				/>
 			</div>
 			<div>
@@ -345,6 +358,7 @@
 					bind:value={skills}
 					data={skillsPills || []}
 					{errors}
+					class="text-xl"
 				/>
 			</div>
 
@@ -364,8 +378,8 @@
 		</form>
 		<Button
 			variant="link"
-			on:click={() => goto('/auth/login')}
-			class=" mt-4 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-sm shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2"
+			href="/auth/login"
+			class=" mt-6 flex w-full justify-center rounded-md border border-transparent px-4 py-2 text-lg shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2"
 		>
 			Already have an account? Login Now
 		</Button>

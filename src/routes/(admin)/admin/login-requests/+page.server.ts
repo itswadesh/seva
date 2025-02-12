@@ -1,4 +1,4 @@
-import { db } from '$lib/db/server'
+import { db } from '$lib/db'
 import { ClientProfile } from '$lib/db/schema'
 import { desc, eq } from 'drizzle-orm'
 export const load = async () => {

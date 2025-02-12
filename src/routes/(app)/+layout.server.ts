@@ -1,4 +1,4 @@
-import { db } from '$lib/db/server'
+import { db } from '$lib/db'
 import { ProgramInfo } from '$lib/db/schema'
 import log from '$lib/utils/log'
 import { eq } from 'drizzle-orm'

@@ -1,10 +1,10 @@
-import { redirect } from '@sveltejs/kit'
+// import { redirect } from '@sveltejs/kit'
 
-export const load = async ({ locals }) => {
+// export const load = async ({ locals }) => {
   // if (locals.me) {
   //   redirect(302, '/')
   // }
-}
+// }
 
 // export const actions = {
 //   register: async ({ request }) => {

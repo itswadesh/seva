@@ -42,6 +42,7 @@
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-svelte": "^2.45.1",
+        "fuse.js": "^7.1.0",
         "instascan": "^1.0.0",
         "jsqr": "^1.4.0",
         "postcss": "^8.4.35",
@@ -684,6 +685,8 @@
     "fsm-as-promised": ["fsm-as-promised@0.13.2", "", { "dependencies": { "es6-promise": "^4.0.2", "lodash": "^4.16.2", "stampit": "^3.0.1" } }, "sha512-1tjwtVOEzqygbG3vHbfaQ4XJql5H0Zv2hMm7Mx1DndCeyTYjHNwgklsrC8fTHUslB0eHMSg9HBMV5QZodJpAcg=="],
 
     "function-bind": ["function-bind@1.1.2", "", {}, "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="],
+
+    "fuse.js": ["fuse.js@7.1.0", "", {}, "sha512-trLf4SzuuUxfusZADLINj+dE8clK1frKdmqiJNb1Es75fmI5oY6X2mxLVUciLLjxqw/xr72Dhy+lER6dGd02FQ=="],
 
     "get-func-name": ["get-func-name@2.0.2", "", {}, "sha512-8vXOvuE167CtIc3OyItco7N/dpRtBbYOsPsXCz7X/PMnlGjYjSGuZJgM1Y7mmew7BKf9BqvLX2tnOVy1BBUsxQ=="],
 

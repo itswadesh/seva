@@ -4,6 +4,7 @@ import { db } from '$lib/db'
 import { fail } from '@sveltejs/kit'
 import type { Actions } from './$types'
 import { eq, sql } from 'drizzle-orm'
+import { redirect } from '@sveltejs/kit'
 
 
 const updateChangeImageSaved = async ({ tokenNo, image, programId }) => {
@@ -62,25 +63,37 @@ export const actions: Actions = {
 		// }
 
 		try {
-			const newData = await db.insert(SangatData).values({
-				TokenNo: items?.TokenNo,
-				ProgramID: programId,
-				Collect_SewadarID: items?.Collect_SewadarID,
-				Collect_SewadarName: items?.Collect_SewadarName,
-				Mobiles: +items?.Mobiles,
-				EarPhone: +items?.EarPhone,
-				// EarPod: +items?.EarPod,
-				PowerBank: +items?.PowerBank,
-				Charger: +items?.Charger,
-				SmartWatch: +items?.SmartWatch,
-				Others: +items?.Others,
-				TotalItems: +items?.TotalItems,
-				CollectSangatFaceImage: CollectSangatFaceImage, //items?.CollectSangatFaceImage,
-				ItemsImageBack: ItemsImageBack, //items?.ItemsImageBack,
-				ItemsImageFront: ItemsImageFront, //items?.ItemsImageFront
-			})
-			console.log('data inserted', newData)
-			return newData
+
+			const checkData = await db.select().from(SangatData).where(eq(SangatData.TokenNo, items?.TokenNo)).where(eq(SangatData.ProgramID, programId)).limit(1)
+
+			if (checkData.length > 0) {
+				await db.update(SangatData).set({
+					SubmissionCount: checkData[0].SubmissionCount + 1,
+					Remark: items?.Collect_SewadarID
+				})
+				redirect(302, '/collect3/step4?message=This token number is already used. Please use another token.')
+			} else {
+
+				const newData = await db.insert(SangatData).values({
+					TokenNo: items?.TokenNo,
+					ProgramID: programId,
+					Collect_SewadarID: items?.Collect_SewadarID,
+					Collect_SewadarName: items?.Collect_SewadarName,
+					Mobiles: +items?.Mobiles,
+					EarPhone: +items?.EarPhone,
+					// EarPod: +items?.EarPod,
+					PowerBank: +items?.PowerBank,
+					Charger: +items?.Charger,
+					SmartWatch: +items?.SmartWatch,
+					Others: +items?.Others,
+					TotalItems: +items?.TotalItems,
+					CollectSangatFaceImage: CollectSangatFaceImage, //items?.CollectSangatFaceImage,
+					ItemsImageBack: ItemsImageBack, //items?.ItemsImageBack,
+					ItemsImageFront: ItemsImageFront, //items?.ItemsImageFront
+				})
+				console.log('data inserted', newData)
+				return newData
+			}
 		} catch (e: any) {
 			console.error('Error inserting data:', e)
 			fail(e.status, { message: e.body?.message })

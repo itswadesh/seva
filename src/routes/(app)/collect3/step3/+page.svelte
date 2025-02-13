@@ -69,7 +69,7 @@
 		formData.append('image', file)
 		const type = `Back-${Math.random()}`
 		formData.append('type', type)
-		const filepath1: any = await fetch('/api/mages/save', {
+		const filepath1: any = await fetch('/api/images/save', {
 			method: 'POST',
 			body: formData
 		})

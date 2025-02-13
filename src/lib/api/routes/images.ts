@@ -6,6 +6,7 @@ import { db } from '../../db'
 import fs from 'fs'
 import { Buffer } from 'buffer';
 import 'dotenv/config'
+import sharp from 'sharp'
 import { ProgramInfo, ClientProfile } from '$lib/db/schema'
 import { setCookie, deleteCookie, getCookie } from 'hono/cookie'
 // import { basicAuth } from 'hono/basic-auth'
@@ -83,9 +84,15 @@ app.post('/save', async (c) => {
   const buffer = await file.arrayBuffer()
   const fileContent = Buffer.from(buffer);       // 
 
+  const compressedBuffer = await sharp(fileContent)
+    .resize({ width: 1000, height: 1000, fit: 'inside' })
+    .png({ quality: 80 })
+    .toBuffer();
+
   fs.mkdirSync(`./static/uploads/${programId}/${sewadarId}`, { recursive: true });
-  fs.writeFileSync(`./static/uploads/${programId}/${sewadarId}/${type}.png`, fileContent);
+  fs.writeFileSync(`./static/uploads/${programId}/${sewadarId}/${type}.png`, compressedBuffer);
   return c.json({ filepath: `/${programId}/${sewadarId}/${type}.png` });
 })
 
 export default app
+

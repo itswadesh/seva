@@ -39,6 +39,8 @@ export const SangatData = pgTable('SangatData', {
   Validation: varchar('Validation'),
   ValidationDT: timestamp('ValidationDT'),
   ErrorReason: varchar('ErrorReason'),
+  Remark: varchar('Remark'),
+  SubmissionCount: integer('SubmissionCount').default(1),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull()
 

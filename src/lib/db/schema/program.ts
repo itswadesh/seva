@@ -1,5 +1,4 @@
 import { pgTable, serial, date, text, boolean, integer, timestamp, real, varchar, primaryKey } from 'drizzle-orm/pg-core'
-import { pgTable } from 'drizzle-orm/pg-core'
 
 
 export const ProgramInfo = pgTable('ProgramInfo', {

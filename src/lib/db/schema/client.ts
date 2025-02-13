@@ -1,8 +1,5 @@
 import { pgTable, serial, date, text, boolean, integer, timestamp, real, varchar, primaryKey } from 'drizzle-orm/pg-core'
 
-import { pgTable } from 'drizzle-orm/pg-core'
-
-
 export const ClientProfile = pgTable('ClientProfile', {
   ID: serial('ID').primaryKey(),
   Pending_Approval: boolean('Pending_Approval').default(true),

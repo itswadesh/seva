@@ -1,4 +1,4 @@
-import { ProgramInfo, SangatData } from '$lib/db/schema.js';
+import { ProgramInfo, SangatData } from '$lib/db/schema';
 import { db } from '$lib/db/index.js';
 import { and, eq } from 'drizzle-orm';
 

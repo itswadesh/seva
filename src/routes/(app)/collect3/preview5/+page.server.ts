@@ -5,15 +5,16 @@ import { fail } from '@sveltejs/kit'
 import type { Actions } from './$types'
 import { eq, sql } from 'drizzle-orm'
 import { redirect } from '@sveltejs/kit'
+import { goto } from '$app/navigation'
 
 
-const updateChangeImageSaved = async ({ tokenNo, image, programId }) => {
+const updateChangeImageSaved = async ({ tokenNo, image, programId, fetch1 }) => {
 	const formData = new FormData()
 	formData.append('image', image)
 	const type = tokenNo
 	formData.append('type', type)
 	formData.append('programId', programId?.toString())
-	const res = await fetch('/api/images/update', {
+	const res = await fetch1('/api/images/update', {
 		method: 'POST',
 		body: formData
 	})
@@ -51,9 +52,9 @@ export const actions: Actions = {
 		let { CollectSangatFaceImage, ItemsImageBack, ItemsImageFront } = items
 		const tokenNo = items.TokenNo
 		console.log('tokenNo', tokenNo, programId)
-		CollectSangatFaceImage = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Face`, image: CollectSangatFaceImage, programId })
-		ItemsImageBack = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Back`, image: ItemsImageBack, programId })
-		ItemsImageFront = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Front`, image: ItemsImageFront, programId })
+		CollectSangatFaceImage = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Face`, image: CollectSangatFaceImage, programId, fetch1: event.fetch })
+		ItemsImageBack = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Back`, image: ItemsImageBack, programId, fetch1: event.fetch })
+		ItemsImageFront = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Front`, image: ItemsImageFront, programId, fetch1: event.fetch })
 
 		// const q = `SELECT * FROM SangatData WHERE TokenNo = '${items?.TokenNo}' AND ProgramID = ${programId}`
 		// const CheckTokenAndProgramId = await db.execute(sql.raw(q))
@@ -64,14 +65,18 @@ export const actions: Actions = {
 
 		try {
 
-			const checkData = await db.select().from(SangatData).where(eq(SangatData.TokenNo, items?.TokenNo)).where(eq(SangatData.ProgramID, programId)).limit(1)
-
+			const checkData = await db.select().from(SangatData).where(eq(SangatData.TokenNo, items?.TokenNo)).limit(1)
+			// console.log('checkData', checkData)
 			if (checkData.length > 0) {
 				await db.update(SangatData).set({
 					SubmissionCount: checkData[0].SubmissionCount + 1,
 					Remark: items?.Collect_SewadarID
-				})
-				redirect(302, '/collect3/step4?message=This token number is already used. Please use another token.')
+				}).where(eq(SangatData.TokenNo, items?.TokenNo))
+				return {
+					message: 'This token number is already used. Please use another token.',
+					isRedirect: true
+				}
+				// redirect(307, '/collect3/step4?message=This token number is already used. Please use another token.')
 			} else {
 
 				const newData = await db.insert(SangatData).values({

@@ -35,7 +35,7 @@
 			})
 		}
 	})
-	console.log('formData', formData)
+	// console.log('formData', formData)
 </script>
 
 <div>
@@ -46,20 +46,24 @@
 			loading = true
 
 			return async (result) => {
-				console.log('result', result?.result?.error, result?.result?.error?.message)
-
-				loading = false
-				if (result?.result?.status === 200) {
-					clearStore()
-					goto('/collect3/step1')
+				console.log('result', result.result?.data?.isRedirect, result.result?.data?.message)
+				if (result.result?.data?.isRedirect) {
+					// console.log('redirecting')
+					goto(`/collect3/step4?message=${result.result?.data?.message}`)
 				} else {
-					toast.error('Something went wrong', {
-						description: result?.result?.error?.message,
-						action: {
-							label: 'Ok',
-							onClick: () => console.log('Ok')
-						}
-					})
+					loading = false
+					if (result?.result?.status === 200) {
+						clearStore()
+						goto('/collect3/step1')
+					} else {
+						toast.error('Something went wrong', {
+							description: result?.result?.error?.message,
+							action: {
+								label: 'Ok',
+								onClick: () => console.log('Ok')
+							}
+						})
+					}
 				}
 			}
 		}}

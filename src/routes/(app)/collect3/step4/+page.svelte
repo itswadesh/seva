@@ -1,21 +1,11 @@
 <script lang="ts">
-	import { page } from '$app/stores'
 	import { onMount } from 'svelte'
 
 	let QR = $state()
-	let queryParam = ''
 	onMount(async () => {
 		const QRModule = await import('./QrScan.svelte')
 		QR = QRModule.default
-		const unsubscribe = page.subscribe(($page) => {
-			queryParam = $page.url.searchParams.get('message') || ''
-		})
 	})
-
-	if (queryParam != '') {
-		queryParam = ''
-		alert(queryParam)
-	}
 </script>
 
 <div>

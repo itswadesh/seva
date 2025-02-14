@@ -4,13 +4,23 @@
 	import { goto } from '$app/navigation'
 	import { StepState } from '$lib/steps.svelte'
 	import { getStepState } from '$lib/steps.svelte'
+	import { page } from '$app/state'
 	const stepState = getStepState()
 	let videoElement: any = $state()
 	let canvasElement: any = $state()
 	let scanning = false
 
+	let queryParam = $state('')
 	onMount(async () => {
-		await startCamera()
+		// if(process.env.IS_DEV) {
+		queryParam = page.url.searchParams.get('message') || ''
+		if (queryParam != '') {
+			alert(queryParam)
+			queryParam = ''
+			await startCamera()
+		} else {
+			await startCamera()
+		}
 	})
 
 	async function startCamera() {

@@ -10,8 +10,8 @@ export const load = async ({ request }) => {
   const paramValue = searchParams.get('tokenNo');
 
   // Do something with the parameter value
-  const programData = await db.select().from(ProgramInfo).where(eq(ProgramInfo.Active, true)).limit(1)
-  const programId = programData[0].ProgramID
+  const programData = (await db.select().from(ProgramInfo).where(eq(ProgramInfo.Active, true)).limit(1))[0]
+  const programId = programData.ProgramID
   const data = await db.select().from(SangatData).where(and(
     eq(SangatData.TokenNo, paramValue),
     eq(SangatData.ProgramID, programId)

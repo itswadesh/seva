@@ -62,7 +62,7 @@
 			const data = { TokenNo: code.data }
 			stepState.updateTokenNo(code.data)
 			stopScan()
-			goto('/collect3/preview5')
+			goto(`/collect3/preview5?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`, { replaceState: true })
 			// Stop scanning once a QR code is detected
 			// scanning = false;
 		}

@@ -89,13 +89,13 @@
 							class="h-full w-full object-contain object-center"
 						/>
 					{:else}
-						{#await stepState.checkImageExists(`/9/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/face.png`)}
+						{#await stepState.checkImageExists(`/${page.data?.programData?.ProgramID}/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/face.png`)}
 							<!-- Loading state -->
 							<p>Checking image...</p>
 						{:then exists}
 							{#if exists}
 								<img
-									src={`/uploads/9/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/face.png`}
+									src={`/uploads/${page.data?.programData?.ProgramID}/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/face.png`}
 									alt=""
 									class="h-full w-full object-contain object-center"
 								/>

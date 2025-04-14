@@ -1,16 +1,18 @@
 <script lang="ts">
 	import { browser } from '$app/environment'
-	import { clearStore, collectionstore, updateStore } from '$lib/store/collectionStore'
+	import { clearStore, collectionstore } from '$lib/store/collectionStore'
 	import { enhance } from '$app/forms'
 	import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
-	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
 	import Button from '$lib/components/misiki/button/button.svelte'
-
+	import { page } from '$app/state'
+	import { getStepState } from '$lib/steps.svelte'
+	const stepState = getStepState()
 	let formData: any = $state({})
 	let loading = $state(false)
 	let total = $state(0)
+	const me = $derived(JSON.parse(page.data.me || '{}'))
 	const getTotalitems = () => {
 		total =
 			+(formData.Bag || 0) +
@@ -49,12 +51,14 @@
 				console.log('result', result.result?.data?.isRedirect, result.result?.data?.message)
 				if (result.result?.data?.isRedirect) {
 					// console.log('redirecting')
-					goto(`/collect3/step4?message=${result.result?.data?.message}`)
+					goto(
+						`/collect3/step4?sangat_id=${page.url.searchParams.get('sangat_id') || ''}&message=${result.result?.data?.message}`
+					)
 				} else {
 					loading = false
 					if (result?.result?.status === 200) {
 						clearStore()
-						goto('/collect3/step1')
+						goto(`/collect3/step1?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)
 					} else {
 						toast.error('Something went wrong', {
 							description: result?.result?.error?.message,
@@ -70,12 +74,21 @@
 	>
 		<div class="grid grid-cols-2">
 			<img
-				src={'/uploads' + formData.CollectSangatFaceImage}
-				alt="Sangat Face Missing"
+				src={`/uploads/${stepState.getSangatFaceImage({
+					programId: page.data?.programData?.ProgramID,
+					sewadarId: me.id,
+					sangatId: page.url.searchParams.get('sangat_id') || ''
+				})}`}
+				alt="Sangat face missing"
 				class="h-40 w-auto object-contain object-left"
 			/>
 			<div class="flex flex-col items-center">
-				{#if !formData.ItemsImageFront}
+				{#if !stepState.getItemsImage({
+					programId: page.data?.programData?.ProgramID,
+					sewadarId: me.id,
+					sangatId: page.url.searchParams.get('sangat_id') || '',
+					type: 'front'
+				})}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -92,12 +105,22 @@
 					</svg>
 				{:else}
 					<img
-						src={'/uploads' + formData.ItemsImageFront}
-						alt="Front Image Missing"
+						src={`/uploads/${stepState.getItemsImage({
+							programId: page.data?.programData?.ProgramID,
+							sewadarId: me.id,
+							sangatId: page.url.searchParams.get('sangat_id') || '',
+							type: 'front'
+						})}`}
+						alt="Front image missing"
 						class="h-20 w-auto object-contain object-left"
 					/>
 				{/if}
-				{#if !formData.ItemsImageBack}
+				{#if !stepState.getItemsImage({
+					programId: page.data?.programData?.ProgramID,
+					sewadarId: me.id,
+					sangatId: page.url.searchParams.get('sangat_id') || '',
+					type: 'front'
+				})}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -114,8 +137,13 @@
 					</svg>
 				{:else}
 					<img
-						src={'/uploads' + formData.ItemsImageBack}
-						alt="Back Image Missing"
+						src={`/uploads/${stepState.getItemsImage({
+							programId: page.data?.programData?.ProgramID,
+							sewadarId: me.id,
+							sangatId: page.url.searchParams.get('sangat_id') || '',
+							type: 'back'
+						})}`}
+						alt="Back image missing"
 						class="h-20 w-auto object-contain object-left"
 					/>
 				{/if}
@@ -149,8 +177,8 @@
 					<div class="col-span-1 p-2 font-semibold">
 						{#if key === 'CollectSangatFaceImage' || key === 'ItemsImageBack' || key === 'ItemsImageFront'}
 							<img
-								src={'/uploads' + value}
-								alt={key}
+								src={`/uploads/${value}`}
+								alt={key.replace(/_/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2')}
 								class="h-20 w-auto object-contain object-left"
 							/>
 						{:else}

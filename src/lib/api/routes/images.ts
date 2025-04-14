@@ -76,8 +76,8 @@ app.post('/save', async (c) => {
   }
   const sewadarId = me.id
   // ProgramID: id, ProgramCategory: category, ProgramLocation: location, ProgramStartDate: startDate, ProgramCompDate: compDate, ProgramBy: by, ProgramAdmin: admin
-  const programData = await db.select().from(ProgramInfo).where(eq(ProgramInfo.Active, true)).limit(1)
-  const programId = programData[0].ProgramID
+  const programData = (await db.select().from(ProgramInfo).where(eq(ProgramInfo.Active, true)).limit(1))[0]
+  const programId = programData.ProgramID
 
   if (!file) {
     return c.json({ error: 'No file provided' }, 400);

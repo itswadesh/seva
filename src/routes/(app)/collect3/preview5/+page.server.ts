@@ -46,8 +46,8 @@ export const actions: Actions = {
 
 		const items = formDataToJson(formData)
 
-		const programData = await db.select().from(ProgramInfo).where(eq(ProgramInfo.Active, true)).limit(1)
-		const programId = programData[0].ProgramID
+		const programData = (await db.select().from(ProgramInfo).where(eq(ProgramInfo.Active, true)).limit(1))[0]
+		const programId = programData.ProgramID
 		// update immae based on the form data and the token no
 		let { CollectSangatFaceImage, ItemsImageBack, ItemsImageFront } = items
 		const tokenNo = items.TokenNo

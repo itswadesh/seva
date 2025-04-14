@@ -30,11 +30,12 @@ export class StepState {
 			return false;
 		}
 	}
-	getSangatFaceImage({ sewadarId, sangatId }: { sewadarId: number, sangatId: string }) {
-		return `/9/${sewadarId}/Face-${sangatId}.png`
+	getSangatFaceImage({ programId, sewadarId, sangatId }: { programId: number, sewadarId: number, sangatId: string }) {
+		return `/${programId}/${sewadarId}/${sangatId}/face.png`
 	}
-	getItemsImage({ sewadarId, sangatId, type }: { sewadarId: number, sangatId: string, type: string }) {
-		const path = `/9/${sewadarId}/${type}-${sangatId}.png`
+	getItemsImage({ programId, sewadarId, sangatId, type }: { programId: number, sewadarId: number, sangatId: string, type: string }) {
+		const path = `/${programId}/${sewadarId}/${sangatId}/${type}.png`
+		console.log(path)
 		return path
 	}
 	async updateStepId(step_id: number) {

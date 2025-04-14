@@ -105,7 +105,7 @@
 	<div class="flex flex-col gap-4">
 		<div class="flex w-full items-center justify-center">
 			<label
-				for="image-1"
+				for="item-image-front"
 				class="dark:hover:bg-bray-800 flex h-40 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
 			>
 				{#if capturedItemImageUrl1}
@@ -115,13 +115,13 @@
 						class="h-full w-full object-contain object-center"
 					/>
 				{:else}
-					{#await stepState.checkImageExists(`/9/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/front.png`)}
+					{#await stepState.checkImageExists(`/${page.data?.programData?.ProgramID}/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/front.png`)}
 						<!-- Loading state -->
 						<p>Checking image...</p>
 					{:then exists}
 						{#if exists}
 							<img
-								src={`/uploads/9/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/front.png`}
+								src={`/uploads/${page.data?.programData?.ProgramID}/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/front.png`}
 								alt=""
 								class="h-full w-full object-contain object-center"
 							/>
@@ -174,13 +174,13 @@
 						class="h-full w-full object-contain object-center"
 					/>
 				{:else}
-					{#await stepState.checkImageExists(`/9/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/back.png`)}
+					{#await stepState.checkImageExists(`/${page.data?.programData?.ProgramID}/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/back.png`)}
 						<!-- Loading state -->
 						<p>Checking image...</p>
 					{:then exists}
 						{#if exists}
 							<img
-								src={`/uploads/9/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/back.png`}
+								src={`/uploads/${page.data?.programData?.ProgramID}/${me.id}/${page.url.searchParams.get('sangat_id') || ''}/back.png`}
 								alt=""
 								class="h-full w-full object-contain object-center"
 							/>
@@ -220,18 +220,19 @@
 			</label>
 		</div>
 	</div>
-
 	<Button
 		type="submit"
 		class="w-full"
 		{loading}
 		disabled={!capturedItemImageUrl1 &&
 			!stepState.getItemsImage({
+				programId: page.data?.programData?.ProgramID,
 				sewadarId: me.id,
 				sangatId: page.url.searchParams.get('sangat_id') || '',
 				type: 'front'
 			}) &&
 			!stepState.getItemsImage({
+				programId: page.data?.programData?.ProgramID,
 				sewadarId: me.id,
 				sangatId: page.url.searchParams.get('sangat_id') || '',
 				type: 'back'

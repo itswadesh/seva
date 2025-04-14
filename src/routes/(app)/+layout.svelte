@@ -33,12 +33,12 @@
 		return currentStep < step
 	})
 
-	onMount(() => {
+	// onMount(() => {
 		// console.log(userStore.me)
 		// if (!userStore.me?.sid) {
 		// 	goto('/auth/login')
 		// }
-	})
+	// })
 </script>
 
 <main

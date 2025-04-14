@@ -1,9 +1,9 @@
 <script>
 	import { collectionstore, updateStore } from '$lib/store/collectionStore'
 	import { goto } from '$app/navigation'
-	import Button from '$lib/components/ui/button/button.svelte'
 	import ItemsForm from './itemsForm.svelte'
 	import { getStepState } from '$lib/steps.svelte'
+	import { page } from '$app/stores'
 	const stepState = getStepState()
 	let data = {
 		Mobiles: 0,
@@ -20,7 +20,7 @@
 		// Update dataStore with the collected data
 		// updateStore(data)
 		// stepState.update(data)
-		goto('/collect3/step3')
+		goto(`/collect3/step3?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)
 	}
 </script>
 

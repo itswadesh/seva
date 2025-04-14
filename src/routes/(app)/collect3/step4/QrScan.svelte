@@ -8,15 +8,16 @@
 	const stepState = getStepState()
 	let videoElement: any = $state()
 	let canvasElement: any = $state()
-	let scanning = false
+	let scanning = $state(false)
+	let error = $state('')
 
 	let queryParam = $state('')
 	onMount(async () => {
-		// if(process.env.IS_DEV) {
 		queryParam = page.url.searchParams.get('message') || ''
 		if (queryParam != '') {
 			alert(queryParam)
 			queryParam = ''
+			error = queryParam
 			await startCamera()
 		} else {
 			await startCamera()
@@ -26,18 +27,24 @@
 	async function startCamera() {
 		console.log('startCamera')
 		try {
-			const stream = await navigator.mediaDevices.getUserMedia({
-				video: { facingMode: 'environment' }
-			})
-			videoElement.srcObject = stream
-			await new Promise((resolve) => {
-				videoElement.onloadedmetadata = resolve
-			})
-			videoElement.play()
-			scanning = true
-			scanLoop()
-		} catch (error) {
-			console.error('Error accessing camera:', error)
+			if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+				const stream = await navigator.mediaDevices.getUserMedia({
+					video: { facingMode: 'environment' }
+				})
+				videoElement.srcObject = stream
+				await new Promise((resolve) => {
+					videoElement.onloadedmetadata = resolve
+				})
+				videoElement.play()
+				scanning = true
+				scanLoop()
+			} else {
+				error = 'Camera access is not supported in this browser.'
+				console.error(error)
+			}
+		} catch (e) {
+			console.error('Error accessing camera:', e)
+			error = e.message
 		}
 	}
 
@@ -69,6 +76,9 @@
 </script>
 
 <div>
+	{#if error}
+		<p>{error}</p>
+	{/if}
 	<video bind:this={videoElement}></video>
 	<canvas style="display: none;" bind:this={canvasElement}></canvas>
 	<!-- <button on:click={stopScan}>Stop Scanning</button> -->

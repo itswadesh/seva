@@ -10,8 +10,8 @@
 			try {
 				const QRModule = await import('./QrScan.svelte')
 				QR = QRModule.default
-			} catch (error) {
-				console.error('Failed to load QR component:', error)
+			} catch (e) {
+				console.error('Failed to load QR component:', e)
 			} finally {
 				isLoading = false
 			}

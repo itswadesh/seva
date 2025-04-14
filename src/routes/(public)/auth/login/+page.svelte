@@ -16,10 +16,8 @@
 	let isLoading = $state(false)
 	let errors = $state({})
 
-	import { getContext } from 'svelte'
 	/** @type {{data: any}} */
 	let { data } = $props()
-	// const userStore = getContext('user')
 
 	const handleSignIn = async () => {
 		const loginSchema = z.object({

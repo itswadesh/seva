@@ -6,14 +6,16 @@
 	// import { getContext } from 'svelte'
 	// import { goto } from '$app/navigation'
 	// const userStore = getContext('user')
+	import { page } from '$app/state'
 	/** @type {{programData: any}} */
 	let { programData } = $props()
 	// import logoBlack from '$lib/assets/logo-black.png';
 	// import logoWhite from '$lib/assets/logo-white.png';
 
 	// let isLoading = false
-	import { getUserState } from '$lib/user.svelte'
-	const userStore = getUserState()
+	// import { getUserState } from '$lib/user.svelte'
+	// const userStore = getUserState()
+	const me = $derived(JSON.parse(page.data.me || '{}'))
 </script>
 
 <nav class="sticky inset-x-0 top-0 z-40 border-b bg-white p-3">
@@ -34,7 +36,7 @@
 	<div class="flex items-center">
 		<div class="w-24 px-1 pt-2 text-xl font-bold text-blue-500">A-W-1</div>
 		<div class="w-full truncate px-1 pt-2 text-right text-xl font-bold text-gray-600">
-			[{userStore?.me?.id}] {userStore?.me?.name}
+			[{me?.id}] {me?.name}
 		</div>
 		<!-- <Button variant="link" on:click={logout} class="ml-3 pt-4">Logout</Button> -->
 	</div>

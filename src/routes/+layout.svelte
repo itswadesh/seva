@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.pcss'
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	import Footer from '$lib/components/seva/Footer.svelte'
 	import { fade, fly } from 'svelte/transition'
 	import { Toaster } from '$lib/components/ui/sonner'
@@ -23,7 +23,7 @@
 
 <main
 	class="mx-auto flex min-h-screen w-full flex-col justify-between
-	{$page.url?.pathname.startsWith('/admin') ? 'max-w-full' : ' max-w-md'}"
+	{page.url?.pathname.startsWith('/admin') ? 'max-w-full' : ' max-w-md'}"
 >
 	<div class="h-full">
 		<div class="flex-1 px-3 py-1">

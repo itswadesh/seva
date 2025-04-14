@@ -1,17 +1,20 @@
 <script lang="ts">
+	import { browser } from '$app/environment'
 	import { onMount } from 'svelte'
 
 	let QR = $state()
 	let isLoading = $state(true)
 
 	onMount(async () => {
-		try {
-			const QRModule = await import('./QrScan.svelte')
-			QR = QRModule.default
-		} catch (error) {
-			console.error('Failed to load QR component:', error)
-		} finally {
-			isLoading = false
+		if (browser) {
+			try {
+				const QRModule = await import('./QrScan.svelte')
+				QR = QRModule.default
+			} catch (error) {
+				console.error('Failed to load QR component:', error)
+			} finally {
+				isLoading = false
+			}
 		}
 	})
 </script>

@@ -2,7 +2,7 @@
 	import '../../app.pcss'
 	import { Button } from '$lib/components/ui/button'
 	import { goto } from '$app/navigation'
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	import Footer from '$lib/components/seva/Footer.svelte'
 	import Nav from '$lib/components/seva/Nav.svelte'
 	import { fade, fly } from 'svelte/transition'
@@ -10,7 +10,8 @@
 	// import { getContext } from 'svelte'
 	// const userStore = getContext('user')
 	import { getUserState } from '$lib/user.svelte'
-	const userStore = getUserState()
+	import { getStepState } from '$lib/steps.svelte'
+	const stepState = getStepState()
 
 	interface Props {
 		data: any
@@ -18,11 +19,11 @@
 	}
 
 	let { data, children }: Props = $props()
-	let currentStepUrl = $derived($page?.url?.pathname)
+	let currentStepUrl = $derived(page?.url?.pathname)
 	let currentStep = $derived(currentStepUrl.split('/')[2]?.match(/\d+/) || 0)
 
 	const gotoo = (step: number) => {
-		goto(`/collect3/step${step}`)
+		goto(`/collect3/step${step}?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)
 	}
 
 	let isComplete = $derived((step: number) => {
@@ -33,21 +34,22 @@
 	})
 
 	onMount(() => {
-		if (!userStore.me?.sid) {
-			goto('/auth/login')
-		}
+		// console.log(userStore.me)
+		// if (!userStore.me?.sid) {
+		// 	goto('/auth/login')
+		// }
 	})
 </script>
 
 <main
 	class="mx-auto flex min-h-screen w-full flex-col justify-between
-	{$page.url?.pathname === '/admin' ? 'max-w-full' : ' max-w-md'}"
+	{page.url?.pathname === '/admin' ? 'max-w-full' : ' max-w-md'}"
 >
 	<div class="h-full">
 		<!-- Nav -->
 		<Nav programData={data.programData} />
 
-		{#if $page.url.pathname !== '/' && $page.url.pathname !== '/auth/login'}
+		{#if page.url.pathname !== '/' && page.url.pathname !== '/auth/login'}
 			<div class="grid grid-cols-5 gap-2 overflow-x-auto px-3 pb-1 pt-3">
 				<button
 					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(1)
@@ -59,7 +61,7 @@
 				>
 					Step1
 				</button>
-				{#if $page.url.pathname != '/collect3/preview5' && $page.url.pathname != '/give-back'}
+				{#if page.url.pathname != '/collect3/preview5' && page.url.pathname != '/give-back'}
 					<button
 						class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(2)
 							? 'border border-green-500 bg-green-200 font-bold text-black'

@@ -11,7 +11,7 @@ export class StepState {
 	TokenNo = $state<string>('')
 	step_id = $state<number>(1)
 	loading = $state<boolean>(false)
-
+	sangatId = $state<string>('')
 	// getCurrentState() {
 	// 	return {
 	// 		step_id: this.step_id,
@@ -22,20 +22,36 @@ export class StepState {
 	// 		TokenNo: this.TokenNo
 	// 	}
 	// }
+	async checkImageExists(path: string) {
+		try {
+			const response = await fetch(`/uploads${path}`, { method: 'HEAD' });
+			return response.ok;
+		} catch {
+			return false;
+		}
+	}
+	getSangatFaceImage({ sewadarId, sangatId }: { sewadarId: number, sangatId: string }) {
+		return `/9/${sewadarId}/Face-${sangatId}.png`
+	}
+	getItemsImage({ sewadarId, sangatId, type }: { sewadarId: number, sangatId: string, type: string }) {
+		const path = `/9/${sewadarId}/${type}-${sangatId}.png`
+		return path
+	}
 	async updateStepId(step_id: number) {
 		this.step_id = step_id
 	}
 	async updateItems(items: Partial<any>) {
 		this.items = items
-		this.total_items = Object.values(this.items).reduce((sum, val) => sum + (+val || 0), 0)
+		this.total_items = Object.values(this.items).reduce((sum, val) => +sum + (+val || 0), 0)
 		console.log(this.CollectSangatFaceImage)
 	}
 
-	async updateSangatFaceImage(CollectSangatFaceImage: string) {
-		this.CollectSangatFaceImage = CollectSangatFaceImage
+	async updateSangatFaceImage({ sangatId, filepath }: { sangatId: string, filepath: string }) {
+		this.sangatId = sangatId
+		this.CollectSangatFaceImage = filepath
 	}
 
-	async updateItemsImage({ CollectItemsImageFront, CollectItemsImageBack }) {
+	async updateItemsImage({ CollectItemsImageFront, CollectItemsImageBack }: { CollectItemsImageFront: string, CollectItemsImageBack: string }) {
 		this.CollectItemsImageFront = CollectItemsImageFront
 		this.CollectItemsImageBack = CollectItemsImageBack
 	}

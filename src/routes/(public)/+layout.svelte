@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../../app.pcss'
 	import { goto } from '$app/navigation'
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	import Nav from '$lib/components/seva/Nav.svelte'
 	import NavPublic from '$lib/components/seva/NavPublic.svelte'
 	import { fade, fly } from 'svelte/transition'
@@ -15,12 +15,12 @@
 
 <main
 	class="mx-auto flex min-h-screen w-full flex-col justify-between
-	{$page.url?.pathname === '/admin' ? 'max-w-full' : ' max-w-md'}"
+	{page.url?.pathname === '/admin' ? 'max-w-full' : ' max-w-md'}"
 >
 	<div class="h-full">
 		<NavPublic />
 
-		{#if $page.url.pathname !== '/' && $page.url.pathname !== '/auth/login'}
+		{#if page.url.pathname !== '/' && page.url.pathname !== '/auth/login'}
 			<div class="grid grid-cols-5 gap-2 overflow-x-auto px-3 pb-1 pt-3"></div>
 		{/if}
 

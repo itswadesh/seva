@@ -9,6 +9,7 @@
 	// import { onMount } from 'svelte'
 	// import { browser } from '$app/environment'
 	import { getStepState } from '$lib/steps.svelte'
+	import { page } from '$app/state'
 	const stepState = getStepState()
 	let loading = $state(false)
 
@@ -42,7 +43,7 @@
 
 		loading = false
 
-		goto('/collect3/step3')
+		goto(`/collect3/step3?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)
 	}
 	$effect(()=>{
 		console.log( $state.snapshot(stepState.CollectSangatFaceImage),  $state.snapshot(stepState.items))

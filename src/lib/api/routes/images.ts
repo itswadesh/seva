@@ -66,7 +66,9 @@ app.post('/save', async (c) => {
   const args = await c.req.formData()
   const file = args.get('image')
   const type = args.get('type')
-  console.log({ file, type })
+  const sangatId = args.get('sangat_id')
+
+  console.log({ file, type, sangatId })
   const cookieMe = getCookie(c, 'me')
   let me
   if (cookieMe) {
@@ -85,13 +87,13 @@ app.post('/save', async (c) => {
   const fileContent = Buffer.from(buffer);       // 
 
   const compressedBuffer = await sharp(fileContent)
-    .resize({ width: 1000, height: 1000, fit: 'inside' })
+    .resize({ width: 700, height: 700, fit: 'inside' })
     .png({ quality: 80 })
     .toBuffer();
 
-  fs.mkdirSync(`./static/uploads/${programId}/${sewadarId}`, { recursive: true });
-  fs.writeFileSync(`./static/uploads/${programId}/${sewadarId}/${type}.png`, compressedBuffer);
-  return c.json({ filepath: `/${programId}/${sewadarId}/${type}.png` });
+  fs.mkdirSync(`./static/uploads/${programId}/${sewadarId}/${sangatId}`, { recursive: true });
+  fs.writeFileSync(`./static/uploads/${programId}/${sewadarId}/${sangatId}/${type}.png`, compressedBuffer);
+  return c.json({ filepath: `/${programId}/${sewadarId}/${sangatId}/${type}.png` });
 })
 
 export default app

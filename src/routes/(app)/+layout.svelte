@@ -101,10 +101,10 @@
 				<button
 					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(5)
 						? 'border border-green-500 bg-green-200 font-bold text-black'
-						: ''} {currentStepUrl.includes('/preview')
+						: ''} {currentStepUrl.includes('/preview5')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"
-					onclick={() => goto('/preview')}
+					onclick={() => goto(`/preview5?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)}
 					disabled={isDisabled(5)}
 				>
 					Preview

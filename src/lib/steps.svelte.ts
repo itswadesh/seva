@@ -35,7 +35,6 @@ export class StepState {
 	}
 	getItemsImage({ programId, sewadarId, sangatId, type }: { programId: number, sewadarId: number, sangatId: string, type: string }) {
 		const path = `/${programId}/${sewadarId}/${sangatId}/${type}.png`
-		console.log(path)
 		return path
 	}
 	async updateStepId(step_id: number) {
@@ -44,7 +43,6 @@ export class StepState {
 	async updateItems(items: Partial<any>) {
 		this.items = items
 		this.total_items = Object.values(this.items).reduce((sum, val) => +sum + (+val || 0), 0)
-		console.log(this.CollectSangatFaceImage)
 	}
 
 	async updateSangatFaceImage({ sangatId, filepath }: { sangatId: string, filepath: string }) {

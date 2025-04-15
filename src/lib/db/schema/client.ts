@@ -6,7 +6,7 @@ export const ClientProfile = pgTable('ClientProfile', {
   Sewadar_ID: varchar('Sewadar_ID'),
   Avatar: varchar('avatar'),
   FatherName: varchar('FatherName'),
-  AadharNo: varchar('AadharNo').unique(),
+  AadhaarNo: varchar('AadharNo').unique(),
   Qualification: varchar('Qualification'),
   password: varchar('password'),
   ProfileLevel: varchar('ProfileLevel'),

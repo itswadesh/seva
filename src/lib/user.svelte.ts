@@ -48,10 +48,10 @@ export class UserState {
 		}
 	}
 
-	async checkExistingProfile({ phone, aadharNo }: { phone: string, aadharNo: string }) {
+	async checkExistingProfile({ phone, aadhaarNo }: { phone: string, aadhaarNo: string }) {
 		this.isLoading = true
 		try {
-			const res = await axios.post('/api/auth/check-user-exists', { phone, aadharNo })
+			const res = await axios.post('/api/auth/check-user-exists', { phone, aadhaarNo })
 			return res.data
 		} catch (e) {
 			toast.error(e.response.data)

@@ -28,8 +28,8 @@
 	let gender = $state('M')
 	let fatherName = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'Bipin Behera' : '')
 	let center = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'Bangalore' : '')
-	let aadharNo = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? '111111111111' : '')
-	let maskedAadhar = ''
+	let aadhaarNo = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? '111111111111' : '')
+	let maskedAadhaar = ''
 	let qualification = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'B.Tech' : '')
 	let sevaPreference = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'WINDOW' : '')
 	let sevaPreference1 = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'BACKUP' : '')
@@ -76,7 +76,7 @@
 			gender,
 			fatherName,
 			center,
-			aadharNo,
+			aadhaarNo,
 			qualification,
 			sevaPreference,
 			sevaPreference1,
@@ -104,10 +104,10 @@
 			center: z
 				.string({ required_error: 'Please enter your center' })
 				.min(1, { message: 'Please enter satsang center' }),
-			aadharNo: z
-				.string({ required_error: 'Please enter your aadhar number' })
-				.min(12, { message: 'AADHAR number must be 12 or 16 digits' })
-				.max(16, { message: 'AADHAR number must be 12 or 16 digits' }),
+			aadhaarNo: z
+				.string({ required_error: 'Please enter your aadhaar number' })
+				.min(12, { message: 'AADHAAR number must be 12 or 16 digits' })
+				.max(16, { message: 'AADHAAR number must be 12 or 16 digits' }),
 			qualification: z
 				.string({ required_error: 'Please enter your qualification' })
 				.min(1, { message: 'Please enter your qualification' }),
@@ -128,10 +128,10 @@
 		try {
 			const result = registerSchema.parse(user)
 			// Upload image first and get avatar path
-			const phone1 = await userStore.checkExistingProfile({ phone, aadharNo })
+			const phone1 = await userStore.checkExistingProfile({ phone, aadhaarNo })
 			if (phone1) {
 				return toast.error('Validation Errors', {
-					description: 'Phone number or Aadhar number already registered'
+					description: 'Phone number or Aadhaar number already registered'
 				})
 			}
 			const formData = new FormData()
@@ -141,7 +141,7 @@
 				method: 'POST',
 				body: formData
 			})
-			avatar = `/uploads/avatar/${phone}.png`
+			user.avatar = `/uploads/avatar/${phone}.png`
 
 			isLoading = true
 			// Continue with user signup
@@ -177,13 +177,13 @@
 		}
 	}
 
-	// function handleAadharInput(event) {
+	// function handleAadhaarInput(event) {
 	// 	const rawValue = event.detail.target?.value || '' // Get the raw value
-	// 	aadharNo = rawValue.replace(/\D/g, '') // Strip non-digit characters
-	// 	maskedAadhar = maskAndFormatAadhar(aadharNo) // Mask and format
+	// 	aadhaarNo = rawValue.replace(/\D/g, '') // Strip non-digit characters
+	// 	maskedAadhaar = maskAndFormatAadhaar(aadhaarNo) // Mask and format
 	// }
 
-	// function maskAndFormatAadhar(number) {
+	// function maskAndFormatAadhaar(number) {
 	// 	let masked = number.slice(0, -4).replace(/\d/g, 'X') // Replace all but the last 4 digits
 	// 	let lastFour = number.slice(-4)
 	// 	return (masked + lastFour).replace(/(.{4})/g, '$1-').slice(0, -1) // Format
@@ -315,12 +315,12 @@
 			/>
 
 			<Textbox
-				id="aadharNo"
-				name="aadharNo"
+				id="aadhaarNo"
+				name="aadhaarNo"
 				type="tel"
-				label="AADHAR Number:"
-				bind:value={aadharNo}
-				placeholder="Enter your aadhar number"
+				label="AADHAAR Number:"
+				bind:value={aadhaarNo}
+				placeholder="Enter your aadhaar number"
 				{errors}
 			/>
 

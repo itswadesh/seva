@@ -17,8 +17,8 @@ app.post('/logout', async (c) => {
 
 app.post('/check-user-exists', async (c) => {
   const args = await c.req.json()
-  const { phone, aadharNo } = args
-  const res = await db.select().from(ClientProfile).where(or(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.AadharNo, aadharNo)))
+  const { phone, aadhaarNo } = args
+  const res = await db.select().from(ClientProfile).where(or(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.AadhaarNo, aadhaarNo)))
   return c.json(!!res[0])
 })
 
@@ -61,7 +61,7 @@ app.post('/login', async (c) => {
 
 app.post('/signup', async (c) => {
   const args = await c.req.json()
-  const { phone, name, dob, gender, fatherName, center, aadharNo, qualification, sevaPreference, sevaPreference1, mobileAvailability, avatar } = args
+  const { phone, name, dob, gender, fatherName, center, aadhaarNo, qualification, sevaPreference, sevaPreference1, mobileAvailability, avatar, skills } = args
 
   // Add role validation for signup
   const validRoles = ['WINDOW', 'BACKUP', 'PLANNING', 'ADMIN']
@@ -79,10 +79,10 @@ app.post('/signup', async (c) => {
     return c.json({ status: 400, message: 'Phone number already registered' })
   }
   if (phone.length !== 10) {
-    return c.json({ status: 400, message: 'Invalid Phone Number' })
+    return c.json({ status: 400, message: 'Invalid phone number' })
   }
-  if (aadharNo.length !== 12) {
-    return c.json({ status: 400, message: 'Invalid Aadhar Number' })
+  if (aadhaarNo.length !== 12) {
+    return c.json({ status: 400, message: 'Invalid adhaar number' })
   }
   const postData = {
     Name: name,
@@ -93,15 +93,16 @@ app.post('/signup', async (c) => {
     Gender: gender,
     Centre: center,
     FatherName: fatherName,
-    AadharNo: aadharNo,
+    AadhaarNo: aadhaarNo,
     Qualification: qualification,
     SevaPreference: sevaPreference,
     MobileAvailability: mobileAvailability,
     Avatar: avatar,
-    SevaPreference1: sevaPreference1
+    SevaPreference1: sevaPreference1,
+    Skills: skills
   }
   const res = await db
-    .insert(ClientProfile).values(postData).returning({ id: ClientProfile.ID, name: ClientProfile.Name, phone: ClientProfile.MobileNo, dob: ClientProfile.DOB, role: ClientProfile.Role, gender: ClientProfile.Gender, approved: ClientProfile.Approved, approved_at: ClientProfile.ApprovalDT, fatherName: ClientProfile.FatherName, aadharNo: ClientProfile.AadharNo, qualification: ClientProfile.Qualification, center: ClientProfile.Centre, avatar: ClientProfile.Avatar })
+    .insert(ClientProfile).values(postData).returning({ id: ClientProfile.ID, name: ClientProfile.Name, phone: ClientProfile.MobileNo, dob: ClientProfile.DOB, role: ClientProfile.Role, gender: ClientProfile.Gender, approved: ClientProfile.Approved, approved_at: ClientProfile.ApprovalDT, fatherName: ClientProfile.FatherName, aadhaarNo: ClientProfile.AadhaarNo, qualification: ClientProfile.Qualification, center: ClientProfile.Centre, avatar: ClientProfile.Avatar })
   return c.json(res)
 })
 

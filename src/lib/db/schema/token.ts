@@ -14,5 +14,4 @@ export const TokenMaster = pgTable('TokenMaster', {
   Bag: boolean('Bag'),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull()
-
 })

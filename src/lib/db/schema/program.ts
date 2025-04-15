@@ -1,6 +1,5 @@
 import { pgTable, serial, date, text, boolean, integer, timestamp, real, varchar, primaryKey } from 'drizzle-orm/pg-core'
 
-
 export const ProgramInfo = pgTable('ProgramInfo', {
   ProgramID: serial('ProgramID').primaryKey(),
   ProgramCategory: varchar('ProgramCategory'),
@@ -13,5 +12,4 @@ export const ProgramInfo = pgTable('ProgramInfo', {
   ProgramAdmin: varchar('ProgramAdmin'),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull()
-
 })

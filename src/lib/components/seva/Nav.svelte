@@ -20,7 +20,11 @@
 
 <nav class="sticky inset-x-0 top-0 z-40 border-b bg-white p-3">
 	<div class="flex h-12 items-center justify-between">
-		<div class="h-full items-center bg-red-500 p-1 px-3 text-3xl font-bold text-white">
+		<div
+			class="h-full items-center {programData?.ProgramCategory == 'LIVE'
+				? 'bg-green-500'
+				: 'bg-red-500'} p-1 px-3 text-3xl font-bold text-white"
+		>
 			{programData?.ProgramCategory}
 		</div>
 		<div

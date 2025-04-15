@@ -11,7 +11,7 @@ export class StepState {
 	TokenNo = $state<string>('')
 	step_id = $state<number>(1)
 	loading = $state<boolean>(false)
-	sangatId = $state<string>('')
+	tokenNo = $state<string>('')
 	// getCurrentState() {
 	// 	return {
 	// 		step_id: this.step_id,
@@ -30,11 +30,11 @@ export class StepState {
 			return false;
 		}
 	}
-	getSangatFaceImage({ programId, sewadarId, sangatId }: { programId: number, sewadarId: number, sangatId: string }) {
-		return `/${programId}/${sewadarId}/${sangatId}/face.png`
+	getSangatFaceImage({ programId, sewadarId, tokenNo }: { programId: number, sewadarId: number, tokenNo: string }) {
+		return `/${programId}/${sewadarId}/${tokenNo}/face.png`
 	}
-	getItemsImage({ programId, sewadarId, sangatId, type }: { programId: number, sewadarId: number, sangatId: string, type: string }) {
-		const path = `/${programId}/${sewadarId}/${sangatId}/${type}.png`
+	getItemsImage({ programId, sewadarId, tokenNo, type }: { programId: number, sewadarId: number, tokenNo: string, type: string }) {
+		const path = `/${programId}/${sewadarId}/${tokenNo}/${type}.png`
 		return path
 	}
 	async updateStepId(step_id: number) {
@@ -45,8 +45,15 @@ export class StepState {
 		this.total_items = Object.values(this.items).reduce((sum, val) => +sum + (+val || 0), 0)
 	}
 
-	async updateSangatFaceImage({ sangatId, filepath }: { sangatId: string, filepath: string }) {
-		this.sangatId = sangatId
+	async clearItems() {
+		this.items = {
+			Mobiles: 0, Charger: 0, EarPhone: 0, Laptop: 0, SmartWatch: 0, Others: 0, Bag: 0
+		}
+		this.total_items = 0
+	}
+
+	async updateSangatFaceImage({ tokenNo, filepath }: { tokenNo: string, filepath: string }) {
+		this.tokenNo = tokenNo
 		this.CollectSangatFaceImage = filepath
 	}
 

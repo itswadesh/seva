@@ -43,12 +43,13 @@
 
 		loading = false
 
-		goto(`/collect3/step3?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)
+		goto(`/collect3/step4?token_no=${page.url.searchParams.get('token_no') || ''}`)
 	}
-	$effect(()=>{
-		console.log( $state.snapshot(stepState.CollectSangatFaceImage),  $state.snapshot(stepState.items))
-	})
+	// $effect(() => {
+	// 	console.log($state.snapshot(stepState.CollectSangatFaceImage), $state.snapshot(stepState.items))
+	// })
 </script>
+
 <form method="POST" onsubmit={preventDefault(save)} class="flex flex-col gap-8">
 	<div class="mb-16 flex flex-col gap-4">
 		{#each Object.entries(stepState.items) as [key, value] (key)}

@@ -48,13 +48,13 @@
 			return async (result) => {
 				if (result.result?.data?.isRedirect) {
 					goto(
-						`/collect3/step4?sangat_id=${page.url.searchParams.get('sangat_id') || ''}&message=${result.result?.data?.message}`
+						`/collect3/step4?token_no=${page.url.searchParams.get('token_no') || ''}&message=${result.result?.data?.message}`
 					)
 				} else {
 					loading = false
 					if (result?.result?.status === 200) {
-						clearStore()
-						goto(`/collect3/step1?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)
+						stepState.clearItems()
+						goto(`/collect3/step1?token_no=${page.url.searchParams.get('token_no') || ''}`)
 					} else {
 						toast.error('Something went wrong', {
 							description: result?.result?.error?.message,
@@ -73,13 +73,13 @@
 				src={`/uploads/${stepState.getSangatFaceImage({
 					programId: page.data?.programData?.ProgramID,
 					sewadarId: me.id,
-					sangatId: page.url.searchParams.get('sangat_id') || ''
+					tokenNo: page.url.searchParams.get('token_no') || ''
 				})}`}
 				alt="Sangat face missing"
 				class="h-40 w-auto object-contain object-left"
 			/>
 			<div class="flex flex-col items-center">
-				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, sangatId: page.url.searchParams.get('sangat_id') || '', type: 'front' } )}
+				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, tokenNo: page.url.searchParams.get('token_no') || '', type: 'front' } )}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -99,14 +99,14 @@
 						src={`/uploads/${stepState.getItemsImage({
 							programId: page.data?.programData?.ProgramID,
 							sewadarId: me.id,
-							sangatId: page.url.searchParams.get('sangat_id') || '',
+							tokenNo: page.url.searchParams.get('token_no') || '',
 							type: 'front'
 						})}`}
 						alt="Front image missing"
 						class="h-20 w-auto object-contain object-left"
 					/>
 				{/if}
-				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, sangatId: page.url.searchParams.get('sangat_id') || '', type: 'front' } )}
+				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, tokenNo: page.url.searchParams.get('token_no') || '', type: 'front' } )}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -126,7 +126,7 @@
 						src={`/uploads/${stepState.getItemsImage({
 							programId: page.data?.programData?.ProgramID,
 							sewadarId: me.id,
-							sangatId: page.url.searchParams.get('sangat_id') || '',
+							tokenNo: page.url.searchParams.get('token_no') || '',
 							type: 'back'
 						})}`}
 						alt="Back image missing"
@@ -144,7 +144,7 @@
 		<div
 			class="flex items-center justify-center border-2 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"
 		>
-			{stepState.TokenNo}
+			{page.url.searchParams.get('token_no')}
 		</div>
 		<ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
 			{#each Object.entries(stepState.items) as [key, value], index}
@@ -176,6 +176,8 @@
 					{/if}
 				</li>
 			{/each}
+			<input type="hidden" name="TokenNo" value={page.url.searchParams.get('token_no') || ''} />
+			<input type="hidden" name="Collect_SewadarID" value={me.id} />
 		</ul>
 
 		<Button type="submit" {loading}>Submit</Button>

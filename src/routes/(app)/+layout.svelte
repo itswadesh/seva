@@ -23,7 +23,7 @@
 	let currentStep = $derived(currentStepUrl.split('/')[2]?.match(/\d+/) || 0)
 
 	const gotoo = (step: number) => {
-		goto(`/collect3/step${step}?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)
+		goto(`/collect3/step${step}?token_no=${page.url.searchParams.get('token_no') || ''}`)
 	}
 
 	let isComplete = $derived((step: number) => {
@@ -54,7 +54,7 @@
 				>
 					Step1
 				</button>
-				{#if page.url.pathname != '/collect3/preview5' && page.url.pathname != '/give-back'}
+				{#if page.url.pathname != '/give-back'}
 					<button
 						class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(2)
 							? 'border border-green-500 bg-green-200 font-bold text-black'
@@ -97,8 +97,7 @@
 						: ''} {currentStepUrl.includes('/preview5')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"
-					onclick={() =>
-						goto(`/preview5?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)}
+					onclick={() => goto(`/preview5?token_no=${page.url.searchParams.get('token_no') || ''}`)}
 					disabled={isDisabled(5)}
 				>
 					Preview

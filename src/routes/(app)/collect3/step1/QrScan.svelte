@@ -5,6 +5,7 @@
 	import { StepState } from '$lib/steps.svelte'
 	import { getStepState } from '$lib/steps.svelte'
 	import { page } from '$app/state'
+	import { redirect } from '@sveltejs/kit'
 	const stepState = getStepState()
 	let videoElement: any = $state()
 	let canvasElement: any = $state()
@@ -47,7 +48,7 @@
 		}
 	}
 
-	function scanLoop() {
+	async function scanLoop() {
 		if (!videoElement) return
 		if (!scanning) return
 		canvasElement.width = videoElement.videoWidth
@@ -61,7 +62,20 @@
 			const data = { TokenNo: code.data }
 			stepState.updateTokenNo(code.data)
 			stopScan()
-			goto(`/collect3/preview5?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`, { replaceState: true })
+			// goto(`/collect3/check-token?token_no=${data.TokenNo || ''}`, {
+			// 	replaceState: true
+			// })
+			// const tokenNo = page.url.searchParams.get('token_no')
+			const response = await fetch(`/api/sangat/check-token`, {
+				method: 'POST',
+				body: JSON.stringify({ tokenNo: data.TokenNo })
+			})
+			const isExist = await response.json()
+			if (isExist) {
+				goto('/collect3/invalid-token', { replaceState: true })
+			} else {
+				goto(`/collect3/step2?token_no=${data.TokenNo}`, { replaceState: true })
+			}
 			// Stop scanning once a QR code is detected
 			// scanning = false;
 		}

@@ -1,5 +1,5 @@
 <script module>
-	import Step1 from './step1/+page.svelte'
+	import Step1 from './step2/+page.svelte'
 
 	export async function load({ fetch }) {
 		// Load the initial data or perform any setup here

@@ -66,7 +66,7 @@ app.post('/save', async (c) => {
   const args = await c.req.formData()
   const file = args.get('image')
   const type = args.get('type')
-  const sangatId = args.get('sangat_id')
+  const tokenNo = args.get('token_no')
 
   const cookieMe = getCookie(c, 'me')
   let me
@@ -90,9 +90,9 @@ app.post('/save', async (c) => {
     .png({ quality: 80 })
     .toBuffer();
 
-  fs.mkdirSync(`./static/uploads/${programId}/${sewadarId}/${sangatId}`, { recursive: true });
-  fs.writeFileSync(`./static/uploads/${programId}/${sewadarId}/${sangatId}/${type}.png`, compressedBuffer);
-  return c.json({ filepath: `/${programId}/${sewadarId}/${sangatId}/${type}.png` });
+  fs.mkdirSync(`./static/uploads/${programId}/${sewadarId}/${tokenNo}`, { recursive: true });
+  fs.writeFileSync(`./static/uploads/${programId}/${sewadarId}/${tokenNo}/${type}.png`, compressedBuffer);
+  return c.json({ filepath: `/${programId}/${sewadarId}/${tokenNo}/${type}.png` });
 })
 
 export default app

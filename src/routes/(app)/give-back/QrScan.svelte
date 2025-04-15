@@ -43,11 +43,9 @@
 		const code = jsQR(imageData.data, imageData.width, imageData.height)
 		if (code?.data) {
 			const data = { TokenNo: code.data }
-			// updateStore(data)
-			stepState.update(data)
-
+			stepState.updateTokenNo(code.data)
 			stopScan()
-			goto(`/collect3/preview5?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`, {
+			goto(`/collect3/check-token?token_no=${data.TokenNo || ''}`, {
 				replaceState: true
 			})
 			// Stop scanning once a QR code is detected

@@ -23,14 +23,14 @@
 
 	let avatar: any = null
 	let avatartoShow = $state('')
-	let name = $state('Swadesh Behera')
-	let phone = $state('8895092508')
-	let whatsappNo = $state('8895092508')
-	let dob = $state('1985-06-22')
+	let name = $state('')
+	let phone = $state('')
+	let whatsappNo = $state('')
+	let dob = $state('')
 	let gender = $state('M')
-	let fatherName = $state('Bipin Behera')
-	let center = $state('Bangalore')
-	let aadharNo = $state('111111111111')
+	let fatherName = $state('')
+	let center = $state('')
+	let aadharNo = $state('')
 	let maskedAadhar = ''
 	let qualification = $state('B-Tech')
 	let sevaPreference = $state('')

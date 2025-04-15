@@ -19,7 +19,7 @@
 			})
 			console.log(res)
 			if (res) {
-				goto('/give-back/success', { replaceState: true })
+				goto('/give-back/success?message=Token given back.', { replaceState: true })
 			}
 		} catch (e) {
 			console.error('Failed to give back token:', e)
@@ -39,7 +39,7 @@
 					tokenNo: tokenData.TokenNo
 				})
 				if (res) {
-					goto('/give-back/success', { replaceState: true })
+					goto('/give-back/success?message=Token disputed.', { replaceState: true })
 				}
 			}
 		} catch (e) {

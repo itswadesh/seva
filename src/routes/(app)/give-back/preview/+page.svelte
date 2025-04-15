@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte'
 	import { page } from '$app/state'
 	import { Button } from '$lib/components/ui/button'
+	import { goto } from '$app/navigation'
+	import axios from 'axios'
 	let tokenData = $state({})
 
 	onMount(async () => {
@@ -11,22 +13,43 @@
 	})
 
 	const giveBack = async () => {
-		await fetch(`/api/sangat/give-back`, {
-			method: 'POST',
-			body: JSON.stringify({
+		try {
+			const res = await axios.post(`/api/sangat/give-back`, {
 				tokenNo: tokenData.TokenNo
 			})
-		})
+			console.log(res)
+			if (res) {
+				goto('/give-back/success', { replaceState: true })
+			}
+		} catch (e) {
+			console.error('Failed to give back token:', e)
+			goto(
+				`/give-back/error?message=${(e as Error)?.response?.data?.message || 'Failed to give back token'}`,
+				{
+					replaceState: true
+				}
+			)
+		}
 	}
 
 	const dispute = async () => {
-		if (confirm('Are you sure to raise dispute?')) {
-			await fetch(`/api/sangat/dispute`, {
-				method: 'POST',
-				body: JSON.stringify({
+		try {
+			if (confirm('Are you sure to raise dispute?')) {
+				const res = await axios.post(`/api/sangat/dispute`, {
 					tokenNo: tokenData.TokenNo
 				})
-			})
+				if (res) {
+					goto('/give-back/success', { replaceState: true })
+				}
+			}
+		} catch (e) {
+			console.error('Failed to raise dispute:', e)
+			goto(
+				`/give-back/error?message=${(e as Error)?.response?.data?.message || 'Failed to raise dispute'}`,
+				{
+					replaceState: true
+				}
+			)
 		}
 	}
 </script>

@@ -51,7 +51,7 @@
 			})
 			const isExist = await response.json()
 			if (!isExist) {
-				goto('/give-back/invalid-token', { replaceState: true })
+				goto('/give-back/error?message=Invalid token', { replaceState: true })
 			} else {
 				goto(`/give-back/preview?token_no=${data.TokenNo}`, { replaceState: true })
 			}

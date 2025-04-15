@@ -2,7 +2,7 @@
 	import '../../app.pcss'
 	import { Button } from '$lib/components/ui/button'
 	import { goto } from '$app/navigation'
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	import Footer from '$lib/components/seva/Footer.svelte'
 	import Nav from '$lib/components/seva/Nav.svelte'
 	import { fade, fly } from 'svelte/transition'
@@ -10,11 +10,11 @@
 	import { Home } from 'radix-icons-svelte'
 
 	interface Props {
-		data: any;
-		children?: import('svelte').Snippet;
+		data: any
+		children?: import('svelte').Snippet
 	}
 
-	let { data, children }: Props = $props();
+	let { data, children }: Props = $props()
 </script>
 
 <main

@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { date, dateOnly } from '$lib/utils'
+
 	interface Props {
-		data: any;
+		data: any
 	}
 
-	let { data }: Props = $props();
+	let { data }: Props = $props()
 	const sangatData = JSON.parse(data.sangatData) || []
 </script>
 
@@ -45,6 +47,10 @@
 												{:else}
 													-
 												{/if}
+											{:else if key === 'createdAt'}
+												{date(value as string)}
+											{:else if key === 'updatedAt'}
+												{date(value as string)}
 											{:else}
 												{value || '_'}
 											{/if}

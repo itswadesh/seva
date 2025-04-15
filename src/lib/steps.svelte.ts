@@ -2,7 +2,7 @@ import { getContext, onDestroy, onMount, setContext } from 'svelte'
 
 export class StepState {
 	items = $state<any>({
-		Bag: 0, Charger: 0, EarPhone: 0, Laptop: 0, Mobiles: 0, Others: 0, SmartWatch: 0
+		Mobiles: 0, Charger: 0, EarPhone: 0, Laptop: 0, SmartWatch: 0, Others: 0, Bag: 0
 	})
 	total_items = $state<number>(0)
 	CollectSangatFaceImage = $state<string>('')

@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation'
 	import ItemsForm from './itemsForm.svelte'
 	import { getStepState } from '$lib/steps.svelte'
-	import { page } from '$app/stores'
+	import { page } from '$app/state'
 	const stepState = getStepState()
 	let data = {
 		Mobiles: 0,

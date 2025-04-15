@@ -15,15 +15,15 @@
 	const me = $derived(JSON.parse(page.data.me || '{}'))
 	const getTotalitems = () => {
 		total =
-			+(formData.Bag || 0) +
-			+(formData.Charger || 0) +
-			+(formData.EarPhone || 0) +
-			+(formData.EarPod || 0) +
-			+(formData.Laptop || 0) +
-			+(formData.Mobiles || 0) +
-			+(formData.Others || 0) +
-			+(formData.SmartWatch || 0) +
-			+(formData.PowerBank || 0)
+			+(stepState.items.Bag || 0) +
+			+(stepState.items.Charger || 0) +
+			+(stepState.items.EarPhone || 0) +
+			+(stepState.items.EarPod || 0) +
+			+(stepState.items.Laptop || 0) +
+			+(stepState.items.Mobiles || 0) +
+			+(stepState.items.Others || 0) +
+			+(stepState.items.SmartWatch || 0) +
+			+(stepState.items.PowerBank || 0)
 		return total
 	}
 
@@ -45,7 +45,6 @@
 		class="flex flex-col gap-5"
 		use:enhance={() => {
 			loading = true
-
 			return async (result) => {
 				if (result.result?.data?.isRedirect) {
 					goto(
@@ -145,10 +144,10 @@
 		<div
 			class="flex items-center justify-center border-2 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"
 		>
-			{formData.TokenNo}
+			{stepState.TokenNo}
 		</div>
 		<ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
-			{#each Object.entries(formData) as [key, value], index}
+			{#each Object.entries(stepState.items) as [key, value], index}
 				<li
 					class="grid grid-cols-2 items-center
 					{index % 2 === 0 ? 'bg-white' : 'bg-secondary'}"

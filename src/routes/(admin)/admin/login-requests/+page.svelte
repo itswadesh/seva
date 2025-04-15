@@ -2,7 +2,8 @@
 	import { date, dateOnly } from '$lib/utils'
 	import { Checkbox } from '$lib/components/ui/checkbox/index'
 	// import * as Select from '$lib/components/ui/select/index'
-	import Select from '$lib/components/Select.svelte'
+	// import Select from '$lib/components/Select.svelte'
+	import Select from '$lib/components/form/select.svelte'
 	import Button from '$lib/components/misiki/button/button.svelte'
 	import axios from 'axios'
 	import { toast } from 'svelte-sonner'
@@ -94,6 +95,24 @@
 											{:else if key === 'role'}
 												<div class="flex items-center space-x-2">
 													<Select
+														title="Select"
+														id={`role-${vx}`}
+														{value}
+														optionSelected={async (v) => {
+															try {
+																const res = await axios.post('/api/admin/users', {
+																	id: item.id,
+																	role: v
+																})
+																toast.success(`Role changed successfully`)
+															} catch (e) {
+																toast.error(e.response.data)
+															}
+														}}
+														data={roles || []}
+														class="text-xl"
+													/>
+													<!-- <Select
 														title="Select role"
 														{value}
 														data={roles || []}
@@ -109,7 +128,7 @@
 																toast.error(e.response.data)
 															}
 														}}
-													/>
+													/> -->
 												</div>
 											{:else if key === 'approved'}
 												<div class="flex items-center space-x-2">

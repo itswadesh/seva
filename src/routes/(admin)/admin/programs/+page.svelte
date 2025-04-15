@@ -4,7 +4,8 @@
 	import { date, dateOnly } from '$lib/utils'
 	import { Checkbox } from '$lib/components/ui/checkbox/index'
 	// import * as Select from '$lib/components/ui/select/index'
-	import Select from '$lib/components/Select.svelte'
+	// import Select from '$lib/components/Select.svelte'
+	import Select from '$lib/components/form/select.svelte'
 
 	import axios from 'axios'
 	import { toast } from 'svelte-sonner'
@@ -116,44 +117,6 @@
 												{dateOnly(value)}
 											{:else if key === 'approved_at'}
 												{date(value)}
-											{:else if key === 'category'}
-												<div class="flex items-center space-x-2">
-													<Select
-														title="Select category"
-														{value}
-														data={roles || []}
-														on:value={async ({ detail }) => {
-															// selectedRole = detail
-															try {
-																await axios.post('/api/admin/programs', {
-																	id: item.id,
-																	category: detail
-																})
-																toast.success(`Category changed`)
-															} catch (e) {
-																toast.error(e.response.data)
-															}
-														}}
-													/>
-												</div>
-											{:else if key === 'active'}
-												<div class="flex items-center space-x-2">
-													<Checkbox
-														id="terms"
-														checked={value}
-														onCheckedChange={async (v) => {
-															try {
-																const res = await axios.post('/api/admin/programs', {
-																	id: item.id,
-																	active: v
-																})
-																window.location.reload()
-															} catch (e) {
-																toast.error(e.response.data)
-															}
-														}}
-													/>
-												</div>
 											{:else}
 												{value || '_'}
 											{/if}

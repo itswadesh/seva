@@ -55,7 +55,5 @@ export const actions = {
 				form
 			})
 		}
-	} catch(e) {
-		console.log(e)
 	}
 }

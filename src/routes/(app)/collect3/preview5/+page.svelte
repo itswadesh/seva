@@ -83,7 +83,12 @@
 				class="h-40 w-auto object-contain object-left"
 			/>
 			<div class="flex flex-col items-center">
-				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, sangatId: page.url.searchParams.get('sangat_id') || '', type: 'front' } )}
+				{#if !stepState.getItemsImage({
+					programId: page.data?.programData?.ProgramID,
+					sewadarId: me.id,
+					sangatId: page.url.searchParams.get('sangat_id') || '',
+					type: 'front'
+				})}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -110,7 +115,12 @@
 						class="h-20 w-auto object-contain object-left"
 					/>
 				{/if}
-				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, sangatId: page.url.searchParams.get('sangat_id') || '', type: 'front' } )}
+				{#if !stepState.getItemsImage({
+					programId: page.data?.programData?.ProgramID,
+					sewadarId: me.id,
+					sangatId: page.url.searchParams.get('sangat_id') || '',
+					type: 'front'
+				})}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { preventDefault } from 'svelte/legacy';
+	import { preventDefault } from 'svelte/legacy'
 
 	import { date, dateOnly } from '$lib/utils'
 	import { Checkbox } from '$lib/components/ui/checkbox/index'
@@ -12,10 +12,10 @@
 	import Textbox from '$lib/components/misiki/Textbox.svelte'
 	import Label from '$lib/components/ui/label/label.svelte'
 	interface Props {
-		data: any;
+		data: any
 	}
 
-	let { data }: Props = $props();
+	let { data }: Props = $props()
 	const roles = [
 		{ name: 'DEMO', value: 'DEMO' },
 		{ name: 'LIVE', value: 'LIVE' }
@@ -117,7 +117,7 @@
 											{:else if key === 'approved_at'}
 												{date(value)}
 											{:else if key === 'category'}
-												<div class="flex items-center space-x-2 text-white">
+												<div class="flex items-center space-x-2">
 													<Select
 														title="Select category"
 														{value}

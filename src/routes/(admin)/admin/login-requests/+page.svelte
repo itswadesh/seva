@@ -9,10 +9,10 @@
 	import { Value } from 'radix-icons-svelte'
 	let checked = false
 	interface Props {
-		data: any;
+		data: any
 	}
 
-	let { data }: Props = $props();
+	let { data }: Props = $props()
 	let isLoading = false
 	const roles = [
 		{ name: 'ADMIN', value: 'ADMIN' },
@@ -92,7 +92,7 @@
 											{:else if key === 'approved_at'}
 												{date(value)}
 											{:else if key === 'role'}
-												<div class="flex items-center space-x-2 text-white">
+												<div class="flex items-center space-x-2">
 													<Select
 														title="Select role"
 														{value}

@@ -32,7 +32,7 @@
 	let center = $state('')
 	let aadharNo = $state('')
 	let maskedAadhar = ''
-	let qualification = $state('B-Tech')
+	let qualification = $state('')
 	let sevaPreference = $state('')
 	let sevaPreference1 = $state('')
 	let mobileAvailability = $state('')

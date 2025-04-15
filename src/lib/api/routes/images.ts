@@ -54,12 +54,13 @@ app.post('/save-avatar', async (c) => {
 
 app.post('/update-avatar', async (c) => {
   const args = await c.req.formData()
-  const avatarLocation = "./static" + args.get('image')
+  const imageName = args.get('image')
+  const avatarLocation = "./static" + imageName
   const type = args.get('type')
   const data = fs.readFileSync(avatarLocation)
   fs.writeFileSync(`./static/uploads/avatar/${type}.png`, data)
   fs.unlinkSync(avatarLocation)
-  return c.json('./static/uploads/avatar/${type}.png')
+  return c.json(`./static/uploads/avatar/${type}.png`)
 })
 
 app.post('/save', async (c) => {

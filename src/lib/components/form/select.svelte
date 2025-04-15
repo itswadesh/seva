@@ -36,7 +36,7 @@
 		id = '',
 		title = '',
 		errors = {},
-		value = '',
+		value = $bindable(''),
 		label = '',
 		valueField = 'value',
 		...rest

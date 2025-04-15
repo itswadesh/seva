@@ -12,30 +12,31 @@
 	import Select from '$lib/components/form/select.svelte'
 	import { Textbox } from '$lib/components/misiki'
 	import { getUserState } from '$lib/user.svelte'
+	import { PUBLIC_IS_DEV } from '$env/static/public'
 	const userStore = getUserState()
 	interface Props {
 		data: any
 	}
-	let capturedImageURI: string = $state()
-	let selectedFile: File = $state(null)
+	let capturedImageURI: string = $state('')
+	let selectedFile: File = $state()
 
 	// let { data }: Props = $props()
 
-	let avatar: any = null
+	let avatar: any = $state('')
 	let avatartoShow = $state('')
-	let name = $state('')
-	let phone = $state('')
-	let whatsappNo = $state('')
-	let dob = $state('')
+	let name = $state(PUBLIC_IS_DEV === 'TRUE' ? 'Swadesh Behera' : '')
+	let phone = $state(PUBLIC_IS_DEV === 'TRUE' ? '8895092508' : '')
+	let whatsappNo = $state(PUBLIC_IS_DEV === 'TRUE' ? '8895092508' : '')
+	let dob = $state(PUBLIC_IS_DEV === 'TRUE' ? '1985-06-22' : '')
 	let gender = $state('M')
-	let fatherName = $state('')
-	let center = $state('')
-	let aadharNo = $state('')
+	let fatherName = $state(PUBLIC_IS_DEV === 'TRUE' ? 'Bipin Behera' : '')
+	let center = $state(PUBLIC_IS_DEV === 'TRUE' ? 'Bangalore' : '')
+	let aadharNo = $state(PUBLIC_IS_DEV === 'TRUE' ? '111111111111' : '')
 	let maskedAadhar = ''
-	let qualification = $state('')
-	let sevaPreference = $state('')
-	let sevaPreference1 = $state('')
-	let mobileAvailability = $state('')
+	let qualification = $state(PUBLIC_IS_DEV === 'TRUE' ? 'B.Tech' : '')
+	let sevaPreference = $state(PUBLIC_IS_DEV === 'TRUE' ? 'WINDOW' : '')
+	let sevaPreference1 = $state(PUBLIC_IS_DEV === 'TRUE' ? 'BACKUP' : '')
+	let mobileAvailability = $state(PUBLIC_IS_DEV === 'TRUE' ? 'Yes - Android Mobile' : '')
 	let isLoading = $state(false)
 
 	const sevaPreferenceDD = [
@@ -50,7 +51,7 @@
 		{ name: 'Yes - iPhone Mobile', value: 'Yes - iPhone Mobile' },
 		{ name: 'No', value: 'No' }
 	]
-	let skills = $state('')
+	let skills = $state(PUBLIC_IS_DEV === 'TRUE' ? 'MS Office Basic' : '')
 	const skillsPills = [
 		{ name: 'None', value: 'None' },
 		{ name: 'MS Office Basic', value: 'MS Office Basic' },
@@ -62,6 +63,13 @@
 	let errors = $state({})
 
 	const handleSignUp = async () => {
+		// First check if image is uploaded
+		if (!selectedFile) {
+			return toast.error('Validation Errors', {
+				description: 'avatar: Please upload your image'
+			})
+		}
+
 		const user = {
 			avatar,
 			name,
@@ -122,30 +130,35 @@
 
 		try {
 			const result = registerSchema.parse(user)
+			// Upload image first and get avatar path
+			const formData = new FormData()
+			formData.append('image', selectedFile)
+			formData.append('type', phone)
+			await fetch('/api/images/save-avatar', {
+				method: 'POST',
+				body: formData
+			})
+			avatar = `/uploads/avatar/${phone}.png`
+
 			isLoading = true
-
-			// Upload image first
-			if (selectedFile) {
-				const formData = new FormData()
-				formData.append('image', selectedFile)
-				formData.append('type', phone)
-				await fetch('/api/images/update-avatar', {
-					method: 'POST',
-					body: formData
-				})
-				avatar = `/uploads/avatar/${phone}.png`
-			}
-
 			// Continue with user signup
 			userStore.signup(user)
 		} catch (e) {
 			const { fieldErrors: err } = e.flatten()
 			errors = err
-			return toast.error(errors[Object.keys(errors)[0]][0])
+			console.log(errors)
+			// Show all validation errors in the toast
+			const errorMessages = Object.entries(errors)
+				.map(([field, messages]) => {
+					const messageArray = Array.isArray(messages) ? messages : [String(messages)]
+					return `${field}: ${messageArray.join(', ')}`
+				})
+				.join('\n')
+			return toast.error('Validation Errors', {
+				description: errorMessages
+			})
 		}
-		isLoading = true
-		await updateChangeImageSaved({ phone })
-		userStore.signup(user)
+		isLoading = false
 	}
 	const phoneChanged = () => {
 		if (phone.length == 10 && !whatsappNo) {

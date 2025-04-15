@@ -43,6 +43,6 @@
 		<div class="w-full truncate px-1 pt-2 text-right text-xl font-bold text-gray-600">
 			[{me?.id}] {me?.name}
 		</div>
-		<!-- <Button variant="link" on:click={logout} class="ml-3 pt-4">Logout</Button> -->
+		<!-- <Button variant="link" onclick={logout} class="ml-3 pt-4">Logout</Button> -->
 	</div>
 </nav>

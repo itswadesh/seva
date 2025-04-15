@@ -19,7 +19,7 @@
 	<div class="flex items-center">
 		{#if userStore?.sid}
 			Welcome {userStore?.name || ''}
-			<!-- <Button variant="link" on:click={logout} class="ml-3">Logout</Button> -->
+			<!-- <Button variant="link" onclick={logout} class="ml-3">Logout</Button> -->
 		{:else}
 			<!-- <a href="/auth/signup" class=" px-1">SignUp</a>
 			<a href="/auth/login" class=" truncate px-1 text-right text-gray-600">Login</a> -->

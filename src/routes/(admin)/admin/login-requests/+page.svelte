@@ -34,7 +34,7 @@
 						<Button
 							type="submit"
 							class="flex w-full justify-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
-							on:click={async () => {
+							onclick={async () => {
 								try {
 									const res = await axios.post('/api/admin/users/all', {
 										approved: true,

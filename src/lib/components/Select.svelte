@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import Check from 'svelte-radix/Check.svelte'
 	import CaretSort from 'svelte-radix/CaretSort.svelte'
 	import { tick } from 'svelte'
@@ -87,4 +87,4 @@
 </div>
 {#if errors[id]}
 	<span class="text-red-500">{errors[id]}</span>
-{/if}
+{/if} -->

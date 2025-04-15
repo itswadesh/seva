@@ -1,18 +1,16 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { date, dateOnly } from '$lib/utils'
 	import { Checkbox } from '$lib/components/ui/checkbox/index'
-	// import * as Select from '$lib/components/ui/select/index'
-	import Select from '$lib/components/Select.svelte'
+	import Select from '$lib/components/form/select.svelte'
 	import Button from '$lib/components/misiki/button/button.svelte'
 	import axios from 'axios'
 	import { toast } from 'svelte-sonner'
-	import { Value } from 'radix-icons-svelte'
 	let checked = false
 	interface Props {
-		data: any;
+		data: any
 	}
 
-	let { data }: Props = $props();
+	let { data }: Props = $props()
 	let isLoading = false
 	const roles = [
 		{ name: 'ADMIN', value: 'ADMIN' },
@@ -33,7 +31,7 @@
 						<Button
 							type="submit"
 							class="flex w-full justify-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
-							on:click={async () => {
+							onclick={async () => {
 								try {
 									const res = await axios.post('/api/admin/users/all', {
 										active: true
@@ -50,7 +48,7 @@
 						<Button
 							type="submit"
 							class="flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
-							on:click={async () => {
+							onclick={async () => {
 								try {
 									const res = await axios.post('/api/admin/users/all', {
 										active: false
@@ -72,7 +70,7 @@
 						<Button
 							type="submit"
 							class="flex w-full justify-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
-							on:click={async () => {
+							onclick={async () => {
 								try {
 									const res = await axios.post('/api/admin/users/all', {
 										approved: true
@@ -89,7 +87,7 @@
 						<Button
 							type="submit"
 							class="flex w-full justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
-							on:click={async () => {
+							onclick={async () => {
 								try {
 									const res = await axios.post('/api/admin/users/all', {
 										approved: false
@@ -225,4 +223,4 @@
 			</div>
 		{/if}
 	</div>
-</div>
+</div> -->

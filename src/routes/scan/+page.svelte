@@ -69,9 +69,9 @@
 <main>
 	<reader id="reader"></reader>
 	{#if scanning}
-		<Button variant="default" class="w-full" on:click={stop}>Stop</Button>
+		<Button variant="default" class="w-full" onclick={stop}>Stop</Button>
 	{:else}
-		<Button variant="default" class="w-full" on:click={start}>Start</Button>
+		<Button variant="default" class="w-full" onclick={start}>Start</Button>
 	{/if}
 
 	<form

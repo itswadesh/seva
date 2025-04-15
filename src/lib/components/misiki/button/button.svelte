@@ -39,7 +39,7 @@
 	type="button"
 	{...rest}
 	disabled={disabled || loading}
-	on:click
+	onclick
 	on:keydown
 >
 	{#if loading}

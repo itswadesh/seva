@@ -111,7 +111,7 @@
 				<!-- svelte-ignore a11y_img_redundant_alt -->
 				<img src={capturedImageURI} alt="Captured Image" class="h-64 w-64" />
 
-				<Button variant="default" class="w-full" on:click={handleAddItems}>Add Items</Button>
+				<Button variant="default" class="w-full" onclick={handleAddItems}>Add Items</Button>
 			</div>
 		{/if}
 	</div>
@@ -119,7 +119,7 @@
 	<div class="flex flex-col gap-5">
 		<ItemForm form={data.form} />
 
-		<Button variant="default" class="w-full" on:click={handleItemImages}>Take Images</Button>
+		<Button variant="default" class="w-full" onclick={handleItemImages}>Take Images</Button>
 	</div>
 {:else}
 	<div class="flex flex-col gap-5">

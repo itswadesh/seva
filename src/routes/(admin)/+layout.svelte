@@ -26,21 +26,21 @@
 			<a href="/" class="ml-4 flex items-center justify-end pr-2 text-center">
 				<Home class="h-6 w-6" />
 			</a>
-			<a href="/admin/users" class="text-sm font-medium transition-colors hover:text-primary">
+			<!-- <a href="/admin/users" class="text-sm font-medium transition-colors hover:text-primary">
 				Users
-			</a>
+			</a> -->
 			<a
 				href="/admin/programs"
 				class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
 			>
 				Programs
 			</a>
-			<a
+			<!-- <a
 				href="/admin/sangat-data"
 				class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
 			>
 				Sangat Data
-			</a>
+			</a> -->
 
 			<a
 				href="/admin/login-requests"

@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { preventDefault } from 'svelte/legacy'
-
 	import { date, dateOnly } from '$lib/utils'
-	import { Checkbox } from '$lib/components/ui/checkbox/index'
+	// import { Checkbox } from '$lib/components/ui/checkbox/index'
 	// import * as Select from '$lib/components/ui/select/index'
-	// import Select from '$lib/components/Select.svelte'
-	import Select from '$lib/components/form/select.svelte'
+	// import Select from '$lib/components/form/select.svelte'
 
 	import axios from 'axios'
 	import { toast } from 'svelte-sonner'
-	import Button from '$lib/components/misiki/button/button.svelte'
+	import { Button } from '$lib/components/ui/button'
 	import Textbox from '$lib/components/misiki/Textbox.svelte'
+	import { Checkbox } from '$lib/components/ui/checkbox/index'
 	import Label from '$lib/components/ui/label/label.svelte'
 	interface Props {
 		data: any
@@ -72,12 +70,12 @@
 		<Button
 			type="submit"
 			class="w-1/11 my-2 flex justify-center rounded-md border border-transparent bg-green-500 px-4 py-2 text-lg font-medium shadow-sm  hover:border-black focus:outline-none focus:ring-2 focus:ring-offset-2 "
-			on:click={async () => {
+			onclick={async () => {
 				showModal = true
 			}}
 		>
-			Create New Program</Button
-		>
+			Create New Program
+		</Button>
 		{#if programs.length === 0}
 			No program found
 		{:else}
@@ -115,6 +113,31 @@
 												{/if}
 											{:else if key === 'dob' || key === 'startDate' || key === 'compDate'}
 												{dateOnly(value)}
+											{:else if key === 'active'}
+												<div class="flex items-center space-x-2">
+													<Checkbox
+														class="rounded border border-gray-300"
+														id="terms"
+														checked={value}
+														onCheckedChange={async (v) => {
+															try {
+																const res = await axios.post('/api/admin/programs', {
+																	id: item.id,
+																	active: v,
+																	pending_approved: false
+																})
+																if (res.status == 200) {
+																	v === true
+																		? toast.success(`activated successfully`)
+																		: toast.error(`deactivated successfully`)
+																}
+																window.location.reload()
+															} catch (e) {
+																toast.error(e.response.data)
+															}
+														}}
+													/>
+												</div>
 											{:else if key === 'approved_at'}
 												{date(value)}
 											{:else}
@@ -123,24 +146,6 @@
 										</div>
 									</th>
 								{/each}
-								<Button
-									type="submit"
-									class="mx-auto mt-8 flex w-2/3 justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-lg font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 "
-									on:click={async () => {
-										try {
-											const res = await axios.post('/api/admin/programs', {
-												deleted: true,
-												id: item.id
-											})
-											toast.error(`Program Deleted Successfully`)
-											window.location.reload()
-										} catch (e) {
-											toast.error(e.response.data)
-										}
-									}}
-								>
-									Delete</Button
-								>
 							</tr>
 						{/each}
 					</tbody>
@@ -218,14 +223,14 @@
 					</button>
 				</div>
 
-				<form onsubmit={preventDefault(submit)} class="flex flex-col gap-10 pb-10">
+				<form onsubmit={submit} class="flex flex-col gap-10 pb-10">
 					<div>
 						<Label for="name">Program Category :</Label>
 						<select
 							id="category"
 							name="category"
 							required
-							class="h-10 w-full rounded-md border border-gray-300 text-white"
+							class="h-10 w-full rounded-md border border-gray-300 text-black"
 							bind:value={program.ProgramCategory}
 						>
 							<option value="">Select Category</option>
@@ -234,7 +239,7 @@
 							{/each}
 						</select>
 					</div>
-					<div class="text-white">
+					<div class="text-black">
 						<Textbox
 							{errors}
 							id="programBy"
@@ -244,7 +249,7 @@
 							bind:value={program.ProgramBy}
 						/>
 					</div>
-					<div class="text-white">
+					<div class="text-black">
 						<Textbox
 							type="date"
 							{errors}
@@ -255,7 +260,7 @@
 							bind:value={program.ProgramValidity}
 						/>
 					</div>
-					<div class="text-white">
+					<div class="text-black">
 						<Textbox
 							{errors}
 							id="ProgramLocation"

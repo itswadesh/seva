@@ -1,14 +1,11 @@
 <script lang="ts">
 	import { z } from 'zod'
-	import { goto } from '$app/navigation'
+	import { nanoid } from 'nanoid'
 	import Button from '$lib/components/ui/button/button.svelte'
-	// import Input from '$lib/components/ui/input/input.svelte'
-	// import axios from 'axios'
 	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'
 	import { Label } from '$lib/components/ui/label'
 	import * as RadioGroup from '$lib/components/ui/radio-group'
-	// import Select from '$lib/components/Select.svelte'
 	import Select from '$lib/components/form/select.svelte'
 	import { Textbox } from '$lib/components/misiki'
 	import { getUserState } from '$lib/user.svelte'
@@ -37,6 +34,7 @@
 	let sevaPreference = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'WINDOW' : '')
 	let sevaPreference1 = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'BACKUP' : '')
 	let mobileAvailability = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'Yes - Android Mobile' : '')
+	let skills = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'MS Office Basic' : '')
 	let isLoading = $state(false)
 
 	const sevaPreferenceDD = [
@@ -51,7 +49,6 @@
 		{ name: 'Yes - iPhone Mobile', value: 'Yes - iPhone Mobile' },
 		{ name: 'No', value: 'No' }
 	]
-	let skills = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'MS Office Basic' : '')
 	const skillsPills = [
 		{ name: 'None', value: 'None' },
 		{ name: 'MS Office Basic', value: 'MS Office Basic' },
@@ -131,6 +128,12 @@
 		try {
 			const result = registerSchema.parse(user)
 			// Upload image first and get avatar path
+			const phone1 = await userStore.checkExistingProfile({ phone, aadharNo })
+			if (phone1) {
+				return toast.error('Validation Errors', {
+					description: 'Phone number or Aadhar number already registered'
+				})
+			}
 			const formData = new FormData()
 			formData.append('image', selectedFile)
 			formData.append('type', phone)
@@ -174,17 +177,17 @@
 		}
 	}
 
-	function handleAadharInput(event) {
-		const rawValue = event.detail.target?.value || '' // Get the raw value
-		aadharNo = rawValue.replace(/\D/g, '') // Strip non-digit characters
-		maskedAadhar = maskAndFormatAadhar(aadharNo) // Mask and format
-	}
+	// function handleAadharInput(event) {
+	// 	const rawValue = event.detail.target?.value || '' // Get the raw value
+	// 	aadharNo = rawValue.replace(/\D/g, '') // Strip non-digit characters
+	// 	maskedAadhar = maskAndFormatAadhar(aadharNo) // Mask and format
+	// }
 
-	function maskAndFormatAadhar(number) {
-		let masked = number.slice(0, -4).replace(/\d/g, 'X') // Replace all but the last 4 digits
-		let lastFour = number.slice(-4)
-		return (masked + lastFour).replace(/(.{4})/g, '$1-').slice(0, -1) // Format
-	}
+	// function maskAndFormatAadhar(number) {
+	// 	let masked = number.slice(0, -4).replace(/\d/g, 'X') // Replace all but the last 4 digits
+	// 	let lastFour = number.slice(-4)
+	// 	return (masked + lastFour).replace(/(.{4})/g, '$1-').slice(0, -1) // Format
+	// }
 </script>
 
 <div

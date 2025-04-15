@@ -15,18 +15,27 @@ app.post('/logout', async (c) => {
   return c.json(true)
 })
 
+app.post('/check-user-exists', async (c) => {
+  const args = await c.req.json()
+  const { phone, aadharNo } = args
+  // console.log(phone, aadharNo)
+  const res = await db.select().from(ClientProfile).where(or(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.AadharNo, aadharNo)))
+  // console.log(res)
+  return c.json(!!res[0])
+})
+
 app.post('/login', async (c) => {
   const args = await c.req.json()
   const { phone, password } = args
 
   const resA = await db
-    .select({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved,role: ClientProfile.Role }).from(ClientProfile).where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.password, password)))
+    .select({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved, role: ClientProfile.Role }).from(ClientProfile).where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.password, password)))
   const res = resA[0]
   if (!res) {
     deleteCookie(c, 'me', { path: '/' })
     return c.json({ sid: null, message: 'Invalid phone or password' })
   }
-  console.log(res.role)
+  // console.log(res.role)
   // Add role validation
   const validRoles = ['WINDOW', 'BACKUP', 'PLANNING', 'ADMIN']
   if (!validRoles.includes(res.role)) {
@@ -65,7 +74,7 @@ app.post('/signup', async (c) => {
 
   const formattedDOB = new Date(dob).toLocaleDateString('en-GB').replace(/\//g, '')
 
-  console.log(formattedDOB)
+  // console.log(formattedDOB)
   const resA = await db
     .select({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active }).from(ClientProfile).where(eq(ClientProfile.MobileNo, phone))
   const userExist = resA[0]
@@ -77,7 +86,6 @@ app.post('/signup', async (c) => {
   if (phone.length !== 10) {
     return c.json({ status: 400, message: 'Invalid Phone Number' })
   }
-  console.log('aadharNo.length', aadharNo.length)
   if (aadharNo.length !== 12) {
     return c.json({ status: 400, message: 'Invalid Aadhar Number' })
   }
@@ -90,17 +98,15 @@ app.post('/signup', async (c) => {
     Gender: gender,
     Centre: center,
     FatherName: fatherName,
-    AadharNo: aadharNo.replace(/(.{4})/g, '$1-').slice(0, -1),
+    AadharNo: aadharNo,
     Qualification: qualification,
     SevaPreference: sevaPreference,
     MobileAvailability: mobileAvailability,
     Avatar: avatar,
     SevaPreference1: sevaPreference1
   }
-  console.log(postData)
   const res = await db
     .insert(ClientProfile).values(postData).returning({ id: ClientProfile.ID, name: ClientProfile.Name, phone: ClientProfile.MobileNo, dob: ClientProfile.DOB, role: ClientProfile.Role, gender: ClientProfile.Gender, approved: ClientProfile.Approved, approved_at: ClientProfile.ApprovalDT, fatherName: ClientProfile.FatherName, aadharNo: ClientProfile.AadharNo, qualification: ClientProfile.Qualification, center: ClientProfile.Centre, avatar: ClientProfile.Avatar })
-  console.log(res)
   return c.json(res)
 })
 

@@ -48,6 +48,18 @@ export class UserState {
 		}
 	}
 
+	async checkExistingProfile({ phone, aadharNo }: { phone: string, aadharNo: string }) {
+		this.isLoading = true
+		try {
+			const res = await axios.post('/api/auth/check-user-exists', { phone, aadharNo })
+			return res.data
+		} catch (e) {
+			toast.error(e.response.data)
+		} finally {
+			this.isLoading = false
+		}
+	}
+
 	async logout() {
 		this.isLoading = true
 		try {

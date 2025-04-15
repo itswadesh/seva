@@ -18,7 +18,6 @@ app.post('/update', async (c) => {
   const avatarLocation = "./static/uploads" // + args.get('image')
   const type = args.get('type')
   const programId = Number(args.get('programId'))
-  console.log('programId....................', type, programId, avatarLocation)
   // const data = fs.readFileSync(avatarLocation)
   const cookieMe = getCookie(c, 'me')
   let me
@@ -69,7 +68,6 @@ app.post('/save', async (c) => {
   const type = args.get('type')
   const sangatId = args.get('sangat_id')
 
-  console.log({ file, type, sangatId })
   const cookieMe = getCookie(c, 'me')
   let me
   if (cookieMe) {

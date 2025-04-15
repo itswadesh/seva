@@ -81,6 +81,5 @@ export function setUserState() {
 }
 
 export function getUserState() {
-	// console.log(USER_KEY)
 	return getContext<ReturnType<typeof setUserState>>(USER_KEY)
 }

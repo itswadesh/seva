@@ -25,7 +25,6 @@
 	})
 
 	async function startCamera() {
-		console.log('startCamera')
 		try {
 			if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 				const stream = await navigator.mediaDevices.getUserMedia({

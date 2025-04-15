@@ -18,9 +18,7 @@ app.post('/logout', async (c) => {
 app.post('/check-user-exists', async (c) => {
   const args = await c.req.json()
   const { phone, aadharNo } = args
-  // console.log(phone, aadharNo)
   const res = await db.select().from(ClientProfile).where(or(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.AadharNo, aadharNo)))
-  // console.log(res)
   return c.json(!!res[0])
 })
 
@@ -35,7 +33,6 @@ app.post('/login', async (c) => {
     deleteCookie(c, 'me', { path: '/' })
     return c.json({ sid: null, message: 'Invalid phone or password' })
   }
-  // console.log(res.role)
   // Add role validation
   const validRoles = ['WINDOW', 'BACKUP', 'PLANNING', 'ADMIN']
   if (!validRoles.includes(res.role)) {
@@ -74,12 +71,10 @@ app.post('/signup', async (c) => {
 
   const formattedDOB = new Date(dob).toLocaleDateString('en-GB').replace(/\//g, '')
 
-  // console.log(formattedDOB)
   const resA = await db
     .select({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active }).from(ClientProfile).where(eq(ClientProfile.MobileNo, phone))
   const userExist = resA[0]
 
-  // console.log(!userExist, phone, name, dob)
   if (userExist) {
     return c.json({ status: 400, message: 'Phone number already registered' })
   }

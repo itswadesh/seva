@@ -32,13 +32,6 @@
 	let isDisabled = $derived((step: number) => {
 		return currentStep < step
 	})
-
-	// onMount(() => {
-		// console.log(userStore.me)
-		// if (!userStore.me?.sid) {
-		// 	goto('/auth/login')
-		// }
-	// })
 </script>
 
 <main
@@ -104,7 +97,8 @@
 						: ''} {currentStepUrl.includes('/preview5')
 						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
 						: ''}"
-					onclick={() => goto(`/preview5?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)}
+					onclick={() =>
+						goto(`/preview5?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`)}
 					disabled={isDisabled(5)}
 				>
 					Preview

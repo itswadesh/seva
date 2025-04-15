@@ -1,4 +1,4 @@
-import { and, eq, or, sql } from 'drizzle-orm'
+import { and, eq, or, sql, ne } from 'drizzle-orm'
 import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 import { db } from '../../db'
@@ -12,7 +12,6 @@ const app = new Hono()
 app.post('/programs', async (c) => {
   const args = await c.req.json()
   const { id, category, location, startDate, compDate, by, active, admin, deleted } = args
-  console.log(id, active)
   const cookieMe = getCookie(c, 'me')
   let me
   if (cookieMe) {
@@ -59,7 +58,6 @@ app.post('/programs/new', async (c) => {
   if (me.role !== 'ADMIN') {
     throw new HTTPException(401, { message: 'Unauthorized' })
   }
-  console.log({ ProgramCategory, ProgramStartDate, ProgramCompDate, active, ProgramBy, ProgramValidity, ProgramLocation })
   // ProgramID: id, ProgramCategory: category, ProgramLocation: location, ProgramStartDate: startDate, ProgramCompDate: compDate, ProgramBy: by, ProgramAdmin: admin
   await db
     .insert(ProgramInfo).values({
@@ -78,14 +76,12 @@ app.post('/programs/new', async (c) => {
 app.post('/users', async (c) => {
   const args = await c.req.json()
   const { id, approved, role, pending_approved, active } = args
-  console.log({ id, approved, role, pending_approved, active })
   const userId = id
   const cookieMe = getCookie(c, 'me')
   let me
   if (cookieMe) {
     me = JSON.parse(cookieMe)
   }
-  // console.log({ id, approved })
   if (me.role !== 'ADMIN') {
     throw new HTTPException(401, { message: 'Unauthorized' })
   }
@@ -119,7 +115,6 @@ app.post('/users/all', async (c) => {
   if (cookieMe) {
     me = JSON.parse(cookieMe)
   }
-  // console.log({ id, approved })
   if (me.role !== 'ADMIN') {
     throw new HTTPException(401, { message: 'Unauthorized' })
   }

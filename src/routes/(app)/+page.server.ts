@@ -34,18 +34,12 @@ export const actions = {
 
 		// const newData = await db.insert(ClientProfile).values({ Sewadar_ID: form.data.username, password: form.data.password});
 
-		// console.log("data inserted" , newData);
-
-		// console.log('form', form);
-
 		const checkLoggedin = await db
 			.select()
 			.from(ClientProfile)
 			.where(
 				and(eq(ClientProfile.Sewadar_ID, form.email), eq(ClientProfile.password, form.password))
 			)
-
-		// console.log('data fetche from DB', checkLoggedin.length)
 
 		if (checkLoggedin.length > 0) {
 			isLogged = true

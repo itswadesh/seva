@@ -8,10 +8,10 @@
 	const stepState = getStepState()
 
 	interface Props {
-		data: any;
+		data: any
 	}
 
-	let { data = $bindable() }: Props = $props();
+	let { data = $bindable() }: Props = $props()
 
 	let scanning = $state(false)
 	let html5Qrcode: Html5Qrcode
@@ -53,16 +53,12 @@
 		}
 		stepState.update(updatedState)
 		// updateStore(updatedState)
-		// console.log(decodedResult)
 		stop()
-		// console.log('decodedText', decodedText)
-		// console.log('onsubmit')
 		const form = document.getElementById('scan') as HTMLFormElement
 		if (form) {
 			form.submit()
 		}
 		data.isscanned = false
-		// console.log('onsubmit done')
 	}
 
 	function onScanFailure(error: any) {
@@ -83,9 +79,7 @@
 		method="POST"
 		id="scan"
 		use:enhance={() => {
-			return async (result) => {
-				// console.log('result', result)
-			}
+			return async (result) => {}
 		}}
 	></form>
 </main>

@@ -3,7 +3,7 @@
 	import jsQR from 'jsqr'
 	import { goto } from '$app/navigation'
 	// import { updateStore } from '$lib/store/collectionStore'
-		import { getStepState } from '$lib/steps.svelte'
+	import { getStepState } from '$lib/steps.svelte'
 	const stepState = getStepState()
 
 	let videoElement: any = $state()
@@ -15,7 +15,6 @@
 	})
 
 	async function startCamera() {
-		console.log('startCamera')
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia({
 				video: { facingMode: 'environment' }
@@ -45,10 +44,12 @@
 		if (code?.data) {
 			const data = { TokenNo: code.data }
 			// updateStore(data)
-		stepState.update(data)
+			stepState.update(data)
 
 			stopScan()
-			goto(`/collect3/preview5?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`, { replaceState: true })
+			goto(`/collect3/preview5?sangat_id=${page.url.searchParams.get('sangat_id') || ''}`, {
+				replaceState: true
+			})
 			// Stop scanning once a QR code is detected
 			// scanning = false;
 		}

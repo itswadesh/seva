@@ -51,7 +51,6 @@ export const actions: Actions = {
 		// update immae based on the form data and the token no
 		let { CollectSangatFaceImage, ItemsImageBack, ItemsImageFront } = items
 		const tokenNo = items.TokenNo
-		console.log('tokenNo', tokenNo, programId)
 		CollectSangatFaceImage = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Face`, image: CollectSangatFaceImage, programId, fetch1: event.fetch })
 		ItemsImageBack = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Back`, image: ItemsImageBack, programId, fetch1: event.fetch })
 		ItemsImageFront = await updateChangeImageSaved({ tokenNo: `${tokenNo}_Front`, image: ItemsImageFront, programId, fetch1: event.fetch })
@@ -66,7 +65,6 @@ export const actions: Actions = {
 		try {
 
 			const checkData = await db.select().from(SangatData).where(eq(SangatData.TokenNo, items?.TokenNo)).limit(1)
-			// console.log('checkData', checkData)
 			if (checkData.length > 0) {
 				await db.update(SangatData).set({
 					SubmissionCount: checkData[0].SubmissionCount + 1,
@@ -96,7 +94,6 @@ export const actions: Actions = {
 					ItemsImageBack: ItemsImageBack, //items?.ItemsImageBack,
 					ItemsImageFront: ItemsImageFront, //items?.ItemsImageFront
 				})
-				console.log('data inserted', newData)
 				return newData
 			}
 		} catch (e: any) {

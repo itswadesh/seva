@@ -26,7 +26,6 @@ export const collectionstore = writable(initialState)
 
 export function updateStore(updatedProperties: Partial<typeof initialState>) {
 	collectionstore.update((currentState) => {
-		// console.log(currentState, updatedProperties, { ...currentState, ...updatedProperties })
 		return {
 			...currentState,
 			...updatedProperties

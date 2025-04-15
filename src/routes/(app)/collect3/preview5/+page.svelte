@@ -37,7 +37,6 @@
 			})
 		}
 	})
-	// console.log('formData', formData)
 </script>
 
 <div>
@@ -48,9 +47,7 @@
 			loading = true
 
 			return async (result) => {
-				console.log('result', result.result?.data?.isRedirect, result.result?.data?.message)
 				if (result.result?.data?.isRedirect) {
-					// console.log('redirecting')
 					goto(
 						`/collect3/step4?sangat_id=${page.url.searchParams.get('sangat_id') || ''}&message=${result.result?.data?.message}`
 					)
@@ -83,12 +80,7 @@
 				class="h-40 w-auto object-contain object-left"
 			/>
 			<div class="flex flex-col items-center">
-				{#if !stepState.getItemsImage({
-					programId: page.data?.programData?.ProgramID,
-					sewadarId: me.id,
-					sangatId: page.url.searchParams.get('sangat_id') || '',
-					type: 'front'
-				})}
+				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, sangatId: page.url.searchParams.get('sangat_id') || '', type: 'front' } )}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -115,12 +107,7 @@
 						class="h-20 w-auto object-contain object-left"
 					/>
 				{/if}
-				{#if !stepState.getItemsImage({
-					programId: page.data?.programData?.ProgramID,
-					sewadarId: me.id,
-					sangatId: page.url.searchParams.get('sangat_id') || '',
-					type: 'front'
-				})}
+				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, sangatId: page.url.searchParams.get('sangat_id') || '', type: 'front' } )}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

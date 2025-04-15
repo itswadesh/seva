@@ -68,6 +68,5 @@ export function setStepState() {
 }
 
 export function getStepState() {
-	// console.log(STEP_KEY)
 	return getContext<ReturnType<typeof setStepState>>(STEP_KEY)
 }

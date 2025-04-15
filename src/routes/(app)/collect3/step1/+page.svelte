@@ -41,7 +41,6 @@
 			body: formData
 		})
 		const apiData = await filePath1.json()
-		console.log('apiData', apiData)
 		goto(`/collect3/step2?sangat_id=${sangatId}`, { replaceState: true })
 		// Check if the file size is already below 100kb
 		// if (file.size <= 100 * 1024) {
@@ -58,7 +57,6 @@
 		// const updatedState = {
 		// 	CollectSangatFaceImage: apiData?.filepath
 		// }
-		// console.log('compressed capturedImageURI', capturedImageURI, updatedState)
 		stepState.updateSangatFaceImage({ sangatId, filepath: apiData?.filepath })
 		// updateStore(updatedState)
 	}

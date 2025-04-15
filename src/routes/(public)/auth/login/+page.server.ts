@@ -7,8 +7,6 @@
 //   const data = Object.fromEntries(await request.formData())
 //   const { phone, password } = data
 
-//   console.log({ phone, password })
-
 //   const resA = await db
 //     .select({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid }).from(ClientProfile).where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.password, password)))
 //   const res = resA[0]

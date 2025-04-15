@@ -35,7 +35,6 @@
 			isLoading = true
 			userState.login(user)
 		} catch (e) {
-			console.log(e)
 			const { fieldErrors: err } = e.flatten()
 			errors = err
 			return toast.error(errors[Object.keys(errors)[0]][0])

@@ -55,8 +55,6 @@
 		// Set the source of the compressed image
 		capturedItemImageUrl1 = apiData?.filepath
 
-		// console.log('compressed capturedItemImageUrl1', capturedItemImageUrl1);
-
 		const updatedState = {
 			ItemsImageFront: apiData?.filepath
 		}
@@ -88,8 +86,6 @@
 
 		// Set the source of the compressed image
 		capturedItemImageUrl2 = apiData?.filepath
-
-		// console.log('compressed capturedItemImageUrl2', capturedItemImageUrl2);
 
 		const updatedState = {
 			ItemsImageBack: apiData?.filepath

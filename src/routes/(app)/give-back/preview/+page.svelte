@@ -1,31 +1,45 @@
 <script lang="ts">
-	import { browser } from '$app/environment'
-	import { clearStore, collectionstore, updateStore } from '$lib/store/collectionStore'
-	import { enhance } from '$app/forms'
-	import { goto } from '$app/navigation'
 	import { onMount } from 'svelte'
-	import { Reload } from 'radix-icons-svelte'
-	import { toast } from 'svelte-sonner'
-	import Button from '$lib/components/misiki/button/button.svelte'
-	interface Props {
-		data?: any;
+	import { page } from '$app/state'
+	import { Button } from '$lib/components/ui/button'
+	let tokenData = $state({})
+
+	onMount(async () => {
+		tokenData = await fetch(
+			`/api/sangat/get-token-data?token_no=${page.url.searchParams.get('token_no') || ''}`
+		).then((res) => res.json())
+	})
+
+	const giveBack = async () => {
+		await fetch(`/api/sangat/give-back`, {
+			method: 'POST',
+			body: JSON.stringify({
+				tokenNo: tokenData.TokenNo
+			})
+		})
 	}
 
-	let { data = {} }: Props = $props();
-	let formData: any = data
-	let loading = false
-	let total = 0
+	const dispute = async () => {
+		if (confirm('Are you sure to raise dispute?')) {
+			await fetch(`/api/sangat/dispute`, {
+				method: 'POST',
+				body: JSON.stringify({
+					tokenNo: tokenData.TokenNo
+				})
+			})
+		}
+	}
 </script>
 
 <div>
 	<div class="grid grid-cols-2">
 		<img
-			src={formData.CollectSangatFaceImage}
-			alt="Sangat Face Missing"
+			src={tokenData.CollectSangatFaceImage}
+			alt="Sangat face missing"
 			class="h-40 w-auto object-contain object-left"
 		/>
 		<div class="flex flex-col items-center">
-			{#if !formData.ItemsImageFront}
+			{#if !tokenData.ItemsImageFront}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -42,12 +56,12 @@
 				</svg>
 			{:else}
 				<img
-					src={formData.ItemsImageFront}
-					alt="Front Image Missing"
-					class="h-20 w-auto object-contain object-left"
+					src={tokenData.ItemsImageFront}
+					alt="Items front image missing"
+					class="h-40 w-auto object-contain object-left"
 				/>
 			{/if}
-			{#if !formData.ItemsImageBack}
+			{#if !tokenData.ItemsImageBack}
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
@@ -64,9 +78,9 @@
 				</svg>
 			{:else}
 				<img
-					src={formData.ItemsImageBack}
-					alt="Back Image Missing"
-					class="h-20 w-auto object-contain object-left"
+					src={tokenData.ItemsImageBack}
+					alt="Items back image missing"
+					class="h-40 w-auto object-contain object-left"
 				/>
 			{/if}
 		</div>
@@ -74,39 +88,21 @@
 	<div class="flex items-center gap-5 text-3xl font-bold">
 		<div class="w-full bg-gray-200 p-4">Total Items</div>
 		<div class="w-32 bg-gray-200 p-4 text-center">
-			{total}
+			{tokenData.TotalItems}
 		</div>
 	</div>
-	<div
+	<!-- <div
 		class="flex items-center justify-center border-2 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"
 	>
-		{formData.TokenNo}
-	</div>
-	<ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
-		{#each Object.entries(formData) as [key, value], index}
-			<li
-				class="grid grid-cols-2 items-center
-					{index % 2 === 0 ? 'bg-white' : 'bg-secondary'}"
-			>
-				<div class="col-span-1 flex items-center justify-between gap-2 p-2">
-					<span class="capitalize">
-						{key.replace(/_/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2')}
-					</span>
-
-					<span> : </span>
-				</div>
-
-				<div class="col-span-1 p-2 font-semibold">
-					{#if key === 'CollectSangatFaceImage' || key === 'ItemsImageBack' || key === 'ItemsImageFront'}
-						<img src={value} alt={key} class="h-20 w-auto object-contain object-left" />
-					{:else}
-						{value || '-'}
-					{/if}
-				</div>
-				{#if key != 'CollectSangatFaceImage' && key != 'ItemsImageBack' && key != 'ItemsImageFront'}
-					<input type="hidden" name={key} {value} />
-				{/if}
-			</li>
-		{/each}
-	</ul>
+		{tokenData.TokenNo}
+	</div> -->
+	<Button onclick={giveBack} class="mt-4 w-full">Give Back</Button>
+	<Button variant="ghost" onclick={dispute} class="mt-4 w-full">
+		<span class="text-red-500">Dispute</span>
+	</Button>
+	<!-- <ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
+		<li>
+			<input type="hidden" name="TokenNo" value={tokenData.TokenNo} />
+		</li>
+	</ul> -->
 </div>

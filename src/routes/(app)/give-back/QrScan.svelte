@@ -31,7 +31,7 @@
 		}
 	}
 
-	function scanLoop() {
+	async function scanLoop() {
 		if (!videoElement) return
 		if (!scanning) return
 		canvasElement.width = videoElement.videoWidth
@@ -45,9 +45,16 @@
 			const data = { TokenNo: code.data }
 			stepState.updateTokenNo(code.data)
 			stopScan()
-			goto(`/collect3/check-token?token_no=${data.TokenNo || ''}`, {
-				replaceState: true
+			const response = await fetch(`/api/sangat/check-token`, {
+				method: 'POST',
+				body: JSON.stringify({ tokenNo: data.TokenNo })
 			})
+			const isExist = await response.json()
+			if (!isExist) {
+				goto('/give-back/invalid-token', { replaceState: true })
+			} else {
+				goto(`/give-back/preview?token_no=${data.TokenNo}`, { replaceState: true })
+			}
 			// Stop scanning once a QR code is detected
 			// scanning = false;
 		}

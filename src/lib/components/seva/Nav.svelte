@@ -28,9 +28,9 @@
 			{programData?.ProgramCategory}
 		</div>
 		<div
-			class="h-full w-full items-center bg-green-200 p-1 text-center text-3xl font-bold text-green-500"
+			class="h-full w-full items-center bg-green-200 p-1 text-center text-3xl font-bold text-red-500"
 		>
-			Collect
+			Token No: {page.url.searchParams.get('token_no')}
 		</div>
 		<a href="/" class="ml-4 flex items-center justify-end pr-2 text-center">
 			<Home class="h-6 w-6" />
@@ -39,6 +39,7 @@
 
 	<div class="flex items-center">
 		<div class="w-24 px-1 pt-2 text-xl font-bold text-blue-500">A-W-1</div>
+
 		<div class="w-full truncate px-1 pt-2 text-right text-xl font-bold text-gray-600">
 			[{me?.id}] {me?.name}
 		</div>

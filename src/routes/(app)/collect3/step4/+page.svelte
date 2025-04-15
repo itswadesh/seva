@@ -220,18 +220,12 @@
 		type="submit"
 		class="w-full"
 		{loading}
-		disabled={!capturedItemImageUrl1 &&
+		disabled={!capturedItemImageUrl1 ||
 			!stepState.getItemsImage({
 				programId: page.data?.programData?.ProgramID,
 				sewadarId: me.id,
 				tokenNo: page.url.searchParams.get('token_no') || '',
 				type: 'front'
-			}) &&
-			!stepState.getItemsImage({
-				programId: page.data?.programData?.ProgramID,
-				sewadarId: me.id,
-				tokenNo: page.url.searchParams.get('token_no') || '',
-				type: 'back'
 			})}
 	>
 		Proceed To Preview

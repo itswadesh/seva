@@ -41,20 +41,21 @@
 	<div class="h-full">
 		<!-- Nav -->
 		<Nav programData={data.programData} />
-
 		{#if page.url.pathname !== '/' && page.url.pathname !== '/auth/login'}
 			<div class="grid grid-cols-5 gap-2 overflow-x-auto px-3 pb-1 pt-3">
-				<button
-					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(1)
-						? 'border border-green-500 bg-green-200 font-bold text-black'
-						: ''} {currentStepUrl.includes('/step1')
-						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
-						: ''}"
-					onclick={() => gotoo(1)}
-				>
-					Step1
-				</button>
-				{#if page.url.pathname != '/give-back'}
+				{#if !page.url.pathname.includes('/give-back')}
+					<button
+						class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(1)
+							? 'border border-green-500 bg-green-200 font-bold text-black'
+							: ''} {currentStepUrl.includes('/step1')
+							? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+							: ''}"
+						onclick={() => gotoo(1)}
+					>
+						Step1
+					</button>
+				{/if}
+				{#if !page.url.pathname.includes('/give-back')}
 					<button
 						class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(2)
 							? 'border border-green-500 bg-green-200 font-bold text-black'
@@ -91,17 +92,20 @@
 						Step4
 					</button>
 				{/if}
-				<button
-					class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(5)
-						? 'border border-green-500 bg-green-200 font-bold text-black'
-						: ''} {currentStepUrl.includes('/preview5')
-						? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
-						: ''}"
-					onclick={() => goto(`/preview5?token_no=${page.url.searchParams.get('token_no') || ''}`)}
-					disabled={isDisabled(5)}
-				>
-					Preview
-				</button>
+				{#if !page.url.pathname.includes('/give-back')}
+					<button
+						class="w-full rounded border bg-gray-100 px-2 py-1 text-sm shadow-sm {isComplete(5)
+							? 'border border-green-500 bg-green-200 font-bold text-black'
+							: ''} {currentStepUrl.includes('/preview5')
+							? 'border border-blue-500 bg-blue-200 font-bold text-blue-500'
+							: ''}"
+						onclick={() =>
+							goto(`/preview5?token_no=${page.url.searchParams.get('token_no') || ''}`)}
+						disabled={isDisabled(5)}
+					>
+						Preview
+					</button>
+				{/if}
 			</div>
 		{/if}
 

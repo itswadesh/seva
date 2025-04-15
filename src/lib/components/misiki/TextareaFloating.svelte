@@ -3,18 +3,22 @@
 
 	const dispatch = createEventDispatcher()
 
-	export let id = 'textarea'
-	export let maxlength
-	export let name = ''
-	export let placeholder = ' '
-	export let required = false
-	export let rows = 4
-	export let tabindex = 0
-	export let value = ''
-	export let label = ''
 
-	export let className = ''
-	export { className as class }
+	/** @type {{id?: string, maxlength: any, name?: string, placeholder?: string, required?: boolean, rows?: number, tabindex?: number, value?: string, label?: string, class?: string, children?: import('svelte').Snippet}} */
+	let {
+		id = 'textarea',
+		maxlength,
+		name = '',
+		placeholder = ' ',
+		required = false,
+		rows = 4,
+		tabindex = 0,
+		value = $bindable(''),
+		label = '',
+		class: className = '',
+		children
+	} = $props();
+	
 </script>
 
 <div class={className}>
@@ -30,8 +34,8 @@
 			{required}
 			{tabindex}
 			{maxlength}
-			on:input={() => dispatch('input')}
-			on:focus={() => dispatch('focus')}
+			oninput={() => dispatch('input')}
+			onfocus={() => dispatch('focus')}
 		></textarea>
 
 		<span class="highlight"></span>
@@ -43,7 +47,7 @@
 				<span class="text-red-600">*</span>
 			{/if}
 		</label>
-		<slot />
+		{@render children?.()}
 	</div>
 </div>
 

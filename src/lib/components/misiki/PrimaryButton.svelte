@@ -3,23 +3,27 @@
 
 	const dispatch = createEventDispatcher()
 
-	export let blackBackground = false
-	export let clickEffect = true
-	export let disabled = false
-	export let hideLoading = false
-	export let loading = false
-	export let loadingringsize = 'base'
-	export let roundedFull = false
-	export let roundedNone = false
-	export let title = ''
-	export let type = 'button'
 
 	// creates a `class` property, even
 	// though it is a reserved word
-	let clazz = ''
-	export { clazz as class }
+	/** @type {{blackBackground?: boolean, clickEffect?: boolean, disabled?: boolean, hideLoading?: boolean, loading?: boolean, loadingringsize?: string, roundedFull?: boolean, roundedNone?: boolean, title?: string, type?: string, class?: string, children?: import('svelte').Snippet}} */
+	let {
+		blackBackground = false,
+		clickEffect = true,
+		disabled = false,
+		hideLoading = false,
+		loading = false,
+		loadingringsize = 'base',
+		roundedFull = false,
+		roundedNone = false,
+		title = '',
+		type = 'button',
+		class: clazz = '',
+		children
+	} = $props();
+	
 
-	let localLoadingPeriod = false
+	let localLoadingPeriod = $state(false)
 
 	function handleClick() {
 		if (loading || disabled) return
@@ -53,10 +57,10 @@
 	class:active:scale-95={clickEffect && !disabled}
 	class:applyRoundedNone={roundedNone}
 	class:applyroundedFull={roundedFull}
-	on:click={handleClick}
+	onclick={handleClick}
 >
 	<div class="flex items-center justify-center gap-2">
-		<slot />
+		{@render children?.()}
 	</div>
 
 	{#if loading || localLoadingPeriod}

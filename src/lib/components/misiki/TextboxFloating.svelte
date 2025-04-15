@@ -3,18 +3,22 @@
 
 	const dispatch = createEventDispatcher()
 
-	export let label = '',
+	/** @type {{label?: string, type?: string, value?: string, id?: string, name?: string, class?: string, placeholder?: string, required?: boolean, tabindex?: number, maxlength?: number, children?: import('svelte').Snippet}} */
+	let {
+		label = '',
 		type = 'text',
-		value = '',
+		value = $bindable(''),
 		id = '',
 		name = '',
-		className = '',
+		class: className = '',
 		placeholder = ' ',
 		required = false,
 		tabindex = 0,
-		maxlength = 4000
+		maxlength = 4000,
+		children
+	} = $props();
 
-	export { className as class }
+	
 </script>
 
 <div class={className}>
@@ -31,8 +35,8 @@
 				{required}
 				{tabindex}
 				{maxlength}
-				on:input={() => dispatch('input')}
-				on:focus={() => dispatch('focus')}
+				oninput={() => dispatch('input')}
+				onfocus={() => dispatch('focus')}
 			/>
 		{:else if type === 'email'}
 			<input
@@ -46,8 +50,8 @@
 				{required}
 				{tabindex}
 				{maxlength}
-				on:input={() => dispatch('input')}
-				on:focus={() => dispatch('focus')}
+				oninput={() => dispatch('input')}
+				onfocus={() => dispatch('focus')}
 			/>
 		{:else if type === 'password'}
 			<input
@@ -61,8 +65,8 @@
 				{required}
 				{tabindex}
 				{maxlength}
-				on:input={() => dispatch('input')}
-				on:focus={() => dispatch('focus')}
+				oninput={() => dispatch('input')}
+				onfocus={() => dispatch('focus')}
 			/>
 		{:else if type === 'date'}
 			<input
@@ -76,8 +80,8 @@
 				{required}
 				{tabindex}
 				{maxlength}
-				on:input={() => dispatch('input')}
-				on:focus={() => dispatch('focus')}
+				oninput={() => dispatch('input')}
+				onfocus={() => dispatch('focus')}
 			/>
 		{:else if type === 'time'}
 			<input
@@ -91,8 +95,8 @@
 				{required}
 				{tabindex}
 				{maxlength}
-				on:input={() => dispatch('input')}
-				on:focus={() => dispatch('focus')}
+				oninput={() => dispatch('input')}
+				onfocus={() => dispatch('focus')}
 			/>
 		{:else if type === 'number'}
 			<input
@@ -106,8 +110,8 @@
 				{required}
 				{tabindex}
 				{maxlength}
-				on:input={() => dispatch('input')}
-				on:focus={() => dispatch('focus')}
+				oninput={() => dispatch('input')}
+				onfocus={() => dispatch('focus')}
 			/>
 		{:else if type === 'tel'}
 			<input
@@ -121,14 +125,14 @@
 				{required}
 				{tabindex}
 				{maxlength}
-				on:input={() => dispatch('input')}
-				on:focus={() => dispatch('focus')}
+				oninput={() => dispatch('input')}
+				onfocus={() => dispatch('focus')}
 			/>
 		{/if}
 		<span class="highlight"></span>
 
 		<label for="textbox">{label}</label>
-		<slot />
+		{@render children?.()}
 	</div>
 </div>
 

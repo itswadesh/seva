@@ -1,14 +1,40 @@
-# features
+======================== Logic ========================
+files in `programID/SewadarID, Back-.png, Front-.png, Face-.png`
+==================================== Start Pending Tasks ==========================================
 
-display store data if data available, can move to any step if data available, display face then item image then code at preview with show all details button, preview should not be disabled
+- `admin/users` -> A button to inactive all records
+  -> Each line will have checkbox to approve a user
+- `admin/program-list -> This status will be available in the collection screen (Indicates if the collection is for DEMO or LIVE)
+  1 DEMO Active
 
-## Image handling
+2. LIVE Active
+
+- `/auth/signup` -> After registration is complete, the success page should show the following message
+  `Please wait for activation`
+- `/auth/login` -> If the user is not active, the make pending_approval=true
+- `admin/login-requests` -> List of users trying to login and bulk approve all them by selecting checkboxes. This receives data where pending_approval=true
+
+### Image handling
 
 compress image to 100kb befoe saving
 
 save image inside folder `ProgramId/SewadarId/A_random_number.jpg`
 save image inside folder `ProgramId/SewadarId/F_random_number.jpg`
 save image inside folder `ProgramId/SewadarId/B_random_number.jpg`
+
+==================================== End Pending Tasks ==========================================
+
+# Steps
+
+D:/seva
+Right click and open with VSCODE
+
+Press Ctrl+` and Run the following commands
+
+```
+pnpm i
+pnpm dev
+```
 
 ## Enable Next Button
 
@@ -18,6 +44,7 @@ Step-3: Without uploading front pic Next button will not be highlighted
 
 ## Features
 
+display store data if data available, can move to any step if data available, display face then item image then code at preview with show all details button, preview should not be disabled
 Add Laptop, Bag in items form
 User label for textbox with cart like + - buttons in Step-2
 
@@ -45,12 +72,3 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
-
-### Meeting 27-Feb-2024
-
-Add a homepage with buttons
-Step-1: Make height 100% use full frame
-Step-2: Change order of items
-Step-3: Increasee height of both the frames
-Loading at login screen
-Pass login info to header and while saving

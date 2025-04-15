@@ -12,7 +12,7 @@
 	import Select from '$lib/components/form/select.svelte'
 	import { Textbox } from '$lib/components/misiki'
 	import { getUserState } from '$lib/user.svelte'
-	import { PUBLIC_IS_DEV } from '$env/static/public'
+	import * as env from '$env/static/public'
 	const userStore = getUserState()
 	interface Props {
 		data: any
@@ -24,19 +24,19 @@
 
 	let avatar: any = $state('')
 	let avatartoShow = $state('')
-	let name = $state(PUBLIC_IS_DEV === 'TRUE' ? 'Swadesh Behera' : '')
-	let phone = $state(PUBLIC_IS_DEV === 'TRUE' ? '8895092508' : '')
-	let whatsappNo = $state(PUBLIC_IS_DEV === 'TRUE' ? '8895092508' : '')
-	let dob = $state(PUBLIC_IS_DEV === 'TRUE' ? '1985-06-22' : '')
+	let name = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'Swadesh Behera' : '')
+	let phone = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? '8895092508' : '')
+	let whatsappNo = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? '8895092508' : '')
+	let dob = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? '1985-06-22' : '')
 	let gender = $state('M')
-	let fatherName = $state(PUBLIC_IS_DEV === 'TRUE' ? 'Bipin Behera' : '')
-	let center = $state(PUBLIC_IS_DEV === 'TRUE' ? 'Bangalore' : '')
-	let aadharNo = $state(PUBLIC_IS_DEV === 'TRUE' ? '111111111111' : '')
+	let fatherName = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'Bipin Behera' : '')
+	let center = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'Bangalore' : '')
+	let aadharNo = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? '111111111111' : '')
 	let maskedAadhar = ''
-	let qualification = $state(PUBLIC_IS_DEV === 'TRUE' ? 'B.Tech' : '')
-	let sevaPreference = $state(PUBLIC_IS_DEV === 'TRUE' ? 'WINDOW' : '')
-	let sevaPreference1 = $state(PUBLIC_IS_DEV === 'TRUE' ? 'BACKUP' : '')
-	let mobileAvailability = $state(PUBLIC_IS_DEV === 'TRUE' ? 'Yes - Android Mobile' : '')
+	let qualification = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'B.Tech' : '')
+	let sevaPreference = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'WINDOW' : '')
+	let sevaPreference1 = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'BACKUP' : '')
+	let mobileAvailability = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'Yes - Android Mobile' : '')
 	let isLoading = $state(false)
 
 	const sevaPreferenceDD = [
@@ -51,7 +51,7 @@
 		{ name: 'Yes - iPhone Mobile', value: 'Yes - iPhone Mobile' },
 		{ name: 'No', value: 'No' }
 	]
-	let skills = $state(PUBLIC_IS_DEV === 'TRUE' ? 'MS Office Basic' : '')
+	let skills = $state(env?.PUBLIC_IS_DEV === 'TRUE' ? 'MS Office Basic' : '')
 	const skillsPills = [
 		{ name: 'None', value: 'None' },
 		{ name: 'MS Office Basic', value: 'MS Office Basic' },

@@ -9,11 +9,11 @@
 	// import axios from 'axios'
 
 	import { getUserState } from '$lib/user.svelte'
-	import { PUBLIC_IS_DEV } from '$env/static/public'
+	import * as env from '$env/static/public'
 	const userState = getUserState()
 
-	let phone = $state(PUBLIC_IS_DEV ? '8895092508' : '')
-	let password = $state(PUBLIC_IS_DEV ? '22061985' : '')
+	let phone = $state(env?.PUBLIC_IS_DEV ? '8895092508' : '')
+	let password = $state(env?.PUBLIC_IS_DEV ? '22061985' : '')
 	let isLoading = $state(false)
 	let errors = $state({})
 

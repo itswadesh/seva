@@ -334,7 +334,16 @@
 			/>
 
 			<div class="">
-				<Select
+				<label for="mobileAvailability" class="block text-lg text-gray-700">
+					Do you have Mobile?
+				</label>
+				<select id="mobileAvailability" bind:value={mobileAvailability} class="text-xl">
+					<option value="">Select</option>
+					{#each mobileAvailabilityDD as item}
+						<option value={item.value}>{item.name}</option>
+					{/each}
+				</select>
+				<!-- <Select
 					title="Select"
 					id="mobileAvailability"
 					label="Do you have Mobile?:"
@@ -342,10 +351,11 @@
 					data={mobileAvailabilityDD || []}
 					{errors}
 					class="text-xl"
-				/>
+				/> -->
 			</div>
 			<div>
-				<Select
+				
+				<!-- <Select
 					title="Select"
 					label="Seva Preference1:"
 					id="sevaPreference"
@@ -353,10 +363,19 @@
 					data={sevaPreferenceDD || []}
 					{errors}
 					class="text-xl"
-				/>
+				/> -->
+				<label for="sevaPreference" class="block text-lg text-gray-700">
+					Seva Preference1:
+				</label>
+				<select id="sevaPreference" bind:value={sevaPreference} class="text-xl">
+					<option value="">Select</option>
+					{#each sevaPreferenceDD as item}
+						<option value={item.value}>{item.name}</option>
+					{/each}
+				</select>
 			</div>
 			<div>
-				<Select
+				<!-- <Select
 					title="Select"
 					label="Seva Preference2:"
 					id="sevaPreference1"
@@ -364,10 +383,19 @@
 					data={sevaPreferenceDD || []}
 					{errors}
 					class="text-xl"
-				/>
+				/> -->
+				<label for="sevaPreference1" class="block text-lg text-gray-700">
+					Seva Preference2:
+				</label>
+				<select id="sevaPreference1" bind:value={sevaPreference1} class="text-xl">
+					<option value="">Select</option>
+					{#each sevaPreferenceDD as item}
+						<option value={item.value}>{item.name}</option>
+					{/each}
+				</select>
 			</div>
 			<div>
-				<Select
+				<!-- <Select
 					title="Select"
 					label="Please mention your computer skills:"
 					id="skills"
@@ -375,7 +403,16 @@
 					data={skillsPills || []}
 					{errors}
 					class="text-xl"
-				/>
+				/> -->
+				<label for="skills" class="block text-lg text-gray-700">
+					Please mention your computer skills:
+				</label>
+				<select id="skills" bind:value={skills} class="text-xl">
+					<option value="">Select</option>
+					{#each skillsPills as item}
+						<option value={item.value}>{item.name}</option>
+					{/each}
+				</select>
 			</div>
 
 			<br />

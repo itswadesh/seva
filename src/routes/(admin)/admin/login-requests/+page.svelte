@@ -78,7 +78,7 @@
 								{#each Object.entries(item) as [key, value], vx}
 									<th scope="row" class={vx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
 										<div class="max-w-60 truncate whitespace-pre-wrap px-6 py-4 font-normal">
-											{#if key === 'CollectSangatFaceImage' || key === 'ItemsImageBack' || key === 'ItemsImageFront'}
+											{#if key === 'CollectSangatFaceImage' || key === 'ItemsImageBack' || key === 'ItemsImageFront' || key === 'avatar'}
 												{#if value}
 													<img
 														src={value}

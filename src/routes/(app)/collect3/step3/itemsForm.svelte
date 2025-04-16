@@ -11,7 +11,7 @@
 	import { getStepState } from '$lib/steps.svelte'
 	import { page } from '$app/state'
 	const stepState = getStepState()
-	// let loading = $state(false)
+	let loading = $state(false)
 
 	function handleIncrement(item) {
 		stepState.items[item] = +stepState.items[item] + 1

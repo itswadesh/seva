@@ -88,7 +88,7 @@ app.post('/users', async (c) => {
   let resA = []
   if (active != undefined) {
     if (active) resA = await db
-      .update(ClientProfile).set({ Active: active, ActivatedAt: new Date() }).where(eq(ClientProfile.ID, id)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
+      .update(ClientProfile).set({ Active: active, ActivatedAt: new Date().toISOString() }).where(eq(ClientProfile.ID, id)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
     else resA = await db
       .update(ClientProfile).set({ Active: active }).where(eq(ClientProfile.ID, id)).returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved })
   } else if (approved === undefined) { // When only role is changed

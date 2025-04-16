@@ -72,6 +72,10 @@ export const actions: Actions = {
 				return redirect(307, 'This token number is already used. Please use another token.')
 				// redirect(307, '/collect3/step4?message=This token number is already used. Please use another token.')
 			} else {
+				const TotalItems = +items?.Mobiles + +items?.EarPhone + +items?.Laptop + +items?.Charger + +items?.SmartWatch + +items?.Others + +items?.Bag
+				if (TotalItems < 1) {
+					return fail(404, { message: 'Please collect at least one item in Step-3.' })
+				}
 				const postData = {
 					TokenNo: items?.TokenNo,
 					ProgramID: programId,
@@ -84,7 +88,7 @@ export const actions: Actions = {
 					SmartWatch: +items?.SmartWatch,
 					Others: +items?.Others,
 					Bag: +items?.Bag,
-					TotalItems: +items?.Mobiles + +items?.EarPhone + +items?.Laptop + +items?.Charger + +items?.SmartWatch + +items?.Others + +items?.Bag,
+					TotalItems,
 					CollectSangatFaceImage: `/uploads/${programId}/${items?.Collect_SewadarID}/${items?.TokenNo}/face.png`,
 					ItemsImageBack: `/uploads/${programId}/${items?.Collect_SewadarID}/${items?.TokenNo}/back.png`,
 					ItemsImageFront: `/uploads/${programId}/${items?.Collect_SewadarID}/${items?.TokenNo}/front.png`,

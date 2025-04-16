@@ -7,7 +7,6 @@
 	import Button from '$lib/components/misiki/button/button.svelte'
 	import axios from 'axios'
 	import { toast } from 'svelte-sonner'
-	import { Value } from 'radix-icons-svelte'
 	let checked = false
 	interface Props {
 		data: any
@@ -38,17 +37,18 @@
 								try {
 									const res = await axios.post('/api/admin/users/all', {
 										approved: true,
+										active: true,
 										pending_approved: false
 									})
-									toast.success(`All User Accepted successfully`)
+									toast.success('All users approved')
 									window.location.reload()
 								} catch (e) {
 									toast.error(e.response.data)
 								}
 							}}
 						>
-							Approve all</Button
-						>
+							Approve all
+						</Button>
 					</div>
 				</div>
 			</div>
@@ -151,6 +151,29 @@
 																window.location.reload()
 															} catch (e) {
 																toast.error(e.response.data)
+															}
+														}}
+													/>
+												</div>{:else if key === 'active'}
+												<div class="flex items-center space-x-2">
+													<Checkbox
+														class="rounded border border-gray-300"
+														id="terms"
+														checked={value}
+														onCheckedChange={async (v) => {
+															try {
+																const res = await axios.post('/api/admin/users', {
+																	id: item.id,
+																	active: v
+																})
+																if (res.status == 200) {
+																	v === true
+																		? toast.success(`${item.name} active`)
+																		: toast.error(`${item.name} inactive`)
+																}
+																window.location.reload()
+															} catch (e) {
+																toast.error(e.response?.data)
 															}
 														}}
 													/>

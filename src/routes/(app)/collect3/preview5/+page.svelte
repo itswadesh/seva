@@ -45,19 +45,23 @@
 		class="flex flex-col gap-5"
 		use:enhance={() => {
 			loading = true
-			return async (result) => {
-				if (result.result?.data?.isRedirect) {
+			return async ({ result }) => {
+				if (result?.status === 404 && result?.data?.message) {
+					loading = false
+					return toast.error(result?.data?.message)
+				}
+				if (result?.data?.isRedirect) {
 					goto(
-						`/collect3/step4?token_no=${page.url.searchParams.get('token_no') || ''}&message=${result.result?.data?.message}`
+						`/collect3/step4?token_no=${page.url.searchParams.get('token_no') || ''}&message=${result?.data?.message}`
 					)
 				} else {
 					loading = false
-					if (result?.result?.status === 200) {
+					if (result?.status === 200) {
 						stepState.clearItems()
 						goto(`/collect3/step1?token_no=${page.url.searchParams.get('token_no') || ''}`)
 					} else {
 						toast.error('Something went wrong', {
-							description: result?.result?.error?.message,
+							description: result?.error?.message,
 							action: {
 								label: 'Ok',
 								onClick: () => console.log('Ok')

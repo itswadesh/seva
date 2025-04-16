@@ -28,10 +28,7 @@ export const ClientProfile = pgTable('ClientProfile', {
   ApprovalDT: timestamp('ApprovalDT'),
   LastSigninDT: timestamp('LastSigninDT'),
   Active: boolean('Active').default(false),
-  ActivatedAt: timestamp('ActivatedAt', {
-    precision: 6,
-    withTimezone: true,
-  }),
+  ActivatedAt: timestamp('ActivatedAt', { mode: 'string' }),
   sid: varchar('sid'),
   createdAt: timestamp('created_at', { mode: 'string' }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { mode: 'string' }).defaultNow().notNull()

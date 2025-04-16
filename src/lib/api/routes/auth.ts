@@ -44,7 +44,7 @@ app.post('/login', async (c) => {
   } else if (res.approved == false) {
     await db
       .update(ClientProfile).set({ Pending_Approval: true }).where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.password, password)))
-    return c.json({ sid: null, message: 'Please ask admin to activate your account' })
+    return c.json({ sid: null, message: 'Please ask admin to approve your account' })
   }
   // setCookie(c, 'connect.sid', 'res.id', {
   // 	path: '/',

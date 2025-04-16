@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { z } from 'zod'
-	import { nanoid } from 'nanoid'
+	// import { nanoid } from 'nanoid'
 	import Button from '$lib/components/ui/button/button.svelte'
 	import { Reload } from 'radix-icons-svelte'
 	import { toast } from 'svelte-sonner'

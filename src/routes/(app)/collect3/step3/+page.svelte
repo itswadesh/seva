@@ -1,10 +1,10 @@
 <script>
-	import { collectionstore, updateStore } from '$lib/store/collectionStore'
+	// import { collectionstore, updateStore } from '$lib/store/collectionStore'
 	import { goto } from '$app/navigation'
 	import ItemsForm from './itemsForm.svelte'
-	import { getStepState } from '$lib/steps.svelte'
+	// import { getStepState } from '$lib/steps.svelte'
 	import { page } from '$app/state'
-	const stepState = getStepState()
+	// const stepState = getStepState()
 	let data = {
 		Mobiles: 0,
 		Charger: 0,
@@ -16,12 +16,12 @@
 		Others: 0
 	}
 
-	function nextStep() {
-		// Update dataStore with the collected data
-		// updateStore(data)
-		// stepState.update(data)
-		goto(`/collect3/step4?token_no=${page.url.searchParams.get('token_no') || ''}`)
-	}
+	// function nextStep() {
+	// Update dataStore with the collected data
+	// updateStore(data)
+	// stepState.update(data)
+	// 	goto(`/collect3/step4?token_no=${page.url.searchParams.get('token_no') || ''}`)
+	// }
 </script>
 
 <svelte:head>

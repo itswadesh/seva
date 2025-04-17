@@ -72,3 +72,27 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
+
+
+Meeting Notes
+------------------
+
+ONLY WINDOW/BACKUP/PLANNING/ADMIN are allowed to login
+
+If active=false. then active_datetime_request = currentdate()
+
+day end inactive all (even if programs goes for 3 days)
+
+Login Screen
+----------------
+"Username, password not correct"
+"Please wait for approval" - 1 time approval
+"Please wait for activation" - every day
+
+
+Clicking dispute will take to dispute option page
+Face mis-match
+Already collected
+Items dispute
+Others (textbox)
+

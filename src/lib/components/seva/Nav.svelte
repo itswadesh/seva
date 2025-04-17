@@ -38,7 +38,7 @@
 	</div>
 
 	<div class="flex items-center">
-		<div class="w-24 px-1 pt-2 text-xl font-bold text-blue-500">A-W-1</div>
+		<div class="w-48 px-1 pt-2 text-xl font-bold text-blue-500">{me.module}-{me.role}</div>
 
 		<div class="w-full truncate px-1 pt-2 text-right text-xl font-bold text-gray-600">
 			[{me?.id}] {me?.name}

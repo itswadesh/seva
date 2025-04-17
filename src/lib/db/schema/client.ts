@@ -10,7 +10,7 @@ export const ClientProfile = pgTable('ClientProfile', {
   Qualification: varchar('Qualification'),
   password: varchar('password'),
   ProfileLevel: varchar('ProfileLevel'),
-  Module: text('Module'),
+  Module: text('Module').default('X'),
   Role: varchar('Role'),
   Location: real('Location'),
   Name: varchar('Name'),

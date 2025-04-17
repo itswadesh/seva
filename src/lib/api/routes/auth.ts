@@ -27,7 +27,7 @@ app.post('/login', async (c) => {
   const { phone, password } = args
 
   const resA = await db
-    .select({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved, role: ClientProfile.Role }).from(ClientProfile).where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.password, password)))
+    .select({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, active: ClientProfile.Active, approved: ClientProfile.Approved, role: ClientProfile.Role, module: ClientProfile.Module }).from(ClientProfile).where(and(eq(ClientProfile.MobileNo, phone), eq(ClientProfile.password, password)))
   const res = resA[0]
   if (!res) {
     deleteCookie(c, 'me', { path: '/' })
@@ -54,7 +54,7 @@ app.post('/login', async (c) => {
   const authenticatedUser = await db.update(ClientProfile)
     .set({ sid, LastSigninDT: new Date() })
     .where(eq(ClientProfile.MobileNo, phone))
-    .returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, role: ClientProfile.Role, approved: ClientProfile.Approved })
+    .returning({ id: ClientProfile.ID, name: ClientProfile.Name, sid: ClientProfile.sid, role: ClientProfile.Role, approved: ClientProfile.Approved, module: ClientProfile.Module })
   setCookie(c, 'me', JSON.stringify(authenticatedUser[0]), { path: '/' })
   return c.json(res)
 })

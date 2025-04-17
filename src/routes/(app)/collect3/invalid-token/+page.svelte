@@ -4,7 +4,7 @@
 </script>
 
 <div class="bg-red-100 p-16 text-center text-3xl font-bold text-red-500">
-	<h1 class="h-16">Token already used!</h1>
+	<h1 class="h-20">Token Already Issued!</h1>
 	<Button
 		class="w-full"
 		onclick={() => {

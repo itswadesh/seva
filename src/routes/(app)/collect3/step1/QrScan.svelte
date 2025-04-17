@@ -66,7 +66,7 @@
 			// 	replaceState: true
 			// })
 			// const tokenNo = page.url.searchParams.get('token_no')
-			const response = await fetch(`/api/sangat/check-token`, {
+			const response = await fetch(`/api/sangat/check-collection-token`, {
 				method: 'POST',
 				body: JSON.stringify({ tokenNo: data.TokenNo })
 			})

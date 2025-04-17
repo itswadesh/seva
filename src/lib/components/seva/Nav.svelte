@@ -28,9 +28,9 @@
 			{programData?.ProgramCategory}
 		</div>
 		<div
-			class="h-full w-full items-center bg-green-200 p-1 text-center text-3xl font-bold text-red-500"
+			class="h-full w-full items-center bg-green-200 p-1 text-center text-4xl font-bold text-red-500"
 		>
-			Token No: {page.url.searchParams.get('token_no')}
+			# {page.url.searchParams.get('token_no')}
 		</div>
 		<a href="/" class="ml-4 flex items-center justify-end pr-2 text-center">
 			<Home class="h-6 w-6" />

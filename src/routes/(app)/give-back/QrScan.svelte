@@ -45,15 +45,20 @@
 			const data = { TokenNo: code.data }
 			stepState.updateTokenNo(code.data)
 			stopScan()
-			const response = await fetch(`/api/sangat/check-token`, {
-				method: 'POST',
-				body: JSON.stringify({ tokenNo: data.TokenNo })
-			})
-			const isExist = await response.json()
-			if (!isExist) {
-				goto('/give-back/error?message=Invalid token', { replaceState: true })
-			} else {
-				goto(`/give-back/preview?token_no=${data.TokenNo}`, { replaceState: true })
+			try {
+				const response = await fetch(`/api/sangat/check-token`, {
+					method: 'POST',
+					body: JSON.stringify({ tokenNo: data.TokenNo })
+				})
+				const res = await response.json()
+				if (res.message) {
+					goto(`/give-back/error?message=${res.message}`, { replaceState: true })
+				} else {
+					goto(`/give-back/preview?token_no=${data.TokenNo}`, { replaceState: true })
+				}
+			} catch (e) {
+				console.log(e)
+				goto(`/give-back/error?message=${e.toString()}`, { replaceState: true })
 			}
 			// Stop scanning once a QR code is detected
 			// scanning = false;

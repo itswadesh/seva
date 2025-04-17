@@ -28,7 +28,7 @@ export const SangatData = pgTable('SangatData', {
   ItemsImageBack: varchar('ItemsImageBack'),
   CollectDT: timestamp('CollectDT'),
   GiveBackStatus: varchar('GiveBackStatus'),
-  GiveBackDT: timestamp('GiveBackDT'),
+  GiveBackDT: timestamp('GiveBackDT', { mode: 'string' }),
   DisputeReasonID: integer('DisputeReasonID'),
   DisputeReason: varchar('DisputeReason'),
   DeviceID_Client: varchar('DeviceID_Client'),

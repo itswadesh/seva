@@ -94,7 +94,7 @@
 		>
 			{page.url.searchParams.get('token_no')}
 		</div> -->
-		<!-- <ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
+		<ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
 			{#each Object.entries(stepState.items) as [key, value], index}
 				<li
 					class="grid grid-cols-2 items-center
@@ -126,7 +126,7 @@
 			{/each}
 			<input type="hidden" name="TokenNo" value={page.url.searchParams.get('token_no') || ''} />
 			<input type="hidden" name="Collect_SewadarID" value={me.id} />
-		</ul> -->
+		</ul>
 
 		<Button
 			type="submit"

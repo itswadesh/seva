@@ -32,7 +32,10 @@
 		>
 			# {page.url.searchParams.get('token_no')}
 		</div>
-		<a href="/" class="ml-4 flex items-center justify-end pr-2 text-center">
+		<a
+			href="/"
+			class="block flex w-24 items-center justify-center border bg-orange-200 px-4 py-3 pr-2 text-center text-center"
+		>
 			<Home class="h-6 w-6" />
 		</a>
 	</div>

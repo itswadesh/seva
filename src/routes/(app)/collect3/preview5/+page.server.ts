@@ -95,7 +95,6 @@ export const actions: Actions = {
 					CollectDT: new Date(),
 					GiveBackStatus: 'COLLECTED',
 				}
-				console.log(postData, 'postData')
 				const newData = await db.insert(SangatData).values(postData)
 				return newData
 			}

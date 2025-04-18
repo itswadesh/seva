@@ -19,7 +19,7 @@
 			})
 			console.log(res)
 			if (res) {
-				goto(`/give-back/success?message=Token given back: ${tokenData.TokenNo}`, {
+				goto(`/give-back/success?message=Approved: ${tokenData.TokenNo}`, {
 					replaceState: true
 				})
 			}
@@ -41,7 +41,7 @@
 					tokenNo: tokenData.TokenNo
 				})
 				if (res) {
-					goto(`/give-back/success?message=Token disputed: ${tokenData.TokenNo}`, {
+					goto(`/give-back/success?message=Dispute Submitted: ${tokenData.TokenNo}`, {
 						replaceState: true
 					})
 				}
@@ -132,10 +132,9 @@
 	<Button variant="ghost" onclick={dispute} class="mt-4 w-full">
 		<span
 			class="w-full rounded-lg border border-red-300 bg-red-100 px-6 py-1 text-4xl font-bold text-black text-red-500"
-			>
-			Submit Dispute
-			</span
 		>
+			Submit Dispute
+		</span>
 	</Button>
 	<!-- <ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
 		<li>

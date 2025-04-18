@@ -145,18 +145,12 @@
 				Please wait</button
 			>
 		{:else}
-			<Button
-				type="submit"
-				class="w-full"
-				disabled={!capturedImageURI &&
-					!stepState.getSangatFaceImage({
-						programId: page.data?.programData?.ProgramID,
-						sewadarId: me.id,
-						tokenNo: page.url.searchParams.get('token_no') || ''
-					})}
-			>
-				Next Step
-			</Button>
+			<!-- {stepState.getSangatFaceImage({
+				programId: page.data?.programData?.ProgramID,
+				sewadarId: me.id,
+				tokenNo: page.url.searchParams.get('token_no') || ''
+			})} -->
+			<Button type="submit" class="w-full" disabled={!capturedImageURI}>Next Step</Button>
 		{/if}
 	</form>
 </div>

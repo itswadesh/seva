@@ -216,18 +216,13 @@
 			</label>
 		</div>
 	</div>
-	<Button
-		type="submit"
-		class="w-full"
-		{loading}
-		disabled={!capturedItemImageUrl1 &&
-			!stepState.getItemsImage({
-				programId: page.data?.programData?.ProgramID,
-				sewadarId: me.id,
-				tokenNo: page.url.searchParams.get('token_no') || '',
-				type: 'front'
-			})}
-	>
+	<!-- {stepState.getItemsImage({
+		programId: page.data?.programData?.ProgramID,
+		sewadarId: me.id,
+		tokenNo: page.url.searchParams.get('token_no') || '',
+		type: 'front'
+	})} -->
+	<Button type="submit" class="w-full" {loading} disabled={!capturedItemImageUrl1}>
 		Proceed To Preview
 	</Button>
 </form>

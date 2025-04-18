@@ -72,7 +72,7 @@
 			}
 		}}
 	>
-		<div class="grid grid-cols-2">
+		<div class="grid grid-cols-1">
 			<img
 				src={`/uploads/${stepState.getSangatFaceImage({
 					programId: page.data?.programData?.ProgramID,
@@ -80,77 +80,21 @@
 					tokenNo: page.url.searchParams.get('token_no') || ''
 				})}`}
 				alt="Sangat face missing"
-				class="h-40 w-auto object-contain object-left"
+				class="w-full object-contain object-left"
 			/>
-			<div class="flex flex-col items-center">
-				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, tokenNo: page.url.searchParams.get('token_no') || '', type: 'front' } )}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						class="mb-2 h-8 w-8 text-gray-500 dark:text-gray-400"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-						/>
-					</svg>
-				{:else}
-					<img
-						src={`/uploads/${stepState.getItemsImage({
-							programId: page.data?.programData?.ProgramID,
-							sewadarId: me.id,
-							tokenNo: page.url.searchParams.get('token_no') || '',
-							type: 'front'
-						})}`}
-						alt="Front image missing"
-						class="h-20 w-auto object-contain object-left"
-					/>
-				{/if}
-				{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, tokenNo: page.url.searchParams.get('token_no') || '', type: 'front' } )}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						class="mb-2 h-8 w-8 text-gray-500 dark:text-gray-400"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-						/>
-					</svg>
-				{:else}
-					<img
-						src={`/uploads/${stepState.getItemsImage({
-							programId: page.data?.programData?.ProgramID,
-							sewadarId: me.id,
-							tokenNo: page.url.searchParams.get('token_no') || '',
-							type: 'back'
-						})}`}
-						alt="Back image missing"
-						class="h-20 w-auto object-contain object-left"
-					/>
-				{/if}
-			</div>
 		</div>
 		<div class="flex items-center gap-5 text-3xl font-bold">
-			<div class="w-full bg-gray-200 p-4">Total Items</div>
-			<div class="w-32 bg-gray-200 p-4 text-center">
+			<div class="w-full bg-gray-200 px-4">Total Items</div>
+			<div class="w-32 bg-gray-200 px-4 text-center">
 				{total}
 			</div>
 		</div>
-		<div
+		<!-- <div
 			class="flex items-center justify-center border-2 border-dashed border-black bg-gray-50 py-1 text-center text-7xl font-bold"
 		>
 			{page.url.searchParams.get('token_no')}
-		</div>
-		<ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
+		</div> -->
+		<!-- <ul class="m-0 hidden list-none flex-col divide-y border p-0 text-sm">
 			{#each Object.entries(stepState.items) as [key, value], index}
 				<li
 					class="grid grid-cols-2 items-center
@@ -182,8 +126,70 @@
 			{/each}
 			<input type="hidden" name="TokenNo" value={page.url.searchParams.get('token_no') || ''} />
 			<input type="hidden" name="Collect_SewadarID" value={me.id} />
-		</ul>
+		</ul> -->
 
-		<Button type="submit" {loading}>Submit</Button>
+		<Button
+			type="submit"
+			class="border border-green-700 bg-green-500 py-8 text-3xl font-bold shadow"
+			{loading}
+		>
+			Submit
+		</Button>
+		<div class="flex flex-col items-center gap-4">
+			{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, tokenNo: page.url.searchParams.get('token_no') || '', type: 'front' } )}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="mb-2 h-8 w-8 text-gray-500 dark:text-gray-400"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+					/>
+				</svg>
+			{:else}
+				<img
+					src={`/uploads/${stepState.getItemsImage({
+						programId: page.data?.programData?.ProgramID,
+						sewadarId: me.id,
+						tokenNo: page.url.searchParams.get('token_no') || '',
+						type: 'front'
+					})}`}
+					alt="Front image missing"
+					class="w-full object-contain object-left"
+				/>
+			{/if}
+			{#if !stepState.getItemsImage( { programId: page.data?.programData?.ProgramID, sewadarId: me.id, tokenNo: page.url.searchParams.get('token_no') || '', type: 'front' } )}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="mb-2 h-8 w-8 text-gray-500 dark:text-gray-400"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+					/>
+				</svg>
+			{:else}
+				<img
+					src={`/uploads/${stepState.getItemsImage({
+						programId: page.data?.programData?.ProgramID,
+						sewadarId: me.id,
+						tokenNo: page.url.searchParams.get('token_no') || '',
+						type: 'back'
+					})}`}
+					alt="Back image missing"
+					class="w-full object-contain object-left"
+				/>
+			{/if}
+		</div>
 	</form>
 </div>
